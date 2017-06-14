@@ -55,6 +55,14 @@ namespace BinStringTests
         }
 
         [TestMethod]
+        public void CreationFromBytesTest()
+        {
+            Assert.AreEqual("C0FFEEFF", BinString.FromBytes(0xc0, 0xff, 0xee, 0xff).ToString("X"));
+            Assert.AreEqual("DEADBEEF", BinString.FromBytes("DeadBeef").ToString("X"));
+            Assert.AreEqual("pharetra", BinString.FromBase64String("cGhhcmV0cmE=").ToString(Encoding.ASCII));
+        }
+
+        [TestMethod]
         public void ComparisonTest()
         {
             var stringA = BinString.FromBytes(1, 2, 3, 4, 5);
@@ -82,6 +90,10 @@ namespace BinStringTests
             Assert.AreEqual("49 6E 70 75 74", input.ToString("S"));
             Assert.AreEqual("SW5wdXQ=", input.ToString("64"));
             Assert.AreEqual("(49.6e.70.75.74)", $"({input:x.})");
+
+            Assert.AreEqual("Ping%C3%BCino", BinString.FromTextString("Pingüino", Encoding.UTF8).ToString("U"));
+            Assert.AreEqual("Caf%c3%a9", BinString.FromTextString("Café", Encoding.UTF8).ToString("u"));
+            Assert.AreEqual("\\\"Pi\\xC3\\xB1ata\\\"", BinString.FromTextString("\"Piñata\"", Encoding.UTF8).ToString("E"));
         }
 
         [TestMethod]
@@ -225,6 +237,19 @@ namespace BinStringTests
             Assert.IsTrue(BinString.IsNullOrEmpty(bsNull));
             Assert.IsTrue(BinString.IsNullOrEmpty(bsEmpty));
             Assert.IsFalse(BinString.IsNullOrEmpty(bsNotEmpty));
+        }
+
+        [TestMethod]
+        public void TestBuilder()
+        {
+            var builder = new BinStringBuilder();
+            builder.Append(BinString.FromTextString("Hello", Encoding.ASCII));
+            builder.Append(0x2c);
+            builder.Append(0x20);
+            builder.Append(Encoding.ASCII.GetBytes("world!"));
+
+            Assert.AreEqual("Hello, world!", builder.ToBinString().ToString(Encoding.ASCII));
+            Assert.AreEqual("48 65 6c 6c 6f 2c 20 77 6f 72 6c 64 21", builder.ToString("s"));
         }
     }
 }

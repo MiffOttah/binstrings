@@ -84,6 +84,31 @@ namespace MiffTheFox
             return new BinString(data);
         }
 
+        /// <summary>
+        /// Creates a BinString from a series of bytes repersented as hexadecimal
+        /// </summary>
+        /// <param name="hex">The bytes to create the BinString with, repersented as hexedecimal 0-9 A-F/a-f. All other characters are ignored.</param>
+        public static BinString FromBytes(string hex)
+        {
+            const string HEX_CHARS = "0123456789ABCDEFabcdef";
+
+            var parsedHex = hex
+                .Select(_ => HEX_CHARS.IndexOf(_))
+                .Where(_ => _ != -1)
+                .Select(_ => _ > 0xf ? _ - 6 : _)
+                .ToArray();
+
+            if ((parsedHex.Length & 1) == 1) throw new InvalidOperationException("Input string must contain an even number of hexadecimal digits.");
+
+            byte[] result = new byte[parsedHex.Length >> 1];
+            for (int i = 0; i < parsedHex.Length; i += 2)
+            {
+                result[i >> 1] = Convert.ToByte(parsedHex[i] << 4 | parsedHex[i + 1]);
+            }
+
+            return new BinString(result);
+        }
+
         #endregion
 
         #region Interfaces and Comparison
@@ -165,7 +190,7 @@ namespace MiffTheFox
         /// <summary>
         /// Formats the BinString as a text string for display.
         /// </summary>
-        /// <param name="format">One of: "x", "X", "s", "S", "64". Passing null or "G" defaults to "x". An x can optionally be followed with a separator string to indicate the sepeartor between bytes, such as "x-".</param>
+        /// <param name="format">One of: x/X, s/S, 64, u/U, e/E. Passing null or g/G defaults to x. An x/X can optionally be followed with a separator string to indicate the sepeartor between bytes, such as "x-".</param>
         /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
         /// <returns></returns>
         public string ToString(string format, IFormatProvider formatProvider)
@@ -179,6 +204,14 @@ namespace MiffTheFox
             if (format == "64")
             {
                 return ToBase64String();
+            }
+            else if (format == "u" || format == "U")
+            {
+                return ToUrlString(format == "u", formatProvider);
+            }
+            else if (format == "e" || format == "E")
+            {
+                return ToEscapedString(format == "e", formatProvider);
             }
             else if (format[0] == 'x' || format[0] == 'X')
             {
@@ -214,6 +247,52 @@ namespace MiffTheFox
         public string ToBase64String()
         {
             return Convert.ToBase64String(_Data);
+        }
+
+        public string ToUrlString(bool lowerCase, IFormatProvider formatProvider)
+        {
+            var result = new StringBuilder();
+            foreach (byte b in _Data)
+            {
+                if (b > 0x20 && b < 0x7f && b != 0x2b)
+                {
+                    result.Append((char)b);
+                }
+                else
+                {
+                    result.Append('%');
+                    result.Append(b.ToString(lowerCase ? "x2" : "X2", formatProvider));
+                }
+            }
+            return result.ToString();
+        }
+
+
+        public string ToEscapedString(bool lowerCase, IFormatProvider formatProvider)
+        {
+            var result = new StringBuilder();
+            foreach (byte b in _Data)
+            {
+                if (b == 0x5c)
+                {
+                    result.Append("\\\\");
+                }
+                else if (b == 0x22 || b == 0x27)
+                {
+                    result.Append('\\');
+                    result.Append((char)b);
+                }
+                else if (b >= 0x20 && b < 0x7f)
+                {
+                    result.Append((char)b);
+                }
+                else
+                {
+                    result.Append("\\x");
+                    result.Append(b.ToString(lowerCase ? "x2" : "X2", formatProvider));
+                }
+            }
+            return result.ToString();
         }
 
         #endregion
