@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiffTheFox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -171,9 +172,48 @@ namespace BinStringTests
             Assert.AreEqual(center, zeroPadded.Trim());
             Assert.AreEqual(ffPadded, ffPadded.Trim());
 
-
             Assert.AreEqual(center, ffPadded.Trim(0xff));
             Assert.AreEqual(zeroPadded, zeroPadded.Trim(0xff));
+
+            Assert.AreEqual(center + zeroes, zeroPadded.TrimLeft());
+            Assert.AreEqual(ffs + center, ffPadded.TrimRight(0xff));
+        }
+
+        [TestMethod]
+        public void SearchTest()
+        {
+            var someData = BinString.FromBytes(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+            var repeatingData = BinString.FromBytes(10, 20, 30, 40, 10, 20, 30, 50, 80);
+
+            Assert.AreEqual(0, someData.IndexOf(10));
+            Assert.AreEqual(2, someData.IndexOf(30));
+            Assert.AreEqual(-1, someData.IndexOf(55));
+
+            Assert.AreEqual(2, someData.IndexOf(BinString.FromBytes(30, 40)));
+            Assert.AreEqual(5, someData.IndexOf(BinString.FromBytes(60, 70, 80)));
+            Assert.AreEqual(-1, someData.IndexOf(BinString.FromBytes(4, 8, 15, 16, 23, 42)));
+            Assert.AreEqual(-1, someData.IndexOf(BinString.FromBytes(80, 90, 100, 110)));
+            Assert.AreEqual(0, someData.IndexOf(new BinString()));
+
+            Assert.AreEqual(0, repeatingData.IndexOf(BinString.FromBytes(10, 20, 30)));
+            Assert.AreEqual(4, repeatingData.IndexOf(BinString.FromBytes(10, 20, 30, 50)));
+
+            Assert.AreEqual(BinString.FromBytes(200, 210, 40, 200, 210, 50, 80), repeatingData.Replace(BinString.FromBytes(10, 20, 30), BinString.FromBytes(200, 210)));
+
+            var sections = new BinString[] {
+                BinString.FromBytes(10),
+                BinString.FromBytes(40, 10),
+                BinString.FromBytes(50, 80)
+            };
+            var split = repeatingData.Split(BinString.FromBytes(20, 30));
+            CollectionAssert.AreEqual(sections, split);
+
+            var notSplit = someData.Split((BinString)0xff);
+            Assert.AreEqual(1, notSplit.Length);
+            Assert.AreEqual(someData, notSplit[0]);
+
+            Assert.ThrowsException<InvalidOperationException>(() => repeatingData.Split(new BinString()));
+
         }
     }
 }

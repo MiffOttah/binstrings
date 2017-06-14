@@ -10,7 +10,7 @@ namespace MiffTheFox
     /// <summary>
     ///  Repersents a series of System.Byte objects that can be manipulated like a string.
     /// </summary>
-    public class BinString : IReadOnlyList<byte>, IFormattable
+    public class BinString : IReadOnlyList<byte>, IFormattable, ICloneable
     {
         protected byte[] _Data;
 
@@ -108,6 +108,11 @@ namespace MiffTheFox
             return source._Data;
         }
 
+        public static explicit operator BinString(byte source)
+        {
+            return new BinString(new byte[] { source });
+        }
+
         public override int GetHashCode()
         {
             return _Data.GetHashCode();
@@ -144,6 +149,13 @@ namespace MiffTheFox
             if (ReferenceEquals(y, null)) return true;
 
             return !x.Equals(y);
+        }
+
+        public object Clone()
+        {
+            byte[] clone = new byte[_Data.Length];
+            CopyTo(clone, 0);
+            return new BinString(clone);
         }
 
         #endregion
@@ -339,13 +351,86 @@ namespace MiffTheFox
         {
             int startIndex, endIndex;
 
-            for (startIndex = 0; startIndex < _Data.Length && _Data[startIndex] == trimByte; startIndex++);
-            for (endIndex = _Data.Length - 1; endIndex >= 0 && _Data[endIndex] == trimByte; endIndex--);
+            for (startIndex = 0; startIndex < _Data.Length && _Data[startIndex] == trimByte; startIndex++) ;
+            for (endIndex = _Data.Length - 1; endIndex >= 0 && _Data[endIndex] == trimByte; endIndex--) ;
             endIndex++;
 
             if (endIndex <= startIndex) return new BinString();
             int length = endIndex - startIndex;
             return Substring(startIndex, length);
+        }
+
+        public BinString TrimLeft(byte trimByte = 0)
+        {
+            int startIndex;
+            for (startIndex = 0; startIndex < _Data.Length && _Data[startIndex] == trimByte; startIndex++) ;
+            return Substring(startIndex);
+        }
+
+        public BinString TrimRight(byte trimByte = 0)
+        {
+            int endIndex;
+            for (endIndex = _Data.Length - 1; endIndex >= 0 && _Data[endIndex] == trimByte; endIndex--) ;
+            return Remove(endIndex + 1);
+        }
+
+        public int IndexOf(byte needle)
+        {
+            for (int i = 0; i < _Data.Length; i++)
+            {
+                if (_Data[i] == needle) return i;
+            }
+            return -1;
+        }
+
+        public int IndexOf(BinString needle)
+        {
+            var bbm = new BinBoyerMoore(needle);
+            return bbm.FindNeedleIn(this);
+        }
+
+        public BinString Replace(BinString needle, BinString replacement)
+        {
+            return Replace(needle, replacement, this);
+        }
+
+        public static BinString Replace(BinString needle, BinString replacement, BinString haystack)
+        {
+            if (needle.Length == 0) return haystack;
+
+            var bbm = new BinBoyerMoore(needle);
+            int index;
+            while ((index = bbm.FindNeedleIn(haystack)) != -1)
+            {
+                byte[] newHaystack = new byte[(haystack.Length + replacement.Length) - needle.Length];
+                haystack.CopyTo(0, newHaystack, 0, index);
+                replacement.CopyTo(0, newHaystack, index, replacement.Length);
+
+                int endIndex = index + needle.Length;
+                haystack.CopyTo(endIndex, newHaystack, index + replacement.Length, haystack.Length - endIndex);
+                haystack = new BinString(newHaystack);
+            }
+
+            return haystack;
+        }
+
+        public BinString[] Split(BinString needle)
+        {
+            if (needle.Length == 0) throw new InvalidOperationException("Cannot split on an empty BinString!");
+            
+            var parts = new List<BinString>();
+            var bbm = new BinBoyerMoore(needle);
+            var haystack = this;
+            int index;
+
+            while ((index = bbm.FindNeedleIn(haystack)) != -1)
+            {
+                parts.Add(haystack.Remove(index));
+                haystack = haystack.Substring(index + needle.Length);
+            }
+
+            parts.Add(haystack);
+            return parts.ToArray();
         }
 
         #endregion
