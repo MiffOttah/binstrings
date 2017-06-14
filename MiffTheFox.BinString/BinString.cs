@@ -442,6 +442,16 @@ namespace MiffTheFox
             if (index < 0 || index > _Data.Length) throw new IndexOutOfRangeException();
         }
 
+        /// <summary>
+        /// Checks if the value given is null or empty, returning True if so and False otherwise.
+        /// </summary>
+        public static bool IsNullOrEmpty(BinString value)
+        {
+            if (ReferenceEquals(value, null)) return true;
+            if (value._Data.Length == 0) return true;
+            return false;
+        }
+
         #endregion
     }
 }

@@ -213,7 +213,18 @@ namespace BinStringTests
             Assert.AreEqual(someData, notSplit[0]);
 
             Assert.ThrowsException<InvalidOperationException>(() => repeatingData.Split(new BinString()));
+        }
 
+        [TestMethod]
+        public void IsNullOrEmptyTest()
+        {
+            BinString bsNull = null;
+            BinString bsEmpty = new BinString();
+            BinString bsNotEmpty = BinString.FromTextString("Hello", Encoding.UTF8);
+
+            Assert.IsTrue(BinString.IsNullOrEmpty(bsNull));
+            Assert.IsTrue(BinString.IsNullOrEmpty(bsEmpty));
+            Assert.IsFalse(BinString.IsNullOrEmpty(bsNotEmpty));
         }
     }
 }
