@@ -2,6 +2,7 @@
 using MiffTheFox;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace BinStringTests
     public class BinStringTests
     {
         [TestMethod]
-        public void TestBasicDeclaration()
+        public void DeclarationTest()
         {
             var hello = Encoding.UTF8.GetBytes("Hello, world!");
             var helloBin = new BinString(hello);
@@ -246,7 +247,7 @@ namespace BinStringTests
         }
 
         [TestMethod]
-        public void TestBuilder()
+        public void BuilderTest()
         {
             var builder = new BinStringBuilder();
             builder.Append(BinString.FromTextString("Hello", Encoding.ASCII));
@@ -259,7 +260,7 @@ namespace BinStringTests
         }
 
         [TestMethod]
-        public void TestSorting()
+        public void SortTest()
         {
             var binStrings = new List<BinString>() {
                 BinString.FromBytes(1, 2, 3),
@@ -274,6 +275,43 @@ namespace BinStringTests
             binStrings.Sort();
 
             Assert.AreEqual(BinString.FromBytes(1, 0, 0, 255, 1, 2, 2, 255, 1, 2, 3, 255, 1, 2, 3, 255, 1, 2, 3, 20, 255, 4, 5, 6, 255, 10, 20, 30), BinString.Join(binStrings, (BinString)255));
+        }
+
+        [TestMethod]
+        public void ConversionTest()
+        {
+            const ushort MY_USHORT = 1024;
+            var foo = new BinString(BitConverter.GetBytes(MY_USHORT));
+
+            Assert.AreEqual(2, foo.Length);
+            Assert.AreEqual(MY_USHORT, foo.ToUInt16(CultureInfo.InvariantCulture));
+            Assert.AreEqual(1024, foo.ToInt32(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual('\0', BinString.FromBytes(0).ToChar(CultureInfo.InvariantCulture));
+            Assert.AreEqual('\0', BinString.FromBytes().ToChar(CultureInfo.InvariantCulture));
+            Assert.AreEqual('$', BinString.FromBytes(0x24).ToChar(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<OverflowException>(() => BinString.FromBytes(0xff).ToChar(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<OverflowException>(() => BinString.FromBytes(0x31, 0x32).ToChar(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual((sbyte)-1, BinString.FromBytes(0xff).ToSByte(CultureInfo.InvariantCulture));
+            Assert.AreEqual((byte)0xff, BinString.FromBytes(0xff).ToByte(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<InvalidCastException>(() => foo.ToDecimal(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<InvalidCastException>(() => foo.ToDateTime(CultureInfo.InvariantCulture));
+
+            Assert.AreEqual(foo.ToString(), Convert.ToString(foo));
+
+            const float MY_SINGLE = 3.14f;
+            const double MY_DOUBLE = 6.28;
+
+            var mySingleBytes = new BinString(BitConverter.GetBytes(MY_SINGLE));
+            var myDoubleBytes = new BinString(BitConverter.GetBytes(MY_DOUBLE));
+
+            Assert.AreEqual(4, mySingleBytes.Length);
+            Assert.AreEqual(8, myDoubleBytes.Length);
+            Assert.AreEqual(MY_SINGLE, Convert.ToSingle(mySingleBytes));
+            Assert.AreEqual(MY_DOUBLE, Convert.ToDouble(myDoubleBytes));
+            Assert.ThrowsException<OverflowException>(() => Convert.ToDouble(mySingleBytes));
+            Assert.ThrowsException<OverflowException>(() => Convert.ToSingle(myDoubleBytes));
         }
     }
 }

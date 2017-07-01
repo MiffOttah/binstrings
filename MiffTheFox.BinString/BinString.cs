@@ -10,7 +10,7 @@ namespace MiffTheFox
     /// <summary>
     ///  Repersents binary data as a series of System.Byte objects that can be manipulated like a string.
     /// </summary>
-    public class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>
+    public class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>, IConvertible
     {
         protected byte[] _Data;
 
@@ -762,6 +762,209 @@ namespace MiffTheFox
             if (ReferenceEquals(value, null)) return true;
             if (value._Data.Length == 0) return true;
             return false;
+        }
+
+        #endregion
+
+        #region IConvertable methods
+
+        public TypeCode GetTypeCode()
+        {
+            return TypeCode.Object;
+        }
+
+        public bool ToBoolean(IFormatProvider provider)
+        {
+            return _Data.Length > 0;
+        }
+
+        public char ToChar(IFormatProvider provider)
+        {
+            if (_Data.Length == 0)
+            {
+                return '\0';
+            }
+            else if (_Data.Length == 1)
+            {
+                byte n = _Data[0];
+                if (n == 0 || (n >= 0x20 && n <= 0x7e))
+                {
+                    return (char)n;
+                }
+            }
+
+            throw new OverflowException();
+        }
+
+        public sbyte ToSByte(IFormatProvider provider)
+        {
+            if (_Data.Length == 0)
+            {
+                return 0;
+            }
+            else if (_Data.Length == 1)
+            {
+                return (sbyte)_Data[0];
+            }
+            else
+            {
+                throw new OverflowException();
+            }
+        }
+
+        public byte ToByte(IFormatProvider provider)
+        {
+            if (_Data.Length == 0)
+            {
+                return 0;
+            }
+            else if (_Data.Length == 1)
+            {
+                return _Data[0];
+            }
+            else
+            {
+                throw new OverflowException();
+            }
+        }
+
+        private T _BitConvert<T>(int length, Func<byte[], int, T> convertFunction)
+        {
+            if (_Data.Length == 0)
+            {
+                return default(T);
+            }
+            else if (_Data.Length == length)
+            {
+                return convertFunction(_Data, 0);
+            }
+            else if (_Data.Length < length)
+            {
+                BinString padded;
+                if (BitConverter.IsLittleEndian)
+                {
+                    padded = PadRight(length);
+                }
+                else
+                {
+                    padded = PadLeft(length);
+                }
+                return convertFunction(padded._Data, 0);
+            }
+            else
+            {
+                throw new OverflowException();
+            }
+        }
+
+        public short ToInt16(IFormatProvider provider)
+        {
+            return _BitConvert(2, BitConverter.ToInt16);
+        }
+
+        public ushort ToUInt16(IFormatProvider provider)
+        {
+            return _BitConvert(2, BitConverter.ToUInt16);
+        }
+
+        public int ToInt32(IFormatProvider provider)
+        {
+            return _BitConvert(4, BitConverter.ToInt32);
+        }
+
+        public uint ToUInt32(IFormatProvider provider)
+        {
+            return _BitConvert(4, BitConverter.ToUInt32);
+        }
+
+        public long ToInt64(IFormatProvider provider)
+        {
+            return _BitConvert(8, BitConverter.ToInt64);
+        }
+
+        public ulong ToUInt64(IFormatProvider provider)
+        {
+            return _BitConvert(8, BitConverter.ToUInt64);
+        }
+
+        public float ToSingle(IFormatProvider provider)
+        {
+            if (_Data.Length == 0)
+            {
+                return 0;
+            }
+            else if (_Data.Length == 4)
+            {
+                return BitConverter.ToSingle(_Data, 0);
+            }
+            else
+            {
+                throw new OverflowException();
+            }
+        }
+
+        public double ToDouble(IFormatProvider provider)
+        {
+            if (_Data.Length == 0)
+            {
+                return 0;
+            }
+            else if (_Data.Length == 8)
+            {
+                return BitConverter.ToDouble(_Data, 0);
+            }
+            else
+            {
+                throw new OverflowException();
+            }
+        }
+
+        public decimal ToDecimal(IFormatProvider provider)
+        {
+            throw new InvalidCastException();
+        }
+
+        public DateTime ToDateTime(IFormatProvider provider)
+        {
+            throw new InvalidCastException();
+        }
+
+        public string ToString(IFormatProvider provider)
+        {
+            return this.ToString("g", provider);
+        }
+
+        public object ToType(Type conversionType, IFormatProvider provider)
+        {
+            if (conversionType == typeof(byte[]))
+            {
+                return _Data;
+            }
+            else if (conversionType == typeof(BinString))
+            {
+                return this;
+            }
+            else
+            {
+                var code = Type.GetTypeCode(conversionType);
+                switch (code)
+                {
+                    case TypeCode.Boolean: return this._Data.Length > 0;
+                    case TypeCode.String: return this.ToString("g", provider);
+                    case TypeCode.Byte: return this.ToByte(provider);
+                    case TypeCode.SByte: return this.ToSByte(provider);
+                    case TypeCode.Int16: return this.ToInt16(provider);
+                    case TypeCode.Int32: return this.ToInt32(provider);
+                    case TypeCode.Int64: return this.ToInt64(provider);
+                    case TypeCode.UInt16: return this.ToUInt16(provider);
+                    case TypeCode.UInt32: return this.ToUInt32(provider);
+                    case TypeCode.UInt64: return this.ToUInt64(provider);
+                    case TypeCode.Single: return this.ToSingle(provider);
+                    case TypeCode.Double: return this.ToDouble(provider);
+                    case TypeCode.Char: return this.ToChar(provider);
+                    default: throw new InvalidCastException();
+                }
+            }
         }
 
         #endregion
