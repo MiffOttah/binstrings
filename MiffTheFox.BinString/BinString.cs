@@ -8,28 +8,52 @@ using System.Threading.Tasks;
 namespace MiffTheFox
 {
     /// <summary>
-    ///  Repersents a series of System.Byte objects that can be manipulated like a string.
+    ///  Repersents binary data as a series of System.Byte objects that can be manipulated like a string.
     /// </summary>
     public class BinString : IReadOnlyList<byte>, IFormattable, ICloneable
     {
         protected byte[] _Data;
 
+        /// <summary>
+        /// Returns the number of bytes in the BinString.
+        /// </summary>
         public int Length => _Data.Length;
+
+        /// <summary>
+        /// Returns the number of bytes in the BinString.
+        /// </summary>
         public int Count => _Data.Length;
+
         public byte this[int index] => _Data[index];
 
         #region Array methods
 
+        /// <summary>
+        /// Returns the BinString as an array of System.Byte.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToArray()
         {
             return _Data;
         }
 
+        /// <summary>
+        /// Copys the data from the BinString to a byte[] buffer.
+        /// </summary>
+        /// <param name="buffer">The buffer to copy to.</param>
+        /// <param name="bufferIndex">The index within the buffer to begin the copy at.</param>
         public void CopyTo(byte[] buffer, int bufferIndex)
         {
             Array.Copy(_Data, 0, buffer, bufferIndex, _Data.Length);
         }
 
+        /// <summary>
+        /// Copys the data from the BinString to a byte[] buffer.
+        /// </summary>
+        /// <param name="sourceIndex">The index within this BinString to begin the copy at.</param>
+        /// <param name="buffer">The buffer to copy to.</param>
+        /// <param name="bufferIndex">The index within the buffer to begin the copy at.</param>
+        /// <param name="length">The number of bytes to copy from the BinString to the buffer.</param>
         public void CopyTo(int sourceIndex, byte[] buffer, int bufferIndex, int length)
         {
             Array.Copy(_Data, sourceIndex, buffer, bufferIndex, length);
@@ -40,21 +64,35 @@ namespace MiffTheFox
         #region Creation methods
 
         /// <summary>
-        /// Creats an empty BinString
+        /// Creates an empty BinString
         /// </summary>
         public BinString()
         {
             _Data = new byte[0];
         }
 
+        /// <summary>
+        /// Creates a BinString with the specified binary data.
+        /// </summary>
         public BinString(byte[] data)
         {
             _Data = data;
         }
 
-        public BinString(int length)
+        /// <summary>
+        /// Creates a BinString with the specified length where all bytes are 0.
+        /// </summary>
+        public BinString(int length) : this(length, 0)
+        {
+        }
+
+        /// <summary>
+        /// Creates a BinString with the specified length where all bytes are the given byte.
+        /// </summary>
+        public BinString(int length, byte given)
         {
             _Data = new byte[length];
+            for (int i = 0; i < length; i++) _Data[i] = given;
         }
 
         /// <summary>
@@ -192,7 +230,6 @@ namespace MiffTheFox
         /// </summary>
         /// <param name="format">One of: x/X, s/S, 64, u/U, e/E. Passing null or g/G defaults to x. An x/X can optionally be followed with a separator string to indicate the sepeartor between bytes, such as "x-".</param>
         /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
-        /// <returns></returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format)) format = "x";
@@ -234,21 +271,38 @@ namespace MiffTheFox
             return encoding.GetString(_Data);
         }
 
+        /// <summary>
+        /// Formats the BinString as a text string for display.
+        /// </summary>
+        /// <param name="format">One of: x/X, s/S, 64, u/U, e/E. Passing null or g/G defaults to x. An x/X can optionally be followed with a separator string to indicate the sepeartor between bytes, such as "x-".</param>
         public string ToString(string format)
         {
             return ToString(format, null);
         }
 
+        /// <summary>
+        /// Formats the BinString as a text string for display. The format is a string of hexadecimal characters.
+        /// </summary>
         public override string ToString()
         {
             return ToString("x", null);
         }
 
+        /// <summary>
+        /// Returns the BinString as a base-64 encoded text string.
+        /// </summary>
+        /// <returns></returns>
         public string ToBase64String()
         {
             return Convert.ToBase64String(_Data);
         }
 
+        /// <summary>
+        /// Returns the BinString as an ASCII text string with non-ASCII bytes (and %) repersented by %-encoding.
+        /// </summary>
+        /// <param name="lowerCase">True for hexadecimal bytes in lower case, false for upper case.</param>
+        /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
+        /// <returns></returns>
         public string ToUrlString(bool lowerCase, IFormatProvider formatProvider)
         {
             var result = new StringBuilder();
@@ -267,7 +321,12 @@ namespace MiffTheFox
             return result.ToString();
         }
 
-
+        /// <summary>
+        /// Returns the BinString as an ASCII text string with non-ASCII bytes repersented by backslash-encoding, as well as escaping backslashes and quotes.
+        /// </summary>
+        /// <param name="lowerCase">True for hexadecimal bytes in lower case, false for upper case.</param>
+        /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
+        /// <returns></returns>
         public string ToEscapedString(bool lowerCase, IFormatProvider formatProvider)
         {
             var result = new StringBuilder();
@@ -299,6 +358,9 @@ namespace MiffTheFox
 
         #region String operations
 
+        /// <summary>
+        /// Concatenates two BinStrings
+        /// </summary>
         public static BinString operator +(BinString x, BinString y)
         {
             byte[] result = new byte[x.Length + y.Length];
@@ -307,6 +369,9 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Appends a byte to a BinString
+        /// </summary>
         public static BinString operator +(BinString x, byte append)
         {
             byte[] result = new byte[x.Length + 1];
@@ -315,6 +380,9 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Prepends a byte to a BinString
+        /// </summary>
         public static BinString operator +(byte prepend, BinString x)
         {
             byte[] result = new byte[x.Length + 1];
@@ -323,6 +391,11 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Repeats the BinString a number of times.
+        /// </summary>
+        /// <param name="count">The number of times to repeat the BinString.</param>
+        /// <returns></returns>
         public BinString Repeat(int count)
         {
             if (count == 0) return new BinString();
@@ -336,15 +409,25 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Repeats the BinString a number of times.
+        /// </summary>
         public static BinString operator *(BinString x, int count)
         {
             return x.Repeat(count);
         }
+
+        /// <summary>
+        /// Repeats the BinString a number of times.
+        /// </summary>
         public static BinString operator *(int count, BinString x)
         {
             return x.Repeat(count);
         }
 
+        /// <summary>
+        /// Inserts the contents of another BinString into this BinString at a specified index.
+        /// </summary>
         public BinString Insert(int index, BinString toInsert)
         {
             _CheckIndex(index);
@@ -355,6 +438,9 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Inserts a single byte into this BinString at a specified index.
+        /// </summary>
         public BinString Insert(int index, byte toInsert)
         {
             _CheckIndex(index);
@@ -365,6 +451,11 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Prepends bytes to the beginning of the BinString until the length of the BinString is equal to or greater than length.
+        /// </summary>
+        /// <param name="length">The minimum final length of the string.</param>
+        /// <param name="padding">The byte with which to pad the string to length bytes.</param>
         public BinString PadLeft(int length, byte padding = 0)
         {
             if (length <= 0) throw new ArgumentException("Length must be positive.", "length");
@@ -380,6 +471,11 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Appends bytes to the end of the BinString until the length of the BinString is equal to or greater than length.
+        /// </summary>
+        /// <param name="length">The minimum final length of the string.</param>
+        /// <param name="padding">The byte with which to pad the string to length bytes.</param>
         public BinString PadRight(int length, byte padding = 0)
         {
             if (length <= 0) throw new ArgumentException("Length must be positive.", "length");
@@ -394,6 +490,11 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Removes a number of bytes from the BinString starting the specified index.
+        /// </summary>
+        /// <param name="index">The index to begin removing bytes at.</param>
+        /// <param name="length">The number of bytes to remove. If less than zero, removes all bytes from the index to the end of the BinString.</param>
         public BinString Remove(int index, int length = -1)
         {
             _CheckIndex(index);
@@ -413,6 +514,11 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Extracts a number of bytes from the BinString starting the specified index.
+        /// </summary>
+        /// <param name="index">The index to begin extracting bytes at.</param>
+        /// <param name="length">The number of bytes to extracting. If less than zero, extracts all bytes from the index to the end of the BinString.</param>
         public BinString Substring(int index, int length = -1)
         {
             _CheckIndex(index);
@@ -426,6 +532,9 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
+        /// <summary>
+        /// Removes any occurance of the specified byte from the beginning and end of the BinString.
+        /// </summary>
         public BinString Trim(byte trimByte = 0)
         {
             int startIndex, endIndex;
@@ -439,6 +548,9 @@ namespace MiffTheFox
             return Substring(startIndex, length);
         }
 
+        /// <summary>
+        /// Removes any occurance of the specified byte from the beginning of the BinString.
+        /// </summary>
         public BinString TrimLeft(byte trimByte = 0)
         {
             int startIndex;
@@ -446,6 +558,9 @@ namespace MiffTheFox
             return Substring(startIndex);
         }
 
+        /// <summary>
+        /// Removes any occurance of the specified byte from the end of the BinString.
+        /// </summary>
         public BinString TrimRight(byte trimByte = 0)
         {
             int endIndex;
@@ -453,6 +568,9 @@ namespace MiffTheFox
             return Remove(endIndex + 1);
         }
 
+        /// <summary>
+        /// Finds the first occurrence of the specified byte in the BinString.
+        /// </summary>
         public int IndexOf(byte needle)
         {
             for (int i = 0; i < _Data.Length; i++)
@@ -462,17 +580,31 @@ namespace MiffTheFox
             return -1;
         }
 
+        /// <summary>
+        /// Finds the first occurrence of the specified substring in the BinString.
+        /// </summary>
         public int IndexOf(BinString needle)
         {
             var bbm = new BinBoyerMoore(needle);
             return bbm.FindNeedleIn(this);
         }
 
+        /// <summary>
+        /// Replaces all instances of the needle substring with the replacement substring in this substring.
+        /// </summary>
+        /// <param name="needle">The substring to search for.</param>
+        /// <param name="replacement">The substring to replace the needle with.</param>
         public BinString Replace(BinString needle, BinString replacement)
         {
             return Replace(needle, replacement, this);
         }
 
+        /// <summary>
+        /// Replaces all instances of the needle substring with the replacement substring in a specified substring.
+        /// </summary>
+        /// <param name="needle">The substring to search for.</param>
+        /// <param name="replacement">The substring to replace the needle with.</param>
+        /// <param name="haystack">The substring to search within.</param>
         public static BinString Replace(BinString needle, BinString replacement, BinString haystack)
         {
             if (needle.Length == 0) return haystack;
@@ -493,10 +625,13 @@ namespace MiffTheFox
             return haystack;
         }
 
+        /// <summary>
+        /// Returns an array of BinStrings based on dividing the BinString up along any occurances of the specifeid substring.
+        /// </summary>
         public BinString[] Split(BinString needle)
         {
             if (needle.Length == 0) throw new InvalidOperationException("Cannot split on an empty BinString!");
-            
+
             var parts = new List<BinString>();
             var bbm = new BinBoyerMoore(needle);
             var haystack = this;
