@@ -105,6 +105,12 @@ namespace BinStringTests
             Assert.AreEqual(BinString.FromBytes(1, 2, 3, 4, 5, 6), foo + bar);
             Assert.AreEqual(BinString.FromBytes(1, 2, 3, 255), foo + 255);
             Assert.AreEqual(BinString.FromBytes(128, 1, 2, 3), 128 + foo);
+
+            var baz1 = BinString.Join((new string[] { "Lorem", "Ipsum", "Dolor", "Sit", "Amet" }).Select(_ => BinString.FromTextString(_, Encoding.ASCII)), (BinString)0x20);
+            Assert.AreEqual("Lorem Ipsum Dolor Sit Amet", baz1.ToString(Encoding.ASCII));
+
+            var baz2 = BinString.Join((new string[] { "Aenean", "Porttitor", "Dictumst" }).Select(_ => BinString.FromTextString(_, Encoding.ASCII)));
+            Assert.AreEqual("AeneanPorttitorDictumst", baz2.ToString(Encoding.ASCII));
         }
 
         [TestMethod]
@@ -250,6 +256,24 @@ namespace BinStringTests
 
             Assert.AreEqual("Hello, world!", builder.ToBinString().ToString(Encoding.ASCII));
             Assert.AreEqual("48 65 6c 6c 6f 2c 20 77 6f 72 6c 64 21", builder.ToString("s"));
+        }
+
+        [TestMethod]
+        public void TestSorting()
+        {
+            var binStrings = new List<BinString>() {
+                BinString.FromBytes(1, 2, 3),
+                BinString.FromBytes(4, 5, 6),
+                BinString.FromBytes(1, 2, 3),
+                BinString.FromBytes(1, 2, 3, 20),
+                BinString.FromBytes(1, 2, 2),
+                BinString.FromBytes(10, 20, 30),
+                BinString.FromBytes(1, 0, 0)
+            };
+
+            binStrings.Sort();
+
+            Assert.AreEqual(BinString.FromBytes(1, 0, 0, 255, 1, 2, 2, 255, 1, 2, 3, 255, 1, 2, 3, 255, 1, 2, 3, 20, 255, 4, 5, 6, 255, 10, 20, 30), BinString.Join(binStrings, (BinString)255));
         }
     }
 }

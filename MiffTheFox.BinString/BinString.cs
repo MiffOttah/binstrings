@@ -10,7 +10,7 @@ namespace MiffTheFox
     /// <summary>
     ///  Repersents binary data as a series of System.Byte objects that can be manipulated like a string.
     /// </summary>
-    public class BinString : IReadOnlyList<byte>, IFormattable, ICloneable
+    public class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>
     {
         protected byte[] _Data;
 
@@ -196,6 +196,18 @@ namespace MiffTheFox
             return false;
         }
 
+
+        public bool Equals(BinString other)
+        {
+            if (ReferenceEquals(other, null)) return false;
+            if (other.Length != other.Length) return false;
+            for (int i = 0; i < this._Data.Length; i++)
+            {
+                if (other._Data[i] != this._Data[i]) return false;
+            }
+            return true;
+        }
+
         public static bool operator ==(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
@@ -212,6 +224,60 @@ namespace MiffTheFox
             if (ReferenceEquals(y, null)) return true;
 
             return !x.Equals(y);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is BinString objString)
+            {
+                return CompareTo(objString);
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        public int CompareTo(BinString other)
+        {
+            if (ReferenceEquals(other, null)) return 1;
+            int l = Math.Min(this.Length, other.Length);
+
+            for (int i = 0; i < l; i++)
+            {
+                int c = _Data[i].CompareTo(other._Data[i]);
+                if (c != 0) return c;
+            }
+
+            if (this.Length < other.Length) return -1;
+            else if (this.Length > other.Length) return 1;
+            else return 0;
+        }
+
+        public static bool operator >(BinString x, BinString y)
+        {
+            if (ReferenceEquals(x, y)) return false;
+            if (ReferenceEquals(x, null)) return false;
+            return x.CompareTo(y) > 0;
+        }
+        public static bool operator <(BinString x, BinString y)
+        {
+            if (ReferenceEquals(x, y)) return false;
+            if (ReferenceEquals(x, null)) return true;
+            return x.CompareTo(y) < 0;
+        }
+
+        public static bool operator >=(BinString x, BinString y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, null)) return false;
+            return x.CompareTo(y) >= 0;
+        }
+        public static bool operator <=(BinString x, BinString y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, null)) return true;
+            return x.CompareTo(y) <= 0;
         }
 
         public object Clone()
@@ -645,6 +711,38 @@ namespace MiffTheFox
 
             parts.Add(haystack);
             return parts.ToArray();
+        }
+
+        /// <summary>
+        /// Joins the specified BinStrings into one.
+        /// </summary>
+        /// <param name="binStrings">The BinStrings to join into one.</param>
+        /// <param name="glue">The BinString glue to insert between each string, or null for none.</param>
+        /// <returns></returns>
+        public static BinString Join(IEnumerable<BinString> binStrings, BinString glue = null)
+        {
+            bool useGlue = !IsNullOrEmpty(glue);
+            bool first = true;
+            var builder = new BinStringBuilder();
+
+            foreach (var part in binStrings)
+            {
+                if (useGlue)
+                {
+                    if (first)
+                    {
+                        first = false;
+                    }
+                    else
+                    {
+                        builder.Append(glue);
+                    }
+                }
+
+                builder.Append(part);
+            }
+
+            return builder.ToBinString();
         }
 
         #endregion
