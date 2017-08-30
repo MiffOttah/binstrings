@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="MiffTheFox.BinString.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinString.cs" />
