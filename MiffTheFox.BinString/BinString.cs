@@ -178,7 +178,18 @@ namespace MiffTheFox
 
         public override int GetHashCode()
         {
-            return _Data.GetHashCode();
+            // FNV-1a hash https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+            ulong hash = 14695981039346656037;
+            unchecked
+            {
+                foreach (byte b in _Data)
+                {
+                    hash ^= b;
+                    hash *= 1099511628211;
+                }
+
+                return (int)hash;
+            }
         }
 
         public override bool Equals(object obj)

@@ -80,6 +80,20 @@ namespace BinStringTests
         }
 
         [TestMethod]
+        public void HashTest()
+        {
+            var stringA = BinString.FromTextString("ABCDE", Encoding.ASCII);
+            var stringB = BinString.FromBytes(65, 66, 67, 68, 69);
+
+            Assert.IsTrue(stringA == stringB);
+            Assert.AreEqual(stringA.GetHashCode(), stringB.GetHashCode());
+
+            var stringC = BinString.FromTextString("EDCBA", Encoding.ASCII);
+            Assert.IsTrue(stringA != stringC);
+            Assert.AreNotEqual(stringA.GetHashCode(), stringC.GetHashCode());
+        }
+
+        [TestMethod]
         public void ToStringTest()
         {
             var input = BinString.FromTextString("Input", Encoding.ASCII);
