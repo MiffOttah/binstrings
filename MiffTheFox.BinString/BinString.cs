@@ -64,7 +64,12 @@ namespace MiffTheFox
         #region Creation methods
 
         /// <summary>
-        /// Creates an empty BinString
+        /// Returns an empty BinString.
+        /// </summary>
+        public static BinString Empty => new BinString();
+
+        /// <summary>
+        /// Creates an empty BinString.
         /// </summary>
         public BinString()
         {

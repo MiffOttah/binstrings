@@ -42,6 +42,7 @@
     <Compile Include="BinString.cs" />
     <Compile Include="BinBoyerMoore.cs" />
     <Compile Include="BinStringBuilder.cs" />
+    <Compile Include="BinStringExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
