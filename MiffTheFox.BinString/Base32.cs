@@ -7,14 +7,36 @@ using System.Threading.Tasks;
 
 namespace MiffTheFox
 {
+    /// <summary>
+    /// Provides a Base32 encoder/decoder
+    /// </summary>
     public class Base32
     {
+        /// <summary>
+        /// The RFC 4648 Base32 character set.
+        /// </summary>
         public const string CHARSET_RFC4648 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+
+        /// <summary>
+        /// The zBase32 character set.
+        /// </summary>
         public const string CHARSET_ZBASE32 = "ybndrfg8ejkmcpqxot1uwisza345h769";
+
+        /// <summary>
+        /// The Douglas Crockford Base32 character set.
+        /// </summary>
         public const string CHARSET_CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+
+        /// <summary>
+        /// The triacontakaidecimal/base32hex character set.
+        /// </summary>
         public const string CHARSET_BASE32HEX = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 
         private string _CharacterSet;
+
+        /// <summary>
+        /// The character set used by the base32 encoder/decoder.
+        /// </summary>
         public string CharacterSet
         {
             get => _CharacterSet;
@@ -31,22 +53,48 @@ namespace MiffTheFox
             }
         }
 
+        /// <summary>
+        /// The padding character appended to the end if UsePadding is true.
+        /// </summary>
         public char Padding { get; set; } = '=';
+
+        /// <summary>
+        /// Whether or not to append a padding character to the end of the data to bring it to an even multiple of eight bytes.
+        /// </summary>
         public bool UsePadding { get; set; } = true;
+
+        /// <summary>
+        /// If true, case-insensitive comparison is used when decoding.
+        /// </summary>
         public bool IgnoreCase { get; set; } = true;
+
+        /// <summary>
+        /// The culture used for case-insensitive comparison.
+        /// </summary>
         public CultureInfo Culture { get; set; }
-        
+
+        /// <summary>
+        /// Creates a Base32 encoder/decoder with the specified character set.
+        /// </summary>
+        /// <param name="characterSet">The character set used by the base32 encoder/decoder.</param>
         public Base32(string characterSet = CHARSET_RFC4648)
         {
             CharacterSet = characterSet;
             Culture = CultureInfo.CurrentCulture;
         }
 
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
         public override string ToString()
         {
             return _CharacterSet;
         }
 
+        /// <summary>
+        /// Converts a binary string to its base32 repersentation.
+        /// </summary>
+        /// <param name="data">The binary string to convert.</param>
         public string GetString(BinString data)
         {
             if (BinString.IsNullOrEmpty(data)) return string.Empty;
@@ -87,11 +135,20 @@ namespace MiffTheFox
             return result.ToString();
         }
 
+        /// <summary>
+        /// Converts a base32 encoded string to its original binary form.
+        /// </summary>
+        /// <param name="encoded">The base32 string to convert.</param>
         public BinString GetBinString(string encoded)
         {
             return GetBinString(encoded, Culture);
         }
 
+        /// <summary>
+        /// Converts a base32 encoded string to its original binary form.
+        /// </summary>
+        /// <param name="encoded">The base32 string to convert.</param>
+        /// <param name="culture">The culture used for case-insensitive comparison.</param>
         public BinString GetBinString(string encoded, CultureInfo culture)
         {
             if (string.IsNullOrEmpty(encoded)) return BinString.Empty;
