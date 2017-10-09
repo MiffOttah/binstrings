@@ -39,6 +39,7 @@
     <None Include="MiffTheFox.BinString.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base32.cs" />
     <Compile Include="BinString.cs" />
     <Compile Include="BinBoyerMoore.cs" />
     <Compile Include="BinStringBuilder.cs" />
