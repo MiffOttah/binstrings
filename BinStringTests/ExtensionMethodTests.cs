@@ -80,5 +80,15 @@ namespace BinStringTests
                 Assert.AreEqual(sourceBinString.Remove(32), ms2.ReadBinString(32));
             }
         }
+
+        [TestMethod]
+        public void RandomTest()
+        {
+            var nonSecure = new Random();
+            var secure = System.Security.Cryptography.RandomNumberGenerator.Create();
+
+            Assert.AreEqual(32, nonSecure.NextBinString(32).Length);
+            Assert.AreEqual(48, nonSecure.NextBinString(48).Length);
+        }
     }
 }

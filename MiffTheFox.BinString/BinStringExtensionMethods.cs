@@ -135,5 +135,29 @@ namespace MiffTheFox
         }
 
         #endregion
+
+        #region Random methods
+
+        /// <summary>
+        /// Returns a binary string of the specified length with random contents.
+        /// </summary>
+        public static BinString NextBinString(this Random rng, int length)
+        {
+            var buffer = new byte[length];
+            rng.NextBytes(buffer);
+            return new BinString(buffer);
+        }
+
+        /// <summary>
+        /// Returns a binary string of the specified length with random contents.
+        /// </summary>
+        public static BinString GetBinString(this System.Security.Cryptography.RandomNumberGenerator rng, int length)
+        {
+            var buffer = new byte[length];
+            rng.GetBytes(buffer);
+            return new BinString(buffer);
+        }
+        
+        #endregion
     }
 }

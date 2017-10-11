@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <title>$title$</title>
     <authors>MiffTheFox</authors>
     <owners>miffthefox</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/MiffOttah/binstrings</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixes to comparison functions.</releaseNotes>
+    <releaseNotes>Add random number generation functions.</releaseNotes>
     <copyright>Copyright 2017 MiffTheFox</copyright>
     <tags>binary</tags>
   </metadata>
