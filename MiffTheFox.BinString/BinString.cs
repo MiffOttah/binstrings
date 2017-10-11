@@ -199,24 +199,14 @@ namespace MiffTheFox
 
         public override bool Equals(object obj)
         {
-            if (obj != null && obj is BinString)
-            {
-                var that = (BinString)obj;
-                if (that.Length != this.Length) return false;
-                for (int i = 0; i < this._Data.Length; i++)
-                {
-                    if (that._Data[i] != this._Data[i]) return false;
-                }
-                return true;
-            }
-            return false;
+            if (ReferenceEquals(obj, null)) return false;
+            return obj is BinString && Equals((BinString)obj);
         }
-
 
         public bool Equals(BinString other)
         {
             if (ReferenceEquals(other, null)) return false;
-            if (other.Length != other.Length) return false;
+            if (this.Length != other.Length) return false;
             for (int i = 0; i < this._Data.Length; i++)
             {
                 if (other._Data[i] != this._Data[i]) return false;
@@ -244,13 +234,17 @@ namespace MiffTheFox
 
         public int CompareTo(object obj)
         {
-            if (obj is BinString objString)
+            if (ReferenceEquals(obj, null))
+            {
+                return 1;
+            }
+            else if (obj is BinString objString)
             {
                 return CompareTo(objString);
             }
             else
             {
-                return 1;
+                throw new ArgumentException($"Cannot compare BinString to {obj.GetType().Name}");
             }
         }
 

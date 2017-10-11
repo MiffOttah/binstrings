@@ -18,6 +18,8 @@ namespace BinStringTests
             var helloBin = new BinString(hello);
 
             CollectionAssert.AreEqual(hello, helloBin.ToArray());
+            Assert.AreEqual(13, helloBin.Length);
+            Assert.AreEqual(0, BinString.Empty.Length);
         }
 
         [TestMethod]
@@ -77,6 +79,55 @@ namespace BinStringTests
             Assert.IsTrue(stringB == stringA);
             Assert.IsTrue(stringB != stringC);
             Assert.IsTrue(stringC != stringB);
+
+            Assert.IsTrue(stringA.Equals((object)stringB));
+            Assert.IsFalse(stringA.Equals((object)null));
+        }
+
+        [TestMethod]
+        public void ComparisonUnequalLengthTest()
+        {
+            var string2 = BinString.FromBytes(1, 2);
+            var string3 = BinString.FromBytes(1, 2, 3);
+            var string4 = BinString.FromBytes(1, 2, 3, 4);
+
+            Assert.IsFalse(string4.Equals(string3));
+            Assert.IsFalse(string2.Equals(string4));
+            Assert.IsFalse(string3.Equals(null));
+
+            Assert.IsTrue(string2 < string3);
+            Assert.IsTrue(string2 <= string3);
+            Assert.IsFalse(string2 == string3);
+            Assert.IsTrue(string4 > string3);
+            Assert.IsTrue(string4 >= string3);
+            Assert.IsFalse(string4 == string3);
+
+            Assert.IsFalse(string2 == null);
+            Assert.IsFalse(null == string3);
+            Assert.IsTrue(string4 != null);
+            Assert.IsTrue(BinString.Empty != null);
+        }
+
+        [TestMethod]
+        public void ComparableTest()
+        {
+            var stringA = BinString.FromBytes(5, 10, 15, 20);
+            var stringB = BinString.FromBytes(5, 15, 25, 35);
+
+            Assert.IsTrue(stringA.CompareTo(stringA) == 0);
+            Assert.IsTrue(stringA.CompareTo(stringB) < 0);
+            Assert.IsTrue(stringA.CompareTo((object)stringB) < 0);
+            Assert.IsTrue(stringB.CompareTo(stringA) > 0);
+            Assert.IsTrue(stringA.CompareTo(BinString.Empty) > 0);
+
+            Assert.IsTrue(stringA > BinString.Empty);
+            Assert.IsTrue(stringA > null);
+            Assert.IsTrue(BinString.Empty > null);
+            Assert.IsTrue(BinString.Empty != null);
+            Assert.IsFalse(BinString.Empty < null);
+
+            Assert.ThrowsException<ArgumentException>(() => stringA.CompareTo("TEST"));
+            Assert.ThrowsException<ArgumentException>(() => stringA.CompareTo(ConsoleColor.Red));
         }
 
         [TestMethod]
