@@ -74,6 +74,11 @@ namespace MiffTheFox
         public CultureInfo Culture { get; set; }
 
         /// <summary>
+        /// If true, will ignore any invalid characters that are whitespace.
+        /// </summary>
+        public bool IgnoreWhiteSpace { get; set; } = true;
+
+        /// <summary>
         /// Creates a Base32 encoder/decoder with the specified character set.
         /// </summary>
         /// <param name="characterSet">The character set used by the base32 encoder/decoder.</param>
@@ -102,7 +107,7 @@ namespace MiffTheFox
             int building = 0;
             int buildLocation = 4;
             var result = new StringBuilder();
-            
+
             foreach (byte b in data)
             {
                 for (int i = 7; i >= 0; i--)
@@ -118,7 +123,7 @@ namespace MiffTheFox
                     }
                 }
             }
-            
+
             if (buildLocation < 4)
             {
                 result.Append(_CharacterSet[building]);
@@ -152,19 +157,57 @@ namespace MiffTheFox
         public BinString GetBinString(string encoded, CultureInfo culture)
         {
             if (string.IsNullOrEmpty(encoded)) return BinString.Empty;
-            string chars = _CharacterSet;
+            int[] intData;
 
             if (IgnoreCase)
             {
-                encoded = encoded.ToUpper(culture).TrimEnd(char.ToUpper(Padding, culture));
-                chars = chars.ToUpper(culture);
+                // in order to preform a case-insensitve comparison, we must process each char as a string
+
+                string paddingString = Padding.ToString();
+                var chars = _CharacterSet.Select(c => c.ToString()).ToArray();
+                var encodedChars = new Stack<string>(encoded.Length);
+                bool processingPadding = true;
+
+                foreach (string encodedChar in encoded.Reverse().Select(c => c.ToString()))
+                {
+                    if (processingPadding)
+                    {
+                        if (string.Compare(encodedChar, paddingString, culture, CompareOptions.IgnoreCase) == 0) continue;
+                        processingPadding = false;
+                    }
+
+                    if (IgnoreWhiteSpace && string.IsNullOrWhiteSpace(encodedChar))
+                    {
+                        continue;
+                    }
+
+                    encodedChars.Push(encodedChar);
+                }
+
+                intData = new int[encodedChars.Count];
+                int i = 0;
+                while (encodedChars.Count > 0)
+                {
+                    intData[i] = -1;
+                    string encodedChar = encodedChars.Pop();
+                    for (int j = 0; j < chars.Length; j++)
+                    {
+                        if (string.Compare(chars[j], encodedChar, culture, CompareOptions.IgnoreCase) == 0)
+                        {
+                            intData[i] = j;
+                            break;
+                        }
+                    }
+                    i++;
+                }
             }
             else
             {
                 encoded = encoded.TrimEnd(Padding);
+                intData = encoded.Where(c => !(IgnoreWhiteSpace && char.IsWhiteSpace(c))).Select(c => _CharacterSet.IndexOf(c)).ToArray();
             }
 
-            var intData = encoded.Where(c => !char.IsWhiteSpace(c)).Select(c => chars.IndexOf(c)).ToArray();
+            if (intData == null || intData.Length == 0) return BinString.Empty;
             if (intData.Any(c => c == -1)) throw new FormatException("This string contains one or more characters not allowed in the character set.");
             int expectedLength = (intData.Length * 5) / 8;
 
@@ -197,7 +240,8 @@ namespace MiffTheFox
                 if (decoded.Length > expectedLength)
                 {
                     return decoded.Substring(0, expectedLength);
-                } else
+                }
+                else
                 {
                     return decoded;
                 }

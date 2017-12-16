@@ -64,6 +64,10 @@ namespace BinStringTests
             Assert.ThrowsException<FormatException>(() => base32.GetBinString("ERROR!"));
             base32.IgnoreCase = false;
             Assert.ThrowsException<FormatException>(() => base32.GetBinString("py7x4==="));
+            base32.IgnoreWhiteSpace = false;
+            Assert.ThrowsException<FormatException>(() => base32.GetBinString("\r\nK5UG S5DF KNYG\tCY\t3F\n"));
+            base32.IgnoreCase = true;
+            Assert.ThrowsException<FormatException>(() => base32.GetBinString("\r\nK5UG S5DF KNYG\tCY\t3F\n"));
 
             // alternate character set
             var crockfordBase32 = new Base32(Base32.CHARSET_CROCKFORD.ToLowerInvariant());
