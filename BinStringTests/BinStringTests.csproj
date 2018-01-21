@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base32Tests.cs" />
+    <Compile Include="BinaryTextEncodingTests.cs" />
     <Compile Include="BinStringTests.cs" />
     <Compile Include="ExtensionMethodTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
