@@ -56,6 +56,15 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Writes the given data from the BinStringBuilder to the end of this buffer.
+        /// </summary>
+        /// <param name="data"></param>
+        public void Append(BinStringBuilder data)
+        {
+            Append(data._MemStream.ToArray());
+        }
+
+        /// <summary>
         /// Returns the buffer contents.
         /// </summary>
         public BinString ToBinString()

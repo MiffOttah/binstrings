@@ -111,14 +111,6 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a BinString from a base64-encoded string
-        /// </summary>
-        public static BinString FromBase64String(string data)
-        {
-            return new BinString(Convert.FromBase64String(data));
-        }
-
-        /// <summary>
         /// Creates a BinString from a series of bytes
         /// </summary>
         public static BinString FromBytes(params byte[] data)
