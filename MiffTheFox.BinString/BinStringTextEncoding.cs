@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,15 @@ namespace MiffTheFox
             else if (format == "e" || format == "E")
             {
                 return ToEscapedString(format == "e", formatProvider);
+            }
+            else if (format == "q" || format == "Q")
+            {
+                return ToQuotedPrintableString(
+                    format == "q" ?
+                        QuotedPrintableFormattingOptions.LowerCaseHex | QuotedPrintableFormattingOptions.DontEnforceLineLengthLimit :
+                        QuotedPrintableFormattingOptions.DontEnforceLineLengthLimit,
+                    formatProvider
+                );
             }
             else if (format[0] == 'x' || format[0] == 'X')
             {
@@ -126,6 +136,85 @@ namespace MiffTheFox
                 }
             }
             return result.ToString();
+        }
+
+        public string ToQuotedPrintableString() => ToQuotedPrintableString(0, CultureInfo.CurrentCulture);
+
+        /// <summary>
+        /// Returns the BinString as an ASCII text string with non-ASCII bytes repersented by MIME quoted-printable encoding.
+        /// </summary>
+        /// <param name="formattingOptions">A set of QuotedPrintableFormattingOptions to format with.</param>
+        /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
+        public string ToQuotedPrintableString(QuotedPrintableFormattingOptions formattingOptions, IFormatProvider formatProvider)
+        {
+            var result = new StringBuilder();
+            bool first = true;
+            int lineLength = 0;
+            const int maxLineLength = 75;
+            bool usedNewlines = false;
+
+            string hexFormat = formattingOptions.HasFlag(QuotedPrintableFormattingOptions.LowerCaseHex) ? "x2" : "X2";
+            BinString[] sourceParts = new BinString[] { this };
+
+            if (formattingOptions.HasFlag(QuotedPrintableFormattingOptions.KeepNewlines))
+            {
+                sourceParts = Split(FromTextString(Environment.NewLine, Encoding.ASCII));
+                usedNewlines = true;
+            }
+
+            var extendLineCounter = formattingOptions.HasFlag(QuotedPrintableFormattingOptions.DontEnforceLineLengthLimit) ? null : new Action<int>(toAdd =>
+            {
+                if (lineLength + toAdd > maxLineLength)
+                {
+                    result.Append('=');
+                    result.AppendLine();
+                    usedNewlines = true;
+                    lineLength = toAdd;
+                }
+                else
+                {
+                    lineLength += toAdd;
+                }
+            });
+
+            foreach (var part in sourceParts)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    result.AppendLine();
+                    lineLength = 0;
+                }
+
+                foreach (byte b in part)
+                {
+                    if ((b >= 0x20 && b <= 0x7e) && b != 0x3d)
+                    {
+                        extendLineCounter?.Invoke(1);
+                        result.Append((char)b);
+                    }
+                    else
+                    {
+                        extendLineCounter?.Invoke(3);
+                        result.Append('=');
+                        result.Append(b.ToString(hexFormat, formatProvider));
+                    }
+                }
+            }
+
+            string resultString = result.ToString();
+            if (usedNewlines)
+            {
+                resultString = resultString.Replace(" " + Environment.NewLine, "=20" + Environment.NewLine);
+            }
+            if (resultString.EndsWith(" "))
+            {
+                resultString = resultString.Remove(resultString.Length - 1) + "=20";
+            }
+            return resultString;
         }
 
         /// <summary>

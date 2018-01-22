@@ -46,6 +46,7 @@
     <Compile Include="BinStringExtensionMethods.cs" />
     <Compile Include="BinStringTextEncoding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuotedPrintableFormattingOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
