@@ -243,7 +243,9 @@ namespace MiffTheFox
         /// </summary>
         public string Uuencode(string filename, string unixPermissions = "644")
         {
-            var paddedData = this + BinString.FromBytes(32, 32, 32);
+            int paddingRequired = _Data.Length % 3;
+            var paddedData = this + FromBytes(32, 32, 32);
+
             var encodedRaw = new StringBuilder();
             for (int i = 0; i < _Data.Length; i += 3)
             {
@@ -263,7 +265,7 @@ namespace MiffTheFox
             uu.Append(filename);
             uu.Append(Environment.NewLine);
 
-            int finalLineLength = _Data.Length % 45;
+            int finalLineLength = (_Data.Length % 45);
 
             for (int i = 0; i < encodedRawStr.Length; i += 60)
             {
@@ -272,9 +274,9 @@ namespace MiffTheFox
                     uu.Append('M');
                     uu.Append(encodedRawStr.Substring(i, 60));
                 }
-                else if (i + 60 == encodedRawStr.Length)
+                else if (i + 60 == encodedRawStr.Length && finalLineLength == 0)
                 {
-                    uu.Append((char)(finalLineLength + 32));
+                    uu.Append((char)(77 - paddingRequired));
                     uu.Append(encodedRawStr.Substring(i, 60));
                 }
                 else if (finalLineLength > 0)

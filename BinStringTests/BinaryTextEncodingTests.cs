@@ -22,7 +22,10 @@ namespace BinStringTests
             string wikipediaUrl = "begin 644 wikipedia-url.txt\n::'1T<#HO+W=W=RYW:6MI<&5D:6$N;W)G#0H`\n`\nend";
             Assert.AreEqual("http://www.wikipedia.org\r\n", BinString.Uudecode(wikipediaUrl).ToString(Encoding.ASCII));
 
-            var knownHard = BinString.FromBytes("000306090c0f1215181b1e2124272a2d303336393c3f4245484b4e5154575a5d606366696c6f7275787b7e8184");
+            var knownHard = BinString.FromBytes("000306090c0f1215181b1e2124272a2d303336393c3f4245484b4e5154575a5d606366696c6f7275787b7e81");
+            Assert.AreEqual(knownHard, BinString.Uudecode(knownHard.Uuencode("test")));
+
+            knownHard += 0x84;
             Assert.AreEqual(knownHard, BinString.Uudecode(knownHard.Uuencode("test")));
         }
 
@@ -69,7 +72,7 @@ abriquent pour te la vendre une =C3=A2me vulgaire.", longText.ToQuotedPrintableS
             var builder = new BinStringBuilder();
             for (int i = 0; i < 1000; i++)
             {
-                builder.Append(Convert.ToByte((i * 3) & 0xff));
+                builder.Append(Convert.ToByte((i * 7) & 0xff));
                 var b = builder.ToBinString();
 
                 //Assert.AreEqual(b, BinString.FromAscii85String(b.ToAscii85String()));
