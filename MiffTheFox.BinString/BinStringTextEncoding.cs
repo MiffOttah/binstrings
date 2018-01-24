@@ -26,6 +26,10 @@ namespace MiffTheFox
             {
                 return ToBase64String();
             }
+            else if (format == "85")
+            {
+                return ToAscii85String(-1);
+            }
             else if (format == "u" || format == "U")
             {
                 return ToUrlString(format == "u", formatProvider);
@@ -263,9 +267,14 @@ namespace MiffTheFox
 
             for (int i = 0; i < encodedRawStr.Length; i += 60)
             {
-                if (i + 60 <= encodedRawStr.Length)
+                if (i + 60 < encodedRawStr.Length)
                 {
                     uu.Append('M');
+                    uu.Append(encodedRawStr.Substring(i, 60));
+                }
+                else if (i + 60 == encodedRawStr.Length)
+                {
+                    uu.Append((char)(finalLineLength + 32));
                     uu.Append(encodedRawStr.Substring(i, 60));
                 }
                 else if (finalLineLength > 0)
@@ -338,6 +347,108 @@ namespace MiffTheFox
             {
                 result.Dispose();
                 lineData.Dispose();
+            }
+        }
+
+        public string ToAscii85String(int lineLength = 75)
+        {
+            var result = new StringBuilder();
+            result.Append("<~");
+
+            var groupResult = new int[5];
+            bool lineBreaks = lineLength > 0;
+            int linePos = 0;
+
+            for (int i = 0; i < _Data.Length; i += 4)
+            {
+                var group = Substring(i, 4);
+                int padding = 0;
+
+                if (group.Length < 4)
+                {
+                    padding = 4 - group.Length;
+                    group = group.PadRight(4);
+                }
+
+                uint groupNum =
+                    Convert.ToUInt32(group[0]) << 24 |
+                    Convert.ToUInt32(group[1]) << 16 |
+                    Convert.ToUInt32(group[2]) << 8 |
+                    Convert.ToUInt32(group[3]);
+
+                for (int j = 0; j < 5; j++)
+                {
+                    groupResult[j] = 33 + Convert.ToInt32(groupNum % 85);
+                    groupNum /= 85;
+                }
+
+                for (int j = 4; j >= padding; j--)
+                {
+                    if (lineBreaks && linePos >= lineLength)
+                    {
+                        result.AppendLine();
+                        linePos = 0;
+                    }
+
+                    result.Append((char)groupResult[j]);
+                    linePos++;
+                }
+            }
+
+            result.Append("~>");
+            return result.ToString();
+        }
+
+        public static BinString FromAscii85String(string data, bool requireDelimiters = true)
+        {
+            if (string.IsNullOrEmpty(data)) return BinString.Empty;
+
+            if (requireDelimiters)
+            {
+                if (data.Length < 4 || !data.StartsWith("<~") || !data.EndsWith("~>")) throw new FormatException("Invalid Ascii85 string.");
+                data = data.Substring(2, data.Length - 4);
+            }
+
+            var trueData = new List<int>(data.Length);
+            foreach (int n in data.Select(c => (int)c))
+            {
+                if (n > 117)
+                {
+                    throw new FormatException("Invalid Ascii85 string.");
+                }
+                else if (n > 32)
+                {
+                    trueData.Add(n - 33);
+                }
+            }
+
+            using (var result = new BinStringBuilder())
+            {
+                for (int i = 0; i < trueData.Count; i += 5)
+                {
+                    long groupNum = 0;
+                    int padding = 0;
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if ((i + j) < trueData.Count)
+                        {
+                            groupNum = (groupNum * 85) + trueData[i + j];
+                        }
+                        else
+                        {
+                            groupNum = (groupNum * 85) + 84;
+                            padding++;
+                        }
+                    }
+
+                    result.Append(Convert.ToByte((groupNum >> 24) & 0xff));
+                    if (padding < 3) result.Append(Convert.ToByte((groupNum >> 16) & 0xff));
+                    if (padding < 2) result.Append(Convert.ToByte((groupNum >> 8) & 0xff));
+                    if (padding < 1) result.Append(Convert.ToByte(groupNum & 0xff));
+                }
+
+                return result.ToBinString();
             }
         }
     }
