@@ -53,6 +53,7 @@
     <Compile Include="BinStringTests.cs" />
     <Compile Include="ExtensionMethodTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

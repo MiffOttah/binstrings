@@ -94,6 +94,14 @@ namespace MiffTheFox
             return new BinString(array);
         }
 
+        /// <summary>
+        /// Converts the given memory stream to a binstring.
+        /// </summary>
+        public static BinString ToBinString(this MemoryStream stream)
+        {
+            return new BinString(stream.ToArray());
+        }
+
         #endregion
 
         #region Stream methods
@@ -157,7 +165,47 @@ namespace MiffTheFox
             rng.GetBytes(buffer);
             return new BinString(buffer);
         }
-        
+
+        #endregion
+
+        #region Serialization to BinaryWriter methods
+
+        /// <summary>
+        /// Writes the given binstring to the binary writer, including its length.
+        /// </summary>
+        public static void WriteBinStringIndirect(this BinaryWriter writer, BinString data)
+        {
+            writer.Write(data.Length);
+            writer.Write((byte[])data);
+        }
+
+        /// <summary>
+        /// Writes the given binstring directly to the binary writer (not including its length).
+        /// </summary>
+        public static void WriteBinStringDirect(this BinaryWriter writer, BinString data)
+        {
+            writer.Write((byte[])data);
+        }
+
+
+        /// <summary>
+        /// Reads a binstring (that includes the length) from the binary reader.
+        /// </summary>
+        public static BinString ReadBinStringIndirect(this BinaryReader reader)
+        {
+            int length = reader.ReadInt32();
+            if (length < 0) throw new FormatException("Invalid indirect BinString.");
+
+            return (BinString)reader.ReadBytes(length);
+        }
+
+        /// <summary>
+        /// Reads a binstring of the specified length directly from the binary writer.
+        /// </summary>
+        public static BinString ReadBinStringDirect(this BinaryReader reader, int length)
+        {
+            return (BinString)reader.ReadBytes(length);
+        }
         #endregion
     }
 }

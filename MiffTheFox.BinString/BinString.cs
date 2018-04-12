@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace MiffTheFox
@@ -9,7 +10,8 @@ namespace MiffTheFox
     /// <summary>
     ///  Repersents binary data as a series of System.Byte objects that can be manipulated like a string.
     /// </summary>
-    public partial class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>, IConvertible
+    [Serializable]
+    public partial class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>, IConvertible, ISerializable
     {
         protected byte[] _Data;
 
@@ -835,6 +837,23 @@ namespace MiffTheFox
             }
         }
 
+        #endregion
+
+        #region Serialization
+        public BinString(SerializationInfo info, StreamingContext context)
+        {
+            if (info is null) throw new ArgumentNullException("info");
+
+            string dataStr = (string)info.GetValue("BinStringData", typeof(string));
+            _Data = Convert.FromBase64String(dataStr);
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info is null) throw new ArgumentNullException("info");
+
+            info.AddValue("BinStringData", ToBase64String());
+        }
         #endregion
     }
 }

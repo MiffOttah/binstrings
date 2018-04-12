@@ -51,6 +51,11 @@ namespace BinStringTests
 
             var myArr = new byte[] { 10, 20, 150, 40, 160, 50, 120, 180, 200 };
             Assert.AreEqual(new BinString(myArr), myArr.ToBinString());
+
+            var myMemoryStream = new MemoryStream();
+            myMemoryStream.Write(myArr, 0, myArr.Length);
+            Assert.AreEqual(new BinString(myArr), myArr.ToBinString());
+
         }
 
         [TestMethod]
