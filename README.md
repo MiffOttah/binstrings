@@ -1,6 +1,8 @@
 # MiffTheFox.BinString
 
-This is a .NET library for manipluating sequences of `System.Byte` as easily as a typical string (a sequence of `System.Char`).
+Byte arrays are commonplace in .NET code. But arrays aren't really easy to work with. There are no standard methods for searching, concatenation, padding, or doing any other operation to a byte array that you could easily do with a string.
+
+This library aims to make working with binary data as easy as working with strings by introducing the `BinString` type. A BinString is a string of bytes that can be manipulated along the lines of a string of characters.
 
 # Usage
 
@@ -20,29 +22,26 @@ Format a BinString for display
 
     Console.WriteLine("The hash is: {0:x}", result);
 
-Build a BinString with a BinStringBuilder
+Concatenation!
 
-    var builder = new BinStringBuilder();
-    builder.Append(BinString.FromTextString("Hello", Encoding.ASCII));
-    builder.Append(0x2c);
-    builder.Append(0x20);
-    builder.Append(Encoding.ASCII.GetBytes("world!"));
+    var a = BinString.FromTextString("Hello", Encoding.ASCII));
+    var b = BinString.FromBytes("2c20");
+    var c = BinString.FromTextString("Hello", Encoding.ASCII));
+    var message = a + b + c;
+    Console.WriteLine(message.ToString(Encoding.ASCII));
 
-    var myString = builder.ToBinString();
-    Console.WriteLine(myString.ToString(Encoding.ASCII));
+Equality testing
 
-I still need to write more in-depth docs, but `BinStringTests.cs` and the XML comments in the source files should give examples of usage.
+    var a = BinString.FromTextString("ABC", Encoding.ASCII);
+    var b = BinString.FromBytes("414243");
+    if (a == b) Console.WriteLine("They match!");
+
+[More documentation is available on the wiki.](https://github.com/MiffOttah/binstrings/wiki)
 
 # Installation
-
-Ok, so this is my first NuGet package so I hope it works.
 
 [You can install the package through NuGet with this link](https://www.nuget.org/packages/MiffTheFox.BinString/) or by typing the following command into the Pacakage Manage Console:
 
     Install-Package MiffTheFox.BinString
-
-And I don't use .NET core but if you do this installation command might work:
-
-    dotnet add package MiffTheFox.BinString
 
 Have fun!~
