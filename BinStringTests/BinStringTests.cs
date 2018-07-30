@@ -53,7 +53,7 @@ namespace BinStringTests
             var binString = (BinString)byteArray;
             var array2 = (byte[])binString;
 
-            Assert.AreEqual(byteArray, array2);
+            CollectionAssert.AreEqual(byteArray, array2);
             Assert.AreEqual(input, Encoding.UTF8.GetString(binString));
         }
 
@@ -306,7 +306,7 @@ namespace BinStringTests
             Assert.AreEqual(1, notSplit.Length);
             Assert.AreEqual(someData, notSplit[0]);
 
-            Assert.ThrowsException<InvalidOperationException>(() => repeatingData.Split(new BinString()));
+            Assert.ThrowsException<ArgumentException>(() => repeatingData.Split(new BinString()));
         }
 
         [TestMethod]

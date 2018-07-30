@@ -13,7 +13,7 @@ namespace MiffTheFox
     [Serializable]
     public partial class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>, IConvertible, ISerializable
     {
-        protected byte[] _Data;
+        protected readonly byte[] _Data;
 
         /// <summary>
         /// Returns the number of bytes in the BinString.
@@ -35,7 +35,9 @@ namespace MiffTheFox
         /// <returns></returns>
         public byte[] ToArray()
         {
-            return _Data;
+            var clone = new byte[Length];
+            CopyTo(clone, 0);
+            return clone;
         }
 
         /// <summary>
@@ -99,6 +101,14 @@ namespace MiffTheFox
         {
             _Data = new byte[length];
             for (int i = 0; i < length; i++) _Data[i] = given;
+        }
+
+        /// <summary>
+        ///  Creates a BinString with the specified data encoded in Base64.
+        /// </summary>
+        public BinString(string base64)
+        {
+            _Data = Convert.FromBase64String(base64);
         }
 
         /// <summary>
@@ -191,30 +201,12 @@ namespace MiffTheFox
 
         #region Interfaces and Comparison
 
-        public IEnumerator<byte> GetEnumerator()
-        {
-            return ((IEnumerable<byte>)_Data).GetEnumerator();
-        }
+        public IEnumerator<byte> GetEnumerator() => ((IEnumerable<byte>)_Data).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _Data.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _Data.GetEnumerator();
-        }
-
-        public static explicit operator BinString(byte[] source)
-        {
-            return new BinString(source);
-        }
-
-        public static implicit operator byte[] (BinString source)
-        {
-            return source._Data;
-        }
-
-        public static explicit operator BinString(byte source)
-        {
-            return new BinString(new byte[] { source });
-        }
+        public static explicit operator BinString(byte[] source) => new BinString(source);
+        public static implicit operator byte[] (BinString source) => source.ToArray();
+        public static explicit operator BinString(byte source) => new BinString(new byte[] { source });
 
         public override int GetHashCode()
         {
@@ -234,13 +226,13 @@ namespace MiffTheFox
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(obj, null)) return false;
+            if (obj is null) return false;
             return obj is BinString && Equals((BinString)obj);
         }
 
         public bool Equals(BinString other)
         {
-            if (ReferenceEquals(other, null)) return false;
+            if (other is null) return false;
             if (this.Length != other.Length) return false;
             for (int i = 0; i < this._Data.Length; i++)
             {
@@ -252,8 +244,8 @@ namespace MiffTheFox
         public static bool operator ==(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
-            if (ReferenceEquals(x, null)) return false;
-            if (ReferenceEquals(y, null)) return false;
+            if (x is null) return false;
+            if (y is null) return false;
 
             return x.Equals(y);
         }
@@ -261,15 +253,15 @@ namespace MiffTheFox
         public static bool operator !=(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return false;
-            if (ReferenceEquals(x, null)) return true;
-            if (ReferenceEquals(y, null)) return true;
+            if (x is null) return true;
+            if (y is null) return true;
 
             return !x.Equals(y);
         }
 
         public int CompareTo(object obj)
         {
-            if (ReferenceEquals(obj, null))
+            if (obj is null)
             {
                 return 1;
             }
@@ -285,7 +277,7 @@ namespace MiffTheFox
 
         public int CompareTo(BinString other)
         {
-            if (ReferenceEquals(other, null)) return 1;
+            if (other is null) return 1;
             int l = Math.Min(this.Length, other.Length);
 
             for (int i = 0; i < l; i++)
@@ -302,35 +294,30 @@ namespace MiffTheFox
         public static bool operator >(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return false;
-            if (ReferenceEquals(x, null)) return false;
+            if (x is null) return false;
             return x.CompareTo(y) > 0;
         }
         public static bool operator <(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return false;
-            if (ReferenceEquals(x, null)) return true;
+            if (x is null) return true;
             return x.CompareTo(y) < 0;
         }
 
         public static bool operator >=(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
-            if (ReferenceEquals(x, null)) return false;
+            if (x is null) return false;
             return x.CompareTo(y) >= 0;
         }
         public static bool operator <=(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
-            if (ReferenceEquals(x, null)) return true;
+            if (x is null) return true;
             return x.CompareTo(y) <= 0;
         }
 
-        public object Clone()
-        {
-            byte[] clone = new byte[_Data.Length];
-            CopyTo(clone, 0);
-            return new BinString(clone);
-        }
+        public object Clone() => new BinString(ToArray());
 
         #endregion
 
@@ -377,7 +364,7 @@ namespace MiffTheFox
         public BinString Repeat(int count)
         {
             if (count == 0) return new BinString();
-            if (count < 0) throw new ArgumentException("count must be 0 or greater.", "count");
+            if (count < 0) throw new ArgumentException("count must be 0 or greater.", nameof(count));
 
             byte[] result = new byte[_Data.Length * count];
             for (int i = 0; i < count; i++)
@@ -390,18 +377,12 @@ namespace MiffTheFox
         /// <summary>
         /// Repeats the BinString a number of times.
         /// </summary>
-        public static BinString operator *(BinString x, int count)
-        {
-            return x.Repeat(count);
-        }
+        public static BinString operator *(BinString x, int count) => x.Repeat(count);
 
         /// <summary>
         /// Repeats the BinString a number of times.
         /// </summary>
-        public static BinString operator *(int count, BinString x)
-        {
-            return x.Repeat(count);
-        }
+        public static BinString operator *(int count, BinString x) => x.Repeat(count);
 
         /// <summary>
         /// Inserts the contents of another BinString into this BinString at a specified index.
@@ -436,7 +417,7 @@ namespace MiffTheFox
         /// <param name="padding">The byte with which to pad the string to length bytes.</param>
         public BinString PadLeft(int length, byte padding = 0)
         {
-            if (length <= 0) throw new ArgumentException("Length must be positive.", "length");
+            if (length <= 0) throw new ArgumentException("Length must be positive.", nameof(length));
             if (_Data.Length >= length) return this;
 
             byte[] result = new byte[length];
@@ -456,7 +437,7 @@ namespace MiffTheFox
         /// <param name="padding">The byte with which to pad the string to length bytes.</param>
         public BinString PadRight(int length, byte padding = 0)
         {
-            if (length <= 0) throw new ArgumentException("Length must be positive.", "length");
+            if (length <= 0) throw new ArgumentException("Length must be positive.", nameof(length));
             if (_Data.Length >= length) return this;
 
             byte[] result = new byte[length];
@@ -608,7 +589,7 @@ namespace MiffTheFox
         /// </summary>
         public BinString[] Split(BinString needle)
         {
-            if (needle.Length == 0) throw new InvalidOperationException("Cannot split on an empty BinString!");
+            if (BinString.IsNullOrEmpty(needle)) throw new ArgumentException("Cannot split with an empty needle.", nameof(needle));
 
             var parts = new List<BinString>();
             var bbm = new BinBoyerMoore(needle);
@@ -671,7 +652,7 @@ namespace MiffTheFox
         /// </summary>
         public static bool IsNullOrEmpty(BinString value)
         {
-            if (ReferenceEquals(value, null)) return true;
+            if (value is null) return true;
             if (value._Data.Length == 0) return true;
             return false;
         }
@@ -769,35 +750,12 @@ namespace MiffTheFox
             }
         }
 
-        public short ToInt16(IFormatProvider provider)
-        {
-            return _BitConvert(2, BitConverter.ToInt16);
-        }
-
-        public ushort ToUInt16(IFormatProvider provider)
-        {
-            return _BitConvert(2, BitConverter.ToUInt16);
-        }
-
-        public int ToInt32(IFormatProvider provider)
-        {
-            return _BitConvert(4, BitConverter.ToInt32);
-        }
-
-        public uint ToUInt32(IFormatProvider provider)
-        {
-            return _BitConvert(4, BitConverter.ToUInt32);
-        }
-
-        public long ToInt64(IFormatProvider provider)
-        {
-            return _BitConvert(8, BitConverter.ToInt64);
-        }
-
-        public ulong ToUInt64(IFormatProvider provider)
-        {
-            return _BitConvert(8, BitConverter.ToUInt64);
-        }
+        public short ToInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToInt16);
+        public ushort ToUInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToUInt16);
+        public int ToInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToInt32);
+        public uint ToUInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToUInt32);
+        public long ToInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToInt64);
+        public ulong ToUInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToUInt64);
 
         public float ToSingle(IFormatProvider provider)
         {
@@ -831,20 +789,9 @@ namespace MiffTheFox
             }
         }
 
-        public decimal ToDecimal(IFormatProvider provider)
-        {
-            throw new InvalidCastException();
-        }
-
-        public DateTime ToDateTime(IFormatProvider provider)
-        {
-            throw new InvalidCastException();
-        }
-
-        public string ToString(IFormatProvider provider)
-        {
-            return this.ToString("g", provider);
-        }
+        public decimal ToDecimal(IFormatProvider provider) => throw new InvalidCastException();
+        public DateTime ToDateTime(IFormatProvider provider) => throw new InvalidCastException();
+        public string ToString(IFormatProvider provider) => ToString("g", provider);
 
         public object ToType(Type conversionType, IFormatProvider provider)
         {
@@ -884,7 +831,7 @@ namespace MiffTheFox
         #region Serialization
         public BinString(SerializationInfo info, StreamingContext context)
         {
-            if (info is null) throw new ArgumentNullException("info");
+            if (info is null) throw new ArgumentNullException(nameof(info));
 
             string dataStr = (string)info.GetValue("BinStringData", typeof(string));
             _Data = Convert.FromBase64String(dataStr);
@@ -892,7 +839,7 @@ namespace MiffTheFox
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info is null) throw new ArgumentNullException("info");
+            if (info is null) throw new ArgumentNullException(nameof(info));
 
             info.AddValue("BinStringData", ToBase64String());
         }
