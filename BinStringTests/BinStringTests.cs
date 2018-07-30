@@ -66,6 +66,16 @@ namespace BinStringTests
         }
 
         [TestMethod]
+        public void CreationFromStringTest()
+        {
+            Assert.AreEqual(BinString.FromTextString("¡Hola, señor!", Encoding.UTF8), BinString.FromUrlEncoding("%C2%A1Hola%2C+se%C3%B1or!"));
+
+            var string1 = BinString.FromBytes("DEADBEEF00C0FFEE");
+            Assert.AreEqual(string1, BinString.FromUrlEncoding(string1.ToString("u")));
+            Assert.AreEqual(string1, BinString.FromUrlEncoding(string1.ToString("U")));
+        }
+
+        [TestMethod]
         public void ComparisonTest()
         {
             var stringA = BinString.FromBytes(1, 2, 3, 4, 5);

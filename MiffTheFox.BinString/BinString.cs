@@ -113,6 +113,48 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Creates a BinString from URL encoded data
+        /// </summary>
+        /// <param name="urlEncodedData">The URL encoded data to decode</param>
+        /// <returns></returns>
+        public static BinString FromUrlEncoding(string urlEncodedData)
+        {
+            var result = new BinStringBuilder();
+
+            for (int i = 0; i < urlEncodedData.Length; i++)
+            {
+                switch (urlEncodedData[i])
+                {
+                    case '+':
+                        result.Append(0x20);
+                        break;
+
+                    case '%':
+                        string hex = urlEncodedData.Substring(i + 1, 2);
+                        i += 2;
+                        if (hex.Length >= 2 && int.TryParse(hex, System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out int hexValue))
+                        {
+                            result.Append(Convert.ToByte(hexValue));
+                        }
+                        else
+                        {
+                            throw new ArgumentException("URL encoded data contains an invalid escape sequence.", nameof(urlEncodedData));
+                        }
+                        break;
+
+                    case char c when c <= '~':
+                        result.Append((byte)c);
+                        break;
+
+                    default:
+                        throw new ArgumentException("URL encoded data contains a non-ASCII character.", nameof(urlEncodedData));
+                }
+            }
+
+            return result.ToBinString();
+        }
+
+        /// <summary>
         /// Creates a BinString from a series of bytes
         /// </summary>
         public static BinString FromBytes(params byte[] data)
