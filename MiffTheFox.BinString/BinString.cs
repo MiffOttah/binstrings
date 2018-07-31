@@ -10,7 +10,7 @@ namespace MiffTheFox
     /// <summary>
     ///  Repersents binary data as a series of System.Byte objects that can be manipulated like a string.
     /// </summary>
-    [Serializable]
+    [Serializable, System.ComponentModel.TypeConverter(typeof(BinStringTypeConverter))]
     public partial class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>, IConvertible, ISerializable
     {
         protected readonly byte[] _Data;
