@@ -68,11 +68,22 @@ namespace BinStringTests
         [TestMethod]
         public void CreationFromStringTest()
         {
-            Assert.AreEqual(BinString.FromTextString("¡Hola, señor!", Encoding.UTF8), BinString.FromUrlEncoding("%C2%A1Hola%2C+se%C3%B1or!"));
+            Assert.AreEqual(BinString.FromTextString("¡Hola, señor!", Encoding.UTF8), BinString.FromUrlString("%C2%A1Hola%2C+se%C3%B1or!"));
+            Assert.AreEqual(BinString.FromTextString("¡Hola, señor!", Encoding.UTF8), BinString.FromEscapedString(@"\xC2\xA1Hola\x2C se\xC3\xB1or!"));
 
-            var string1 = BinString.FromBytes("DEADBEEF00C0FFEE");
-            Assert.AreEqual(string1, BinString.FromUrlEncoding(string1.ToString("u")));
-            Assert.AreEqual(string1, BinString.FromUrlEncoding(string1.ToString("U")));
+            var string1 = BinString.FromBytes("DEADBEEF00C0FFEE255C");
+            Assert.AreEqual(string1, BinString.FromUrlString(string1.ToString("u")));
+            Assert.AreEqual(string1, BinString.FromUrlString(string1.ToString("U")));
+            Assert.AreEqual(string1, BinString.FromEscapedString(string1.ToString("e")));
+            Assert.AreEqual(string1, BinString.FromEscapedString(string1.ToString("E")));
+
+            Assert.ThrowsException<ArgumentNullException>(() => BinString.FromUrlString(null));
+            Assert.ThrowsException<ArgumentException>(() => BinString.FromUrlString("99% undone"));
+            Assert.ThrowsException<ArgumentException>(() => BinString.FromUrlString("giving 110%"));
+            Assert.ThrowsException<ArgumentNullException>(() => BinString.FromEscapedString(null));
+            Assert.ThrowsException<ArgumentException>(() => BinString.FromEscapedString("C:\\"));
+            Assert.ThrowsException<ArgumentException>(() => BinString.FromEscapedString("C:\\WINDOWS"));
+            Assert.ThrowsException<ArgumentException>(() => BinString.FromEscapedString("C:\\XZZZZZZ"));
         }
 
         [TestMethod]
@@ -169,7 +180,9 @@ namespace BinStringTests
 
             Assert.AreEqual("Ping%C3%BCino", BinString.FromTextString("Pingüino", Encoding.UTF8).ToString("U"));
             Assert.AreEqual("Caf%c3%a9", BinString.FromTextString("Café", Encoding.UTF8).ToString("u"));
+            Assert.AreEqual("20%25%20cooler", BinString.FromTextString("20% cooler", Encoding.UTF8).ToString("U"));
             Assert.AreEqual("\\\"Pi\\xC3\\xB1ata\\\"", BinString.FromTextString("\"Piñata\"", Encoding.UTF8).ToString("E"));
+            Assert.AreEqual("Backslash\\\\Apos\\'", BinString.FromTextString("Backslash\\Apos'", Encoding.UTF8).ToString("E"));
         }
 
         [TestMethod]

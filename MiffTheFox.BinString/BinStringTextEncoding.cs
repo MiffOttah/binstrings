@@ -86,7 +86,7 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Returns the BinString as an ASCII text string with non-ASCII bytes (and %) repersented by %-encoding.
+        /// Returns the BinString as an ASCII text string with non-ASCII bytes (as well as + and %) repersented by %-encoding.
         /// </summary>
         /// <param name="lowerCase">True for hexadecimal bytes in lower case, false for upper case.</param>
         /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
@@ -96,7 +96,7 @@ namespace MiffTheFox
             var result = new StringBuilder();
             foreach (byte b in _Data)
             {
-                if (b > 0x20 && b < 0x7f && b != 0x2b)
+                if (b > 0x20 && b < 0x7f && b != '+' && b != '%')
                 {
                     result.Append((char)b);
                 }

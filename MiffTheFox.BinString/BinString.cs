@@ -108,7 +108,7 @@ namespace MiffTheFox
         /// </summary>
         public BinString(string base64)
         {
-            _Data = Convert.FromBase64String(base64);
+            _Data = string.IsNullOrEmpty(base64) ? new byte[0] : Convert.FromBase64String(base64);
         }
 
         /// <summary>
@@ -127,8 +127,9 @@ namespace MiffTheFox
         /// </summary>
         /// <param name="urlEncodedData">The URL encoded data to decode</param>
         /// <returns></returns>
-        public static BinString FromUrlEncoding(string urlEncodedData)
+        public static BinString FromUrlString(string urlEncodedData)
         {
+            if (urlEncodedData is null) throw new ArgumentNullException("Provided data is null.", nameof(urlEncodedData));
             var result = new BinStringBuilder();
 
             for (int i = 0; i < urlEncodedData.Length; i++)
@@ -140,10 +141,9 @@ namespace MiffTheFox
                         break;
 
                     case '%':
-                        string hex = urlEncodedData.Substring(i + 1, 2);
-                        i += 2;
-                        if (hex.Length >= 2 && int.TryParse(hex, System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out int hexValue))
+                        if ((i + 2) < urlEncodedData.Length && int.TryParse(urlEncodedData.Substring(i + 1, 2), System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out int hexValue))
                         {
+                            i += 2;
                             result.Append(Convert.ToByte(hexValue));
                         }
                         else
@@ -158,6 +158,55 @@ namespace MiffTheFox
 
                     default:
                         throw new ArgumentException("URL encoded data contains a non-ASCII character.", nameof(urlEncodedData));
+                }
+            }
+
+            return result.ToBinString();
+        }
+
+        /// <summary>
+        /// Creates a BinString from an ASCII text string with non-ASCII bytes repersented by backslash-encoding.
+        /// </summary>
+        /// <param name="escapedData">The escaped string, such as produced by BinString.ToEscapedString</param>
+        public static BinString FromEscapedString(string escapedData)
+        {
+            if (escapedData is null) throw new ArgumentNullException("Provided data is null.", nameof(escapedData));
+            var result = new BinStringBuilder();
+
+            for (int i = 0; i < escapedData.Length; i++)
+            {
+                if (escapedData[i] == '\\')
+                {
+                    i++;
+                    if (i < escapedData.Length)
+                    {
+                        switch (escapedData[i])
+                        {
+                            case 'x':
+                                if ((i + 2) < escapedData.Length && int.TryParse(escapedData.Substring(i + 1, 2), System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out int hexValue))
+                                {
+                                    i += 2;
+                                    result.Append(Convert.ToByte(hexValue));
+                                    continue;
+                                }
+                                break;
+
+                            case '\\':
+                            case '\'':
+                            case '"':
+                                result.Append((byte)escapedData[i]);
+                                continue;
+                        }
+                    }
+                    throw new ArgumentException("Invalid escape sequence in data.", nameof(escapedData));
+                }
+                else if (escapedData[i] <= '~')
+                {
+                    result.Append((byte)escapedData[i]);
+                }
+                else
+                {
+                    throw new ArgumentException("Escaped data contains a non-ASCII character.", nameof(escapedData));
                 }
             }
 
