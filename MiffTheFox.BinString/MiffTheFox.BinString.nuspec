@@ -2,16 +2,17 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.2.0</version>
+    <version>1.4.0</version>
     <title>$title$</title>
     <authors>MiffTheFox</authors>
     <owners>miffthefox</owners>
     <licenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</licenseUrl>
     <projectUrl>https://github.com/MiffOttah/binstrings</projectUrl>
+    <iconUrl>https://files.miffthefox.info/binstrings.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Add random number generation functions.</releaseNotes>
-    <copyright>Copyright 2017 MiffTheFox</copyright>
-    <tags>binary</tags>
+    <releaseNotes>Various text/binary conversion methods added.</releaseNotes>
+    <copyright>Copyright 2017-2018 MiffTheFox</copyright>
+    <tags>binary string manipulation base32 uuencode ascii85 quoted-printable</tags>
   </metadata>
 </package>
