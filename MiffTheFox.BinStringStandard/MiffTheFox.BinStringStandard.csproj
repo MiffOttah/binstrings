@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>MiffTheFox</RootNamespace>
+    <Version>1.4.0</Version>
+    <Product>BinString</Product>
+    <Authors>MiffTheFox</Authors>
+    <Company>MiffTheFox</Company>
+    <Description>Binary string librarhy, .NET standard version</Description>
+    <Copyright>Copyright 2018 MiffTheFox</Copyright>
+    <PackageProjectUrl>https://github.com/MiffOttah/binstrings</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MiffOttah/binstrings.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIconUrl>https://files.miffthefox.info/binstrings.png</PackageIconUrl>
+    <PackageTags>binary</PackageTags>
+    <PackageReleaseNotes>.NET standard build</PackageReleaseNotes>
+    <PackageLicenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\MiffTheFox.BinString\Base32.cs" Link="Base32.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinBoyerMoore.cs" Link="BinBoyerMoore.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinString.cs" Link="BinString.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinStringBuilder.cs" Link="BinStringBuilder.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinStringExtensionMethods.cs" Link="BinStringExtensionMethods.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinStringTextEncoding.cs" Link="BinStringTextEncoding.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinStringTypeConverter.cs" Link="BinStringTypeConverter.cs" />
+    <Compile Include="..\MiffTheFox.BinString\QuotedPrintableFormattingOptions.cs" Link="QuotedPrintableFormattingOptions.cs" />
+  </ItemGroup>
+
+</Project>
