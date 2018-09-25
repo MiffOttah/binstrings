@@ -16,6 +16,7 @@
     <PackageTags>binary</PackageTags>
     <PackageReleaseNotes>.NET standard build</PackageReleaseNotes>
     <PackageLicenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</PackageLicenseUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
