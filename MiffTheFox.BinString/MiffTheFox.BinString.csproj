@@ -44,6 +44,7 @@
     <Compile Include="BinBoyerMoore.cs" />
     <Compile Include="BinStringBuilder.cs" />
     <Compile Include="BinStringExtensionMethods.cs" />
+    <Compile Include="BinStringIntegerConversions.cs" />
     <Compile Include="BinStringTextEncoding.cs" />
     <Compile Include="BinStringTypeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -68,8 +68,8 @@ namespace BinStringTests
         [TestMethod]
         public void CreationFromStringTest()
         {
-            Assert.AreEqual(BinString.FromTextString("¡Hola, señor!", Encoding.UTF8), BinString.FromUrlString("%C2%A1Hola%2C+se%C3%B1or!"));
-            Assert.AreEqual(BinString.FromTextString("¡Hola, señor!", Encoding.UTF8), BinString.FromEscapedString(@"\xC2\xA1Hola\x2C se\xC3\xB1or!"));
+            Assert.AreEqual(new BinString("¡Hola, señor!", Encoding.UTF8), BinString.FromUrlString("%C2%A1Hola%2C+se%C3%B1or!"));
+            Assert.AreEqual(new BinString("¡Hola, señor!", Encoding.UTF8), BinString.FromEscapedString(@"\xC2\xA1Hola\x2C se\xC3\xB1or!"));
 
             var string1 = BinString.FromBytes("DEADBEEF00C0FFEE255C");
             Assert.AreEqual(string1, BinString.FromUrlString(string1.ToString("u")));
@@ -154,13 +154,13 @@ namespace BinStringTests
         [TestMethod]
         public void HashTest()
         {
-            var stringA = BinString.FromTextString("ABCDE", Encoding.ASCII);
+            var stringA = new BinString("ABCDE", Encoding.ASCII);
             var stringB = BinString.FromBytes(65, 66, 67, 68, 69);
 
             Assert.IsTrue(stringA == stringB);
             Assert.AreEqual(stringA.GetHashCode(), stringB.GetHashCode());
 
-            var stringC = BinString.FromTextString("EDCBA", Encoding.ASCII);
+            var stringC = new BinString("EDCBA", Encoding.ASCII);
             Assert.IsTrue(stringA != stringC);
             Assert.AreNotEqual(stringA.GetHashCode(), stringC.GetHashCode());
         }
@@ -168,7 +168,7 @@ namespace BinStringTests
         [TestMethod]
         public void ToStringTest()
         {
-            var input = BinString.FromTextString("Input", Encoding.ASCII);
+            var input = new BinString("Input", Encoding.ASCII);
 
             Assert.AreEqual("496e707574", input.ToString());
             Assert.AreEqual("496e707574", input.ToString("x"));
@@ -178,11 +178,11 @@ namespace BinStringTests
             Assert.AreEqual("SW5wdXQ=", input.ToString("64"));
             Assert.AreEqual("(49.6e.70.75.74)", $"({input:x.})");
 
-            Assert.AreEqual("Ping%C3%BCino", BinString.FromTextString("Pingüino", Encoding.UTF8).ToString("U"));
-            Assert.AreEqual("Caf%c3%a9", BinString.FromTextString("Café", Encoding.UTF8).ToString("u"));
-            Assert.AreEqual("20%25%20cooler", BinString.FromTextString("20% cooler", Encoding.UTF8).ToString("U"));
-            Assert.AreEqual("\\\"Pi\\xC3\\xB1ata\\\"", BinString.FromTextString("\"Piñata\"", Encoding.UTF8).ToString("E"));
-            Assert.AreEqual("Backslash\\\\Apos\\'", BinString.FromTextString("Backslash\\Apos'", Encoding.UTF8).ToString("E"));
+            Assert.AreEqual("Ping%C3%BCino", new BinString("Pingüino", Encoding.UTF8).ToString("U"));
+            Assert.AreEqual("Caf%c3%a9", new BinString("Café", Encoding.UTF8).ToString("u"));
+            Assert.AreEqual("20%25%20cooler", new BinString("20% cooler", Encoding.UTF8).ToString("U"));
+            Assert.AreEqual("\\\"Pi\\xC3\\xB1ata\\\"", new BinString("\"Piñata\"", Encoding.UTF8).ToString("E"));
+            Assert.AreEqual("Backslash\\\\Apos\\'", new BinString("Backslash\\Apos'", Encoding.UTF8).ToString("E"));
         }
 
         [TestMethod]
@@ -195,18 +195,18 @@ namespace BinStringTests
             Assert.AreEqual(BinString.FromBytes(1, 2, 3, 255), foo + 255);
             Assert.AreEqual(BinString.FromBytes(128, 1, 2, 3), 128 + foo);
 
-            var baz1 = BinString.Join((new string[] { "Lorem", "Ipsum", "Dolor", "Sit", "Amet" }).Select(_ => BinString.FromTextString(_, Encoding.ASCII)), (BinString)0x20);
+            var baz1 = BinString.Join((new string[] { "Lorem", "Ipsum", "Dolor", "Sit", "Amet" }).Select(_ => new BinString(_, Encoding.ASCII)), (BinString)0x20);
             Assert.AreEqual("Lorem Ipsum Dolor Sit Amet", baz1.ToString(Encoding.ASCII));
 
-            var baz2 = BinString.Join((new string[] { "Aenean", "Porttitor", "Dictumst" }).Select(_ => BinString.FromTextString(_, Encoding.ASCII)));
+            var baz2 = BinString.Join((new string[] { "Aenean", "Porttitor", "Dictumst" }).Select(_ => new BinString(_, Encoding.ASCII)));
             Assert.AreEqual("AeneanPorttitorDictumst", baz2.ToString(Encoding.ASCII));
         }
 
         [TestMethod]
         public void RepeatTest()
         {
-            var shortStr = BinString.FromTextString("Test", Encoding.ASCII);
-            var longStr = BinString.FromTextString("TestTestTestTest", Encoding.ASCII);
+            var shortStr = new BinString("Test", Encoding.ASCII);
+            var longStr = new BinString("TestTestTestTest", Encoding.ASCII);
 
             var repeated = shortStr * 4;
 
@@ -222,8 +222,8 @@ namespace BinStringTests
         [TestMethod]
         public void ModificationTest()
         {
-            var input = BinString.FromTextString("ABCD", Encoding.ASCII);
-            var anotherString = BinString.FromTextString("xyz", Encoding.ASCII);
+            var input = new BinString("ABCD", Encoding.ASCII);
+            var anotherString = new BinString("xyz", Encoding.ASCII);
 
             Assert.AreEqual("AB~CD", input.Insert(2, 0x7e).ToString(Encoding.ASCII));
             Assert.AreEqual("ABxyzCD", input.Insert(2, anotherString).ToString(Encoding.ASCII));
@@ -245,7 +245,7 @@ namespace BinStringTests
         [TestMethod]
         public void SpliceTest()
         {
-            var input = BinString.FromTextString("ABCD", Encoding.ASCII);
+            var input = new BinString("ABCD", Encoding.ASCII);
 
             Assert.AreEqual("ABD", input.Remove(2, 1).ToString(Encoding.ASCII));
             Assert.AreEqual("AB", input.Remove(2).ToString(Encoding.ASCII));
@@ -327,7 +327,7 @@ namespace BinStringTests
         {
             BinString bsNull = null;
             BinString bsEmpty = new BinString();
-            BinString bsNotEmpty = BinString.FromTextString("Hello", Encoding.UTF8);
+            BinString bsNotEmpty = new BinString("Hello", Encoding.UTF8);
 
             Assert.IsTrue(BinString.IsNullOrEmpty(bsNull));
             Assert.IsTrue(BinString.IsNullOrEmpty(bsEmpty));
@@ -338,7 +338,7 @@ namespace BinStringTests
         public void BuilderTest()
         {
             var builder = new BinStringBuilder();
-            builder.Append(BinString.FromTextString("Hello", Encoding.ASCII));
+            builder.Append(new BinString("Hello", Encoding.ASCII));
             builder.Append(0x2c);
             builder.Append(0x20);
             builder.Append(Encoding.ASCII.GetBytes("world!"));
@@ -400,6 +400,18 @@ namespace BinStringTests
             Assert.AreEqual(MY_DOUBLE, Convert.ToDouble(myDoubleBytes));
             Assert.ThrowsException<OverflowException>(() => Convert.ToDouble(mySingleBytes));
             Assert.ThrowsException<OverflowException>(() => Convert.ToSingle(myDoubleBytes));
+        }
+
+        [TestMethod]
+        public void EndinessConversionTests()
+        {
+            var b = new BinString("Hello World", Encoding.ASCII);
+            Assert.AreEqual(b, b.ConvertEndianess(IntegerEndianess.BigEndian, IntegerEndianess.BigEndian));
+            Assert.AreEqual(b, b.ConvertEndianess(IntegerEndianess.Native, IntegerEndianess.Native));
+            CollectionAssert.AreEqual(b.Reverse().ToArray(), b.ConvertEndianess(IntegerEndianess.LittleEndian, IntegerEndianess.BigEndian).ToArray());
+
+            Assert.AreEqual(BinString.FromBytes("0000abcd"), BinString.FromInt32(0xabcd, IntegerEndianess.BigEndian));
+            Assert.AreEqual(BinString.FromBytes("cdab0000"), BinString.FromInt32(0xabcd, IntegerEndianess.LittleEndian));
         }
     }
 }

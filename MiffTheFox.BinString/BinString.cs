@@ -112,11 +112,21 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Creates a BinString with the specified text encoded in the specified encoding.
+        /// </summary>
+        public BinString(string text, Encoding encoding)
+        {
+            if (encoding is null) throw new ArgumentNullException(nameof(encoding));
+            _Data = string.IsNullOrEmpty(text) ? new byte[0] : encoding.GetBytes(text);
+        }
+
+        /// <summary>
         /// Creates a BinString from a text string
         /// </summary>
         /// <param name="text">The text string to encode as binary</param>
         /// <param name="encoding">The System.Text.Encoding to encode the text string with</param>
         /// <returns></returns>
+        [Obsolete]
         public static BinString FromTextString(string text, Encoding encoding)
         {
             return new BinString(encoding.GetBytes(text));
@@ -769,42 +779,6 @@ namespace MiffTheFox
                 throw new OverflowException();
             }
         }
-
-        private T _BitConvert<T>(int length, Func<byte[], int, T> convertFunction)
-        {
-            if (_Data.Length == 0)
-            {
-                return default(T);
-            }
-            else if (_Data.Length == length)
-            {
-                return convertFunction(_Data, 0);
-            }
-            else if (_Data.Length < length)
-            {
-                BinString padded;
-                if (BitConverter.IsLittleEndian)
-                {
-                    padded = PadRight(length);
-                }
-                else
-                {
-                    padded = PadLeft(length);
-                }
-                return convertFunction(padded._Data, 0);
-            }
-            else
-            {
-                throw new OverflowException();
-            }
-        }
-
-        public short ToInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToInt16);
-        public ushort ToUInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToUInt16);
-        public int ToInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToInt32);
-        public uint ToUInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToUInt32);
-        public long ToInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToInt64);
-        public ulong ToUInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToUInt64);
 
         public float ToSingle(IFormatProvider provider)
         {
