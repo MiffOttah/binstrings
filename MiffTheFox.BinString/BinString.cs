@@ -260,8 +260,8 @@ namespace MiffTheFox
 
         #region Interfaces and Comparison
 
-        public IEnumerator<byte> GetEnumerator() => ((IEnumerable<byte>)_Data).GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => _Data.GetEnumerator();
+        public IEnumerator<byte> GetEnumerator() => new BinStringEnumerator(this);
+        IEnumerator IEnumerable.GetEnumerator() => new BinStringEnumerator(this);
 
         public static explicit operator BinString(byte[] source) => new BinString(source);
         public static implicit operator byte[] (BinString source) => source.ToArray();

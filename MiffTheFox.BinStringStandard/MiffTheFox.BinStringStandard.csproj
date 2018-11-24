@@ -24,6 +24,7 @@
     <Compile Include="..\MiffTheFox.BinString\BinBoyerMoore.cs" Link="BinBoyerMoore.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinString.cs" Link="BinString.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringBuilder.cs" Link="BinStringBuilder.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinStringEnumerator.cs" Link="BinStringEnumerator.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringExtensionMethods.cs" Link="BinStringExtensionMethods.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringIntegerConversions.cs" Link="BinStringIntegerConversions.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringTextEncoding.cs" Link="BinStringTextEncoding.cs" />
