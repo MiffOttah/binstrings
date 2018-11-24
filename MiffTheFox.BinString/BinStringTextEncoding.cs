@@ -157,12 +157,32 @@ namespace MiffTheFox
             const int maxLineLength = 75;
             bool usedNewlines = false;
 
+            string newLine;
+            switch (formattingOptions & QuotedPrintableFormattingOptions.UseCrLf)
+            {
+                case QuotedPrintableFormattingOptions.UseCrLf:
+                    newLine = "\r\n";
+                    break;
+
+                case QuotedPrintableFormattingOptions.UseCr:
+                    newLine = "\r";
+                    break;
+
+                case QuotedPrintableFormattingOptions.UseLf:
+                    newLine = "\n";
+                    break;
+
+                default:
+                    newLine = Environment.NewLine;
+                    break;
+            }
+
             string hexFormat = formattingOptions.HasFlag(QuotedPrintableFormattingOptions.LowerCaseHex) ? "x2" : "X2";
             BinString[] sourceParts = new BinString[] { this };
 
             if (formattingOptions.HasFlag(QuotedPrintableFormattingOptions.KeepNewlines))
             {
-                sourceParts = Split(FromTextString(Environment.NewLine, Encoding.ASCII));
+                sourceParts = Split(new BinString(newLine, Encoding.ASCII));
                 usedNewlines = true;
             }
 
@@ -171,7 +191,7 @@ namespace MiffTheFox
                 if (lineLength + toAdd > maxLineLength)
                 {
                     result.Append('=');
-                    result.AppendLine();
+                    result.Append(newLine);
                     usedNewlines = true;
                     lineLength = toAdd;
                 }
@@ -189,13 +209,13 @@ namespace MiffTheFox
                 }
                 else
                 {
-                    result.AppendLine();
+                    result.Append(newLine);
                     lineLength = 0;
                 }
 
                 foreach (byte b in part)
                 {
-                    if ((b >= 0x20 && b <= 0x7e) && b != 0x3d)
+                    if ((b >= 0x20 && b <= 0x7e) && b != '=')
                     {
                         extendLineCounter?.Invoke(1);
                         result.Append((char)b);
