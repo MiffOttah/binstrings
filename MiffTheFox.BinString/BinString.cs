@@ -69,7 +69,9 @@ namespace MiffTheFox
         /// <summary>
         /// Returns an empty BinString.
         /// </summary>
-        public static BinString Empty => new BinString();
+        public static BinString Empty { get; } = new BinString();
+        // since BinStrings are (or at least should be) immutable,
+        // we can assign a singleton empty object
 
         /// <summary>
         /// Creates an empty BinString.
@@ -84,7 +86,15 @@ namespace MiffTheFox
         /// </summary>
         public BinString(byte[] data)
         {
-            _Data = data;
+            if (data == null)
+            {
+                _Data = new byte[0];
+            }
+            else
+            {
+                _Data = new byte[data.Length];
+                Array.Copy(data, _Data, data.Length);
+            }
         }
 
         /// <summary>
