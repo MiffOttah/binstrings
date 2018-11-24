@@ -73,6 +73,36 @@ namespace MiffTheFox
         /// Converts the given floating-point value to a binstring.
         /// </summary>
         public static BinString ToBinString(this double n) => (BinString)BitConverter.GetBytes(n);
+        
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this short n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this ushort n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this int n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this uint n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this long n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this ulong n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         #endregion
 
@@ -83,7 +113,7 @@ namespace MiffTheFox
         /// </summary>
         public static BinString ToBinString(this string str, Encoding encoding)
         {
-            return BinString.FromTextString(str, encoding);
+            return new BinString(str, encoding);
         }
 
         /// <summary>
@@ -117,7 +147,7 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Reads binary data from the stream and returns it as a binstring.
+        /// Reads an amount of binary data from the stream and returns it as a BinString. To read the entire stream, use BinString.FromStream
         /// </summary>
         /// <param name="stream">The stream to be read from.</param>
         /// <param name="bufferSize">The maximum amount of data to read from the stream.</param>
