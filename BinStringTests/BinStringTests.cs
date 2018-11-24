@@ -3,6 +3,7 @@ using MiffTheFox;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -55,6 +56,39 @@ namespace BinStringTests
 
             CollectionAssert.AreEqual(byteArray, array2);
             Assert.AreEqual(input, Encoding.UTF8.GetString(binString));
+        }
+
+        [TestMethod]
+        public void CreationFromByteArrayTest()
+        {
+            byte[] sourceArray = new byte[] { 1, 2, 3 };
+            var str = new BinString(sourceArray);
+            CollectionAssert.AreEqual(sourceArray, str.ToArray());
+
+            // binstrings should be immutable
+            sourceArray[1] = 200;
+            CollectionAssert.AreNotEqual(sourceArray, str.ToArray());
+
+            // creation from null array
+            Assert.AreEqual(BinString.Empty, new BinString((byte[])null));
+        }
+
+        [TestMethod]
+        public void CreationFromPartOfByteArray()
+        {
+            byte[] sourceArray = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            var str = new BinString(sourceArray, 2, 4);
+
+            Assert.AreEqual(4, str.Length);
+            Assert.AreEqual(BinString.FromBytes(3, 4, 5, 6), str);
+
+            Assert.AreEqual(BinString.Empty, new BinString(sourceArray, 2, 0));
+
+            Assert.ThrowsException<ArgumentNullException>(() => new BinString(null, 2, 4));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BinString(sourceArray, -2, 4));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BinString(sourceArray, 100, 4));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BinString(sourceArray, 2, -12));
+            Assert.ThrowsException<ArgumentException>(() => new BinString(sourceArray, 2, 100));
         }
 
         [TestMethod]
@@ -412,6 +446,32 @@ namespace BinStringTests
 
             Assert.AreEqual(BinString.FromBytes("0000abcd"), BinString.FromInt32(0xabcd, IntegerEndianess.BigEndian));
             Assert.AreEqual(BinString.FromBytes("cdab0000"), BinString.FromInt32(0xabcd, IntegerEndianess.LittleEndian));
+        }
+
+        [TestMethod]
+        public void StreamConversionTest()
+        {
+            var b = BinString.FromEscapedString("Hello, world.");
+
+            // create from memory stream
+            using (var ms = new MemoryStream(b))
+            {
+                Assert.AreEqual(b, BinString.FromStream(ms));
+            }
+
+            // create from unknown stream
+            using (var ms = new Mocks.MockStream(b))
+            {
+                Assert.AreEqual(b, BinString.FromStream(ms));
+            }
+
+            // create stream from binstring
+            using (var bs = b.ToStream())
+            {
+                byte[] buffer = new byte[64];
+                int read = bs.Read(buffer, 0, buffer.Length);
+                Assert.AreEqual(b, new BinString(buffer, 0, read));
+            }
         }
     }
 }

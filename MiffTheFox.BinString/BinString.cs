@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -95,6 +96,23 @@ namespace MiffTheFox
                 _Data = new byte[data.Length];
                 Array.Copy(data, _Data, data.Length);
             }
+        }
+
+        /// <summary>
+        /// Creates a BinString with binary data from a specific portion of the byte array.
+        /// </summary>
+        /// <param name="data">The byte array containing the data.</param>
+        /// <param name="offset">The index into the byte array to start taking data from.</param>
+        /// <param name="length">The length of data to take.</param>
+        public BinString(byte[] data, int offset, int length)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            if (offset < 0 || offset >= data.Length) throw new ArgumentOutOfRangeException(nameof(offset));
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length));
+            if (offset + length > data.Length) throw new ArgumentException("Cannot read past the end of the byte array.");
+
+            _Data = new byte[length];
+            Array.Copy(data, offset, _Data, 0, length);
         }
 
         /// <summary>
@@ -876,6 +894,31 @@ namespace MiffTheFox
 
             info.AddValue("BinStringData", ToBase64String());
         }
+        #endregion
+
+        #region Stream conversion
+
+        public Stream ToStream()
+        {
+            return new MemoryStream(_Data, 0, _Data.Length, false, false);
+        }
+
+        public static BinString FromStream(Stream str)
+        {
+            if (str is MemoryStream strMs)
+            {
+                return new BinString(strMs.ToArray());
+            }
+            else
+            {
+                using (var ms = new MemoryStream())
+                {
+                    str.CopyTo(ms);
+                    return new BinString(ms.ToArray());
+                }
+            }
+        }
+
         #endregion
     }
 }
