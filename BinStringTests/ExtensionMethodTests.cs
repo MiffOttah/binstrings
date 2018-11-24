@@ -47,7 +47,7 @@ namespace BinStringTests
         public void OtherToBinStringTest()
         {
             string myString = "mañana";
-            Assert.AreEqual(BinString.FromTextString(myString, Encoding.UTF8), myString.ToBinString(Encoding.UTF8));
+            Assert.AreEqual(new BinString(myString, Encoding.UTF8), myString.ToBinString(Encoding.UTF8));
 
             var myArr = new byte[] { 10, 20, 150, 40, 160, 50, 120, 180, 200 };
             Assert.AreEqual(new BinString(myArr), myArr.ToBinString());

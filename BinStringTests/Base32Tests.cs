@@ -16,7 +16,7 @@ namespace BinStringTests
         public void Base32EncodingTest()
         {
             var base32 = new Base32();
-            var hello = BinString.FromTextString("Hello, world!", Encoding.ASCII);
+            var hello = new BinString("Hello, world!", Encoding.ASCII);
 
             // null/empty
             Assert.AreEqual(string.Empty, base32.GetString(BinString.Empty));
@@ -24,7 +24,7 @@ namespace BinStringTests
 
             // basic
             Assert.AreEqual("JBSWY3DPFQQHO33SNRSCC===", base32.GetString(hello));
-            Assert.AreEqual("KRUGS4ZANFZSAYJAORSXG5BO", base32.GetString(BinString.FromTextString("This is a test.", Encoding.UTF8)));
+            Assert.AreEqual("KRUGS4ZANFZSAYJAORSXG5BO", base32.GetString(new BinString("This is a test.", Encoding.UTF8)));
             
             // custom/no padding
             base32.Padding = '?';
