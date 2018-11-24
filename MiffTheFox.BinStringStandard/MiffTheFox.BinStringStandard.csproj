@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>MiffTheFox</RootNamespace>
-    <Version>1.5.0</Version>
+    <Version>1.5.1</Version>
     <Product>BinString</Product>
     <Authors>MiffTheFox</Authors>
     <Company>MiffTheFox</Company>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/MiffOttah/binstrings.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://files.miffthefox.info/binstrings.png</PackageIconUrl>
-    <PackageTags>binary</PackageTags>
+    <PackageTags>binary string manipulation base32 uuencode ascii85 quoted-printable</PackageTags>
     <PackageReleaseNotes>.NET standard build</PackageReleaseNotes>
     <PackageLicenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</PackageLicenseUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <title>$title$</title>
     <authors>MiffTheFox</authors>
     <owners>miffthefox</owners>
@@ -11,7 +11,7 @@
     <iconUrl>https://files.miffthefox.info/binstrings.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Endiness conversion added.</releaseNotes>
+    <releaseNotes>Minor changes, nothing to release yet.</releaseNotes>
     <copyright>Copyright 2017-2018 MiffTheFox</copyright>
     <tags>binary string manipulation base32 uuencode ascii85 quoted-printable</tags>
   </metadata>
