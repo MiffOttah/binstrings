@@ -1,8 +1,13 @@
 # MiffTheFox.BinString
 
-Byte arrays are commonplace in .NET code. But arrays aren't really easy to work with. There are no standard methods for searching, concatenation, padding, or doing any other operation to a byte array that you could easily do with a string.
+Byte arrays are commonplace in .NET code for repersenting data that isn't just
+text. But arrays aren't really easy to work with. There are no standard methods
+for searching, concatenation, padding, or doing any other operation to a byte
+array that you could easily do with a string.
 
-This library aims to make working with binary data as easy as working with strings by introducing the `BinString` type. A BinString is a string of bytes that can be manipulated along the lines of a string of characters.
+This library aims to make working with binary data as easy as working with
+strings by introducing the `BinString` type. A BinString is a string of bytes
+that can be manipulated along the lines of a string of characters.
 
 # Usage
 
@@ -11,7 +16,7 @@ Create a BinString
     byte[] hello = Encoding.UTF8.GetBytes("Hello, world!");
     BinString helloBin = new BinString(hello);
     // or
-    var helloBin = BinString.FromTextString("Hello, world!", Encoding.UTF8);
+    var helloBin = new BinString("Hello, world!", Encoding.UTF8);
 
 Use a BinString
 
@@ -22,11 +27,11 @@ Format a BinString for display
 
     Console.WriteLine("The hash is: {0:x}", result);
 
-Concatenation!
+Concatenation
 
-    var a = BinString.FromTextString("Hello", Encoding.ASCII));
+    var a = new BinString("Hello", Encoding.ASCII));
     var b = BinString.FromBytes("2c20");
-    var c = BinString.FromTextString("Hello", Encoding.ASCII));
+    var c = BinString.FromUrlString("world%21");
     var message = a + b + c;
     Console.WriteLine(message.ToString(Encoding.ASCII));
 
@@ -35,6 +40,14 @@ Equality testing
     var a = BinString.FromTextString("ABC", Encoding.ASCII);
     var b = BinString.FromBytes("414243");
     if (a == b) Console.WriteLine("They match!");
+
+Known-endianess conversion from longer types.
+
+	uint color = 0xff8000ff;
+	var colorBin = BinString.FromUInt32(color, IntegerEndianess.BigEndian);
+	byte a = color[0], r = color[1], g = color[2], b = color[3];
+	return Color.FromArgb(a, r, g, b);
+
 
 [More documentation is available on the wiki.](https://github.com/MiffOttah/binstrings/wiki)
 
