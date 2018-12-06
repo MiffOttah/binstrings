@@ -20,11 +20,8 @@ namespace MiffTheFox
         /// Returns the number of bytes in the BinString.
         /// </summary>
         public int Length => _Data.Length;
-
-        /// <summary>
-        /// Returns the number of bytes in the BinString.
-        /// </summary>
-        public int Count => _Data.Length;
+        
+        int IReadOnlyCollection<byte>.Count => _Data.Length;
 
         public byte this[int index] => _Data[index];
 
