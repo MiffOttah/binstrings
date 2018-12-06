@@ -21,6 +21,10 @@
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;STANDARD</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\MiffTheFox.BinString\Base32.cs" Link="Base32.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinBoyerMoore.cs" Link="BinBoyerMoore.cs" />

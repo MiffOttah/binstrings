@@ -49,12 +49,12 @@ namespace MiffTheFox
             return new BinString(d);
         }
 
-        public short ToInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToInt16);
-        public ushort ToUInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToUInt16);
-        public int ToInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToInt32);
-        public uint ToUInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToUInt32);
-        public long ToInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToInt64);
-        public ulong ToUInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToUInt64);
+        short IConvertible.ToInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToInt16);
+        ushort IConvertible.ToUInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToUInt16);
+        int IConvertible.ToInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToInt32);
+        uint IConvertible.ToUInt32(IFormatProvider provider) => _BitConvert(4, BitConverter.ToUInt32);
+        long IConvertible.ToInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToInt64);
+        ulong IConvertible.ToUInt64(IFormatProvider provider) => _BitConvert(8, BitConverter.ToUInt64);
 
         public short ToInt16(IntegerEndianess endianess = IntegerEndianess.Native) => _BitConvert(2, BitConverter.ToInt16, endianess);
         public ushort ToUInt16(IntegerEndianess endianess = IntegerEndianess.Native) => _BitConvert(2, BitConverter.ToUInt16, endianess);

@@ -63,9 +63,9 @@ namespace MiffTheFox
             Array.Copy(_Data, sourceIndex, buffer, bufferIndex, length);
         }
 
-        #endregion
+#endregion
 
-        #region Creation methods
+#region Creation methods
 
         /// <summary>
         /// Returns an empty BinString.
@@ -146,18 +146,6 @@ namespace MiffTheFox
         {
             if (encoding is null) throw new ArgumentNullException(nameof(encoding));
             _Data = string.IsNullOrEmpty(text) ? new byte[0] : encoding.GetBytes(text);
-        }
-
-        /// <summary>
-        /// Creates a BinString from a text string
-        /// </summary>
-        /// <param name="text">The text string to encode as binary</param>
-        /// <param name="encoding">The System.Text.Encoding to encode the text string with</param>
-        /// <returns></returns>
-        [Obsolete]
-        public static BinString FromTextString(string text, Encoding encoding)
-        {
-            return new BinString(encoding.GetBytes(text));
         }
 
         /// <summary>
@@ -284,9 +272,9 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
-        #endregion
+#endregion
 
-        #region Interfaces and Comparison
+#region Interfaces and Comparison
 
         public IEnumerator<byte> GetEnumerator() => new BinStringEnumerator(this);
         IEnumerator IEnumerable.GetEnumerator() => new BinStringEnumerator(this);
@@ -406,9 +394,9 @@ namespace MiffTheFox
 
         public object Clone() => new BinString(ToArray());
 
-        #endregion
+#endregion
 
-        #region String operations
+#region String operations
 
         /// <summary>
         /// Concatenates two BinStrings
@@ -725,9 +713,9 @@ namespace MiffTheFox
             return builder.ToBinString();
         }
 
-        #endregion
+#endregion
 
-        #region Check methods
+#region Check methods
 
         protected void _CheckIndex(int index)
         {
@@ -744,21 +732,21 @@ namespace MiffTheFox
             return false;
         }
 
-        #endregion
+#endregion
 
-        #region IConvertable methods
+#region IConvertable methods
 
         public TypeCode GetTypeCode()
         {
             return TypeCode.Object;
         }
 
-        public bool ToBoolean(IFormatProvider provider)
+        bool IConvertible.ToBoolean(IFormatProvider provider)
         {
             return _Data.Length > 0;
         }
 
-        public char ToChar(IFormatProvider provider)
+        char IConvertible.ToChar(IFormatProvider provider)
         {
             if (_Data.Length == 0)
             {
@@ -776,7 +764,7 @@ namespace MiffTheFox
             throw new OverflowException();
         }
 
-        public sbyte ToSByte(IFormatProvider provider)
+        sbyte IConvertible.ToSByte(IFormatProvider provider)
         {
             if (_Data.Length == 0)
             {
@@ -792,7 +780,7 @@ namespace MiffTheFox
             }
         }
 
-        public byte ToByte(IFormatProvider provider)
+        byte IConvertible.ToByte(IFormatProvider provider)
         {
             if (_Data.Length == 0)
             {
@@ -808,7 +796,7 @@ namespace MiffTheFox
             }
         }
 
-        public float ToSingle(IFormatProvider provider)
+        float IConvertible.ToSingle(IFormatProvider provider)
         {
             if (_Data.Length == 0)
             {
@@ -824,7 +812,7 @@ namespace MiffTheFox
             }
         }
 
-        public double ToDouble(IFormatProvider provider)
+        double IConvertible.ToDouble(IFormatProvider provider)
         {
             if (_Data.Length == 0)
             {
@@ -840,11 +828,11 @@ namespace MiffTheFox
             }
         }
 
-        public decimal ToDecimal(IFormatProvider provider) => throw new InvalidCastException();
-        public DateTime ToDateTime(IFormatProvider provider) => throw new InvalidCastException();
-        public string ToString(IFormatProvider provider) => ToString("g", provider);
+        decimal IConvertible.ToDecimal(IFormatProvider provider) => throw new InvalidCastException();
+        DateTime IConvertible.ToDateTime(IFormatProvider provider) => throw new InvalidCastException();
+        string IConvertible.ToString(IFormatProvider provider) => ToString("g", provider);
 
-        public object ToType(Type conversionType, IFormatProvider provider)
+        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
         {
             if (conversionType == typeof(byte[]))
             {
@@ -861,25 +849,25 @@ namespace MiffTheFox
                 {
                     case TypeCode.Boolean: return this._Data.Length > 0;
                     case TypeCode.String: return this.ToString("g", provider);
-                    case TypeCode.Byte: return this.ToByte(provider);
-                    case TypeCode.SByte: return this.ToSByte(provider);
-                    case TypeCode.Int16: return this.ToInt16(provider);
-                    case TypeCode.Int32: return this.ToInt32(provider);
-                    case TypeCode.Int64: return this.ToInt64(provider);
-                    case TypeCode.UInt16: return this.ToUInt16(provider);
-                    case TypeCode.UInt32: return this.ToUInt32(provider);
-                    case TypeCode.UInt64: return this.ToUInt64(provider);
-                    case TypeCode.Single: return this.ToSingle(provider);
-                    case TypeCode.Double: return this.ToDouble(provider);
-                    case TypeCode.Char: return this.ToChar(provider);
+                    case TypeCode.Byte: return ((IConvertible)this).ToByte(provider);
+                    case TypeCode.SByte: return ((IConvertible)this).ToSByte(provider);
+                    case TypeCode.Int16: return ((IConvertible)this).ToInt16(provider);
+                    case TypeCode.Int32: return ((IConvertible)this).ToInt32(provider);
+                    case TypeCode.Int64: return ((IConvertible)this).ToInt64(provider);
+                    case TypeCode.UInt16: return ((IConvertible)this).ToUInt16(provider);
+                    case TypeCode.UInt32: return ((IConvertible)this).ToUInt32(provider);
+                    case TypeCode.UInt64: return ((IConvertible)this).ToUInt64(provider);
+                    case TypeCode.Single: return ((IConvertible)this).ToSingle(provider);
+                    case TypeCode.Double: return ((IConvertible)this).ToDouble(provider);
+                    case TypeCode.Char: return ((IConvertible)this).ToChar(provider);
                     default: throw new InvalidCastException();
                 }
             }
         }
 
-        #endregion
+#endregion
 
-        #region Serialization
+#region Serialization
         public BinString(SerializationInfo info, StreamingContext context)
         {
             if (info is null) throw new ArgumentNullException(nameof(info));
@@ -894,9 +882,9 @@ namespace MiffTheFox
 
             info.AddValue("BinStringData", ToBase64String());
         }
-        #endregion
+#endregion
 
-        #region Stream conversion
+#region Stream conversion
 
         public Stream ToStream()
         {
@@ -919,6 +907,6 @@ namespace MiffTheFox
             }
         }
 
-        #endregion
+#endregion
     }
 }

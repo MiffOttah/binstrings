@@ -17,7 +17,7 @@ namespace BinStringTests
         [TestMethod]
         public void TestBinarySerialization()
         {
-            var testData = BinString.FromEscapedString("\xc0\xff\xee Hello, world!");
+            var testData = BinString.FromEscapedString(@"\xc0\xff\xee Hello, world!");
 
             var binaryFormatter = new BinaryFormatter();
             var writeStream = new MemoryStream();
@@ -32,7 +32,7 @@ namespace BinStringTests
         [TestMethod]
         public void TestBinaryWriterSupport()
         {
-            var testData = BinString.FromEscapedString("\xc0\xff\xee Hello, world!"); ;
+            var testData = BinString.FromEscapedString(@"\xc0\xff\xee Hello, world!"); ;
 
             var writeStream1 = new MemoryStream();
             using (var writer = new BinaryWriter(writeStream1))
@@ -54,7 +54,7 @@ namespace BinStringTests
         [TestMethod]
         public void TestBinaryReaderSupport()
         {
-            var testData = BinString.FromEscapedString("Testing binary reader support!\x09\xf9\x12\x34");
+            var testData = BinString.FromEscapedString(@"Testing binary reader support!\x09\xf9\x12\x34");
 
             using (var reader = new BinaryReader(new MemoryStream(testData)))
             {

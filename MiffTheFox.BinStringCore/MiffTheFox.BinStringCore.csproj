@@ -18,6 +18,10 @@
     <PackageTags>binary string manipulation base32 uuencode ascii85 quoted-printable</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;CORE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\MiffTheFox.BinString\Base32.cs" Link="Base32.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinBoyerMoore.cs" Link="BinBoyerMoore.cs" />

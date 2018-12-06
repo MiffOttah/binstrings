@@ -404,21 +404,22 @@ namespace BinStringTests
         {
             const ushort MY_USHORT = 1024;
             var foo = new BinString(BitConverter.GetBytes(MY_USHORT));
+            var fooConvertible = (IConvertible)foo;
 
             Assert.AreEqual(2, foo.Length);
-            Assert.AreEqual(MY_USHORT, foo.ToUInt16(CultureInfo.InvariantCulture));
-            Assert.AreEqual(1024, foo.ToInt32(CultureInfo.InvariantCulture));
+            Assert.AreEqual(MY_USHORT, fooConvertible.ToUInt16(CultureInfo.InvariantCulture));
+            Assert.AreEqual(1024, fooConvertible.ToInt32(CultureInfo.InvariantCulture));
 
-            Assert.AreEqual('\0', BinString.FromBytes(0).ToChar(CultureInfo.InvariantCulture));
-            Assert.AreEqual('\0', BinString.FromBytes().ToChar(CultureInfo.InvariantCulture));
-            Assert.AreEqual('$', BinString.FromBytes(0x24).ToChar(CultureInfo.InvariantCulture));
-            Assert.ThrowsException<OverflowException>(() => BinString.FromBytes(0xff).ToChar(CultureInfo.InvariantCulture));
-            Assert.ThrowsException<OverflowException>(() => BinString.FromBytes(0x31, 0x32).ToChar(CultureInfo.InvariantCulture));
+            Assert.AreEqual('\0', ((IConvertible)BinString.FromBytes(0)).ToChar(CultureInfo.InvariantCulture));
+            Assert.AreEqual('\0', ((IConvertible)BinString.FromBytes()).ToChar(CultureInfo.InvariantCulture));
+            Assert.AreEqual('$', ((IConvertible)BinString.FromBytes(0x24)).ToChar(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<OverflowException>(() => ((IConvertible)BinString.FromBytes(0xff)).ToChar(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<OverflowException>(() => ((IConvertible)BinString.FromBytes(0x31, 0x32)).ToChar(CultureInfo.InvariantCulture));
 
-            Assert.AreEqual((sbyte)-1, BinString.FromBytes(0xff).ToSByte(CultureInfo.InvariantCulture));
-            Assert.AreEqual((byte)0xff, BinString.FromBytes(0xff).ToByte(CultureInfo.InvariantCulture));
-            Assert.ThrowsException<InvalidCastException>(() => foo.ToDecimal(CultureInfo.InvariantCulture));
-            Assert.ThrowsException<InvalidCastException>(() => foo.ToDateTime(CultureInfo.InvariantCulture));
+            Assert.AreEqual((sbyte)-1, ((IConvertible)BinString.FromBytes(0xff)).ToSByte(CultureInfo.InvariantCulture));
+            Assert.AreEqual((byte)0xff, ((IConvertible)BinString.FromBytes(0xff)).ToByte(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<InvalidCastException>(() => fooConvertible.ToDecimal(CultureInfo.InvariantCulture));
+            Assert.ThrowsException<InvalidCastException>(() => fooConvertible.ToDateTime(CultureInfo.InvariantCulture));
 
             Assert.AreEqual(foo.ToString(), Convert.ToString(foo));
 
