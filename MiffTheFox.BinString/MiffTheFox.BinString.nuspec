@@ -2,17 +2,17 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.5.1</version>
+    <version>2.0.0</version>
     <title>$title$</title>
     <authors>MiffTheFox</authors>
     <owners>miffthefox</owners>
-    <licenseUrl>https://www.gnu.org/licenses/lgpl-3.0.en.html</licenseUrl>
+    <licenseUrl>https://github.com/MiffOttah/binstrings/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/MiffOttah/binstrings</projectUrl>
     <iconUrl>https://files.miffthefox.info/binstrings.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Minor changes, nothing to release yet.</releaseNotes>
-    <copyright>Copyright 2017-2018 MiffTheFox</copyright>
+    <releaseNotes>Version 2.0.</releaseNotes>
+    <copyright>Copyright 2017-2019 MiffTheFox</copyright>
     <tags>binary string manipulation base32 uuencode ascii85 quoted-printable</tags>
   </metadata>
 </package>

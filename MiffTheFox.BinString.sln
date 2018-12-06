@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28315.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiffTheFox.BinString", "MiffTheFox.BinString\MiffTheFox.BinString.csproj", "{203591A4-D0D4-4A7B-86F2-2A55C4D53CC8}"
 EndProject
@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiffTheFox.BinStringStandard", "MiffTheFox.BinStringStandard\MiffTheFox.BinStringStandard.csproj", "{9F11C611-1B1A-42AC-8F5B-9A3A1CF5957E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiffTheFox.BinStringStandard", "MiffTheFox.BinStringStandard\MiffTheFox.BinStringStandard.csproj", "{9F11C611-1B1A-42AC-8F5B-9A3A1CF5957E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiffTheFox.BinStringCore", "MiffTheFox.BinStringCore\MiffTheFox.BinStringCore.csproj", "{6684C22C-C064-400D-A453-ACC20E008B72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9F11C611-1B1A-42AC-8F5B-9A3A1CF5957E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F11C611-1B1A-42AC-8F5B-9A3A1CF5957E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F11C611-1B1A-42AC-8F5B-9A3A1CF5957E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6684C22C-C064-400D-A453-ACC20E008B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6684C22C-C064-400D-A453-ACC20E008B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6684C22C-C064-400D-A453-ACC20E008B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6684C22C-C064-400D-A453-ACC20E008B72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
