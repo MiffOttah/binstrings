@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiffTheFox.BinStringStandar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiffTheFox.BinStringCore", "MiffTheFox.BinStringCore\MiffTheFox.BinStringCore.csproj", "{6684C22C-C064-400D-A453-ACC20E008B72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinStringCoreTests", "BinStringCoreTests\BinStringCoreTests.csproj", "{6E1E96D8-E845-4A85-824B-EED5F3D17FB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6684C22C-C064-400D-A453-ACC20E008B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6684C22C-C064-400D-A453-ACC20E008B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6684C22C-C064-400D-A453-ACC20E008B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E1E96D8-E845-4A85-824B-EED5F3D17FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E1E96D8-E845-4A85-824B-EED5F3D17FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E1E96D8-E845-4A85-824B-EED5F3D17FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E1E96D8-E845-4A85-824B-EED5F3D17FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
