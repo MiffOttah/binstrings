@@ -48,6 +48,7 @@
     <Compile Include="BinStringIntegerConversions.cs" />
     <Compile Include="BinStringTextEncoding.cs" />
     <Compile Include="BinStringTypeConverter.cs" />
+    <Compile Include="BitOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuotedPrintableFormattingOptions.cs" />
   </ItemGroup>

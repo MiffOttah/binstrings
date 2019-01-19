@@ -32,6 +32,7 @@
     <Compile Include="..\MiffTheFox.BinString\BinStringIntegerConversions.cs" Link="BinStringIntegerConversions.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringTextEncoding.cs" Link="BinStringTextEncoding.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringTypeConverter.cs" Link="BinStringTypeConverter.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BitOperations.cs" Link="BitOperations.cs" />
     <Compile Include="..\MiffTheFox.BinString\QuotedPrintableFormattingOptions.cs" Link="QuotedPrintableFormattingOptions.cs" />
   </ItemGroup>
 
