@@ -75,10 +75,15 @@ namespace BinStringTests
         }
 
         [TestMethod]
-        public void RoundTripTest()
+        [DataRow("", Base32.CHARSET_CROCKFORD)]
+        [DataRow("AFWPjq109Z2TGHvuZMCvVg==", Base32.CHARSET_CROCKFORD)]
+        [DataRow("HbPLdjim33EFgXOwi5qRtA==", Base32.CHARSET_ZBASE32)]
+        [DataRow("hUhErbXES0j4Sycji9VI9A2jHFjHkXShcBcH+sWauVU=", Base32.CHARSET_RFC4648)]
+        [DataRow("yYwf0SSVdEhEhgoa9N9TIsUDIHo=", "1234567890!@#$%^&*()_-+H`~:;abcZ")]
+        public void RoundTripTest(string bytes, string charset)
         {
-            var data = BinString.Empty;
-            var base32 = new Base32(Base32.CHARSET_ZBASE32);
+            var data = BinString.FromBase64String(bytes);
+            var base32 = new Base32(charset) { Padding = '=' };
 
             for (int i = 0; i < 100; i++)
             {
