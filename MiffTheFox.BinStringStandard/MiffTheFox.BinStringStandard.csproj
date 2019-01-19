@@ -23,6 +23,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;STANDARD</DefineConstants>
+    <DocumentationFile>D:\Code\MiffTheFox.BinString\MiffTheFox.BinStringStandard\MiffTheFox.BinStringStandard.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Code\MiffTheFox.BinString\MiffTheFox.BinStringStandard\MiffTheFox.BinStringStandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
