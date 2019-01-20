@@ -123,15 +123,30 @@ namespace MiffTheFox.BitOperations
         private int _BitIndex = 8;
         private int _Current = -1;
 
+        /// <summary>
+        /// The position of the reader, in bits.
+        /// </summary>
         public int Position => _ByteIndex * 8 + _BitIndex;
+
+        /// <summary>
+        /// The length of the data source, in bits.
+        /// </summary>
         public int Length => Convert.ToInt32(_DataSource.Length) * 8;
 
+        /// <summary>
+        /// Creates a BitReader reading from the specified Stream source.
+        /// </summary>
+        /// <param name="source">The source of binary data to read bit-by-bit.</param>
         public BitReader(Stream source)
         {
             if (source is null) throw new ArgumentNullException(nameof(source));
             _DataSource = source;
         }
 
+        /// <summary>
+        /// Creates a BitReader reading from the specified BinString source.
+        /// </summary>
+        /// <param name="source">The source of binary data to read bit-by-bit.</param>
         public BitReader(BinString source) : this(source.ToStream())
         {
         }

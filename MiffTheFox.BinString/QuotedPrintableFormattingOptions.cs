@@ -12,10 +12,15 @@ namespace MiffTheFox
     [Flags]
     public enum QuotedPrintableFormattingOptions
     {
+        /// <summary>
+        /// The default options. Hexadecimal digits are upper case, newlines in the text are encoded,
+        /// lines greater then 75 characters in length are broken up, and the newline characater is
+        /// the system default.
+        /// </summary>
         Default = 0,
 
         /// <summary>
-        /// Hexidecimal numbers are lower case, instead of upper case.
+        /// Hexadecimal digits are lower case, instead of upper case.
         /// </summary>
         LowerCaseHex = 0b1,
 
@@ -38,7 +43,6 @@ namespace MiffTheFox
         /// Uses LF as a newline. If no newline flags are set, defaults to the system's default.
         /// </summary>
         UseLf = 0b10000,
-
 
         /// <summary>
         /// Uses CR+LF as a newline. If no newline flags are set, defaults to the system's default.

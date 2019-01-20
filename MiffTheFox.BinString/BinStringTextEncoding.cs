@@ -142,6 +142,10 @@ namespace MiffTheFox
             return result.ToString();
         }
 
+        /// <summary>
+        /// Returns the BinString as an ASCII text string with non-ASCII bytes repersented by MIME quoted-printable encoding, with the default options and current culture.
+        /// </summary>
+        /// <returns></returns>
         public string ToQuotedPrintableString() => ToQuotedPrintableString(0, CultureInfo.CurrentCulture);
 
         /// <summary>
@@ -314,6 +318,10 @@ namespace MiffTheFox
             return uu.ToString();
         }
 
+        /// <summary>
+        /// Decodes a uuencoded string into the represented binary data.
+        /// </summary>
+        /// <param name="uuencoded">The uuencoded string to decode.</param>
         public static BinString Uudecode(string uuencoded)
         {
             var lines = uuencoded.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);

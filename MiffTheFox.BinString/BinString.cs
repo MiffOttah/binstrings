@@ -14,6 +14,9 @@ namespace MiffTheFox
     [Serializable, System.ComponentModel.TypeConverter(typeof(BinStringTypeConverter))]
     public partial class BinString : IReadOnlyList<byte>, IFormattable, ICloneable, IEquatable<BinString>, IComparable, IComparable<BinString>, IConvertible, ISerializable
     {
+        /// <summary>
+        /// The byte[] data referenced by this BinString. Mutating this is not a good idea.
+        /// </summary>
         protected readonly byte[] _Data;
 
         /// <summary>
@@ -23,9 +26,12 @@ namespace MiffTheFox
         
         int IReadOnlyCollection<byte>.Count => _Data.Length;
 
+        /// <summary>
+        /// Retreives the byte at the specified index.
+        /// </summary>
         public byte this[int index] => _Data[index];
 
-        #region Array methods
+#region Array methods
 
         /// <summary>
         /// Returns the BinString as an array of System.Byte.
@@ -883,11 +889,18 @@ namespace MiffTheFox
 
 #region Stream conversion
 
+        /// <summary>
+        /// Converts the BinString to a Stream
+        /// </summary>
+        /// <returns></returns>
         public Stream ToStream()
         {
             return new MemoryStream(_Data, 0, _Data.Length, false, false);
         }
 
+        /// <summary>
+        /// Creats a BinString from a Stream
+        /// </summary>
         public static BinString FromStream(Stream str)
         {
             if (str is MemoryStream strMs)
