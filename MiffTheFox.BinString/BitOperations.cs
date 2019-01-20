@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiffTheFox.BitOperations
 {
@@ -17,6 +13,9 @@ namespace MiffTheFox.BitOperations
         private int _Index = 0;
         private int _Value = 0;
 
+        /// <summary>
+        /// The number of bits written to the writer so far
+        /// </summary>
         public int BitsWritten => _Builder.Length * 8 + _Index;
 
         /// <summary>
@@ -44,7 +43,7 @@ namespace MiffTheFox.BitOperations
         public void WriteBits(int bitSource, int count)
         {
             if (count < 0 || count > 32) throw new ArgumentException("Invalid number of bits.", nameof(count));
-            
+
             // This could probably be optimized to write chunks of bits at one time.
             for (int i = count - 1; i >= 0; i--)
             {
@@ -56,25 +55,58 @@ namespace MiffTheFox.BitOperations
         /// <summary>
         /// Converts the bitwise data to a binary string
         /// </summary>
-        /// <param name="allowPadding">If true, extra 0 bits will be appended to the end of the bits to bring it to an even number of eight-bit bytes. If false, will throw an exception if there are remainder bits.</param>
+        /// <param name="unevenMode">The behavior to use when an uneven (non multiple of 8) bits have been written.</param>
         /// <returns></returns>
-        public BinString ToBinString(bool allowPadding)
+        public BinString ToBinString(BitWriterUnevenMode unevenMode)
         {
             if (_Index == 0)
             {
                 return _Builder.ToBinString();
             }
-            else if (allowPadding)
-            {
-                return _Builder.ToBinString() + Convert.ToByte(_Value);
-            }
             else
             {
-                throw new InvalidOperationException("A noneven number of bits have been written to the BitWriter.");
+                switch (unevenMode)
+                {
+                    case BitWriterUnevenMode.Disallow:
+                        throw new InvalidOperationException("A noneven number of bits have been written to the BitWriter.");
+
+                    case BitWriterUnevenMode.Pad:
+                        return _Builder.ToBinString() + Convert.ToByte(_Value);
+
+                    case BitWriterUnevenMode.Truncate:
+                        return _Builder.ToBinString();
+
+                    default:
+                        throw new ArgumentException("Invalid uneven mode.", nameof(unevenMode));
+                }
             }
         }
 
-        public BinString ToBinString() => ToBinString(false);
+        /// <summary>
+        /// Converts the bitwise data to a binary string, disallowing uneven lengths
+        /// </summary>
+        public BinString ToBinString() => ToBinString(BitWriterUnevenMode.Disallow);
+    }
+
+    /// <summary>
+    /// Specifis behavior when attempting to retireve a BinString from a BitWriter has an uneven number of bits written to it.
+    /// </summary>
+    public enum BitWriterUnevenMode
+    {
+        /// <summary>
+        /// A InvalidOperationException will be thrown.
+        /// </summary>
+        Disallow = 0,
+
+        /// <summary>
+        /// The data will have a number of zero bits appended to bring it to an even length.
+        /// </summary>
+        Pad = 1,
+
+        /// <summary>
+        /// The data will be truncated to the last even multiple of eight bits.
+        /// </summary>
+        Truncate = 2
     }
 
     /// <summary>
@@ -99,7 +131,7 @@ namespace MiffTheFox.BitOperations
             if (source is null) throw new ArgumentNullException(nameof(source));
             _DataSource = source;
         }
-        
+
         public BitReader(BinString source) : this(source.ToStream())
         {
         }
@@ -130,7 +162,7 @@ namespace MiffTheFox.BitOperations
             _BitIndex++;
             return true;
         }
-        
+
         /// <summary>
         /// Attempts to read up to 32 bits.
         /// </summary>

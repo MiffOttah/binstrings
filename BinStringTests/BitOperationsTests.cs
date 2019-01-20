@@ -79,10 +79,12 @@ namespace BinStringTests
             w.Write(false);
             Assert.AreEqual(4, w.BitsWritten);
 
-            Assert.AreEqual(BinString.FromBytes(0b0100_0000), w.ToBinString(true));
-            Assert.ThrowsException<InvalidOperationException>(() => w.ToBinString(false));
+            Assert.AreEqual(BinString.Empty, w.ToBinString(BitWriterUnevenMode.Pad));
+            Assert.AreEqual(BinString.FromBytes(0b0100_0000), w.ToBinString(BitWriterUnevenMode.Pad));
+            Assert.ThrowsException<InvalidOperationException>(() => w.ToBinString(BitWriterUnevenMode.Disallow));
+            Assert.ThrowsException<ArgumentException>(() => w.ToBinString((BitWriterUnevenMode)100));
 
-            // The zero-parameter overload of ToBinString should always throw the InvalidOperationException.
+            // The zero-parameter overload of ToBinString should always throw the InvalidOperationException for uneven lengths.
             Assert.ThrowsException<InvalidOperationException>(() => w.ToBinString());
         }
 
