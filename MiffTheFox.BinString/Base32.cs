@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiffTheFox.BitOperations;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -104,29 +105,12 @@ namespace MiffTheFox
         {
             if (BinString.IsNullOrEmpty(data)) return string.Empty;
 
-            int building = 0;
-            int buildLocation = 4;
+            var bitReader = new BitReader(data);
             var result = new StringBuilder();
-
-            foreach (byte b in data)
+            
+            while (bitReader.ReadBits(5, out int base32character) > 0)
             {
-                for (int i = 7; i >= 0; i--)
-                {
-                    building |= ((b >> i) & 1) << buildLocation;
-                    buildLocation--;
-
-                    if (buildLocation < 0)
-                    {
-                        result.Append(_CharacterSet[building]);
-                        building = 0;
-                        buildLocation = 4;
-                    }
-                }
-            }
-
-            if (buildLocation < 4)
-            {
-                result.Append(_CharacterSet[building]);
+                result.Append(_CharacterSet[base32character]);
             }
 
             if (UsePadding)
@@ -211,40 +195,22 @@ namespace MiffTheFox
             if (intData.Any(c => c == -1)) throw new FormatException("This string contains one or more characters not allowed in the character set.");
             int expectedLength = (intData.Length * 5) / 8;
 
-            int building = 0;
-            int buildLocation = 7;
-            using (var result = new BinStringBuilder())
+            var bitWriter = new BitWriter();
+
+            foreach (int encodedInt in intData)
             {
-                foreach (int encodedInt in intData)
-                {
-                    for (int i = 4; i >= 0; i--)
-                    {
-                        building |= ((encodedInt >> i) & 1) << buildLocation;
-                        buildLocation--;
+                bitWriter.WriteBits(encodedInt, 5);
+            }
 
-                        if (buildLocation < 0)
-                        {
-                            result.Append(Convert.ToByte(building));
-                            building = 0;
-                            buildLocation = 7;
-                        }
-                    }
-                }
+            var decoded = bitWriter.ToBinString(BitWriterUnevenMode.Truncate);
 
-                if (buildLocation < 7)
-                {
-                    result.Append(Convert.ToByte(building));
-                }
-
-                var decoded = result.ToBinString();
-                if (decoded.Length > expectedLength)
-                {
-                    return decoded.Substring(0, expectedLength);
-                }
-                else
-                {
-                    return decoded;
-                }
+            if (decoded.Length > expectedLength)
+            {
+                return decoded.Substring(0, expectedLength);
+            }
+            else
+            {
+                return decoded;
             }
         }
     }
