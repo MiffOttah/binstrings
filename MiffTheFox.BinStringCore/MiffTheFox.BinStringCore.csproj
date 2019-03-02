@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Compile Include="..\MiffTheFox.BinString\Base32.cs" Link="Base32.cs" />
+    <Compile Include="..\MiffTheFox.BinString\BinaryTextEncoding.cs" Link="BinaryTextEncoding.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinBoyerMoore.cs" Link="BinBoyerMoore.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinString.cs" Link="BinString.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringBuilder.cs" Link="BinStringBuilder.cs" />
@@ -38,7 +39,6 @@
     <Compile Include="..\MiffTheFox.BinString\BinStringTextEncoding.cs" Link="BinStringTextEncoding.cs" />
     <Compile Include="..\MiffTheFox.BinString\BinStringTypeConverter.cs" Link="BinStringTypeConverter.cs" />
     <Compile Include="..\MiffTheFox.BinString\BitOperations.cs" Link="BitOperations.cs" />
-    <Compile Include="..\MiffTheFox.BinString\QuotedPrintableFormattingOptions.cs" Link="QuotedPrintableFormattingOptions.cs" />
   </ItemGroup>
 
 </Project>

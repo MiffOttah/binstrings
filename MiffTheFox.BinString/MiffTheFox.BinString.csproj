@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base32.cs" />
+    <Compile Include="BinaryTextEncoding.cs" />
     <Compile Include="BinString.cs" />
     <Compile Include="BinBoyerMoore.cs" />
     <Compile Include="BinStringBuilder.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="BinStringTypeConverter.cs" />
     <Compile Include="BitOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuotedPrintableFormattingOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -102,22 +102,23 @@ namespace BinStringTests
         [TestMethod]
         public void CreationFromStringTest()
         {
-            Assert.AreEqual(new BinString("¡Hola, señor!", Encoding.UTF8), BinString.FromUrlString("%C2%A1Hola%2C+se%C3%B1or!"));
-            Assert.AreEqual(new BinString("¡Hola, señor!", Encoding.UTF8), BinString.FromEscapedString(@"\xC2\xA1Hola\x2C se\xC3\xB1or!"));
+            Assert.AreEqual(new BinString("¡Hola, señor!", Encoding.UTF8), new BinString("%C2%A1Hola%2C+se%C3%B1or!", BinaryTextEncoding.Url));
+            Assert.AreEqual(new BinString("¡Hola, señor!", Encoding.UTF8), new BinString(@"\xC2\xA1Hola\x2C se\xC3\xB1or!", BinaryTextEncoding.BackslashEscape));
 
             var string1 = BinString.FromBytes("DEADBEEF00C0FFEE255C");
-            Assert.AreEqual(string1, BinString.FromUrlString(string1.ToString("u")));
-            Assert.AreEqual(string1, BinString.FromUrlString(string1.ToString("U")));
-            Assert.AreEqual(string1, BinString.FromEscapedString(string1.ToString("e")));
-            Assert.AreEqual(string1, BinString.FromEscapedString(string1.ToString("E")));
+            Assert.AreEqual(string1, new BinString(string1.ToString("u"), BinaryTextEncoding.Url));
+            Assert.AreEqual(string1, new BinString(string1.ToString("U"), BinaryTextEncoding.Url));
+            Assert.AreEqual(string1, new BinString(string1.ToString("e"), BinaryTextEncoding.BackslashEscape));
+            Assert.AreEqual(string1, new BinString(string1.ToString("E"), BinaryTextEncoding.BackslashEscape));
 
-            Assert.ThrowsException<ArgumentNullException>(() => BinString.FromUrlString(null));
-            Assert.ThrowsException<ArgumentException>(() => BinString.FromUrlString("99% undone"));
-            Assert.ThrowsException<ArgumentException>(() => BinString.FromUrlString("giving 110%"));
-            Assert.ThrowsException<ArgumentNullException>(() => BinString.FromEscapedString(null));
-            Assert.ThrowsException<ArgumentException>(() => BinString.FromEscapedString("C:\\"));
-            Assert.ThrowsException<ArgumentException>(() => BinString.FromEscapedString("C:\\WINDOWS"));
-            Assert.ThrowsException<ArgumentException>(() => BinString.FromEscapedString("C:\\XZZZZZZ"));
+            Assert.ThrowsException<ArgumentNullException>(() => BinaryTextEncoding.Url.GetBinString(null));
+            Assert.AreEqual(BinString.Empty, new BinString(null, BinaryTextEncoding.Url));
+
+            Assert.ThrowsException<ArgumentException>(() => new BinString("99% undone", BinaryTextEncoding.Url));
+            Assert.ThrowsException<ArgumentException>(() => new BinString("giving 110%", BinaryTextEncoding.Url));
+            Assert.ThrowsException<ArgumentException>(() => new BinString("C:\\", BinaryTextEncoding.BackslashEscape));
+            Assert.ThrowsException<ArgumentException>(() => new BinString("C:\\WINDOWS", BinaryTextEncoding.BackslashEscape));
+            Assert.ThrowsException<ArgumentException>(() => new BinString("C:\\XZZZZZZ", BinaryTextEncoding.BackslashEscape));
         }
 
         [TestMethod]

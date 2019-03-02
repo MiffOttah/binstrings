@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiffTheFox
+namespace MiffTheFox.BinaryTextEncodings
 {
     /// <summary>
-    /// Provides a Base32 encoder/decoder
+    /// Provides a Base32 encoder/decoder.
     /// </summary>
-    public class Base32
+    public class Base32 : BinaryTextEncoding
     {
         /// <summary>
         /// The RFC 4648 Base32 character set.
@@ -70,11 +70,6 @@ namespace MiffTheFox
         public bool IgnoreCase { get; set; } = true;
 
         /// <summary>
-        /// The culture used for case-insensitive comparison.
-        /// </summary>
-        public CultureInfo Culture { get; set; }
-
-        /// <summary>
         /// If true, will ignore any invalid characters that are whitespace.
         /// </summary>
         public bool IgnoreWhiteSpace { get; set; } = true;
@@ -86,7 +81,7 @@ namespace MiffTheFox
         public Base32(string characterSet = CHARSET_RFC4648)
         {
             CharacterSet = characterSet;
-            Culture = CultureInfo.CurrentCulture;
+            FormatProvider = CultureInfo.CurrentCulture;
         }
 
         /// <summary>
@@ -101,7 +96,7 @@ namespace MiffTheFox
         /// Converts a binary string to its base32 repersentation.
         /// </summary>
         /// <param name="data">The binary string to convert.</param>
-        public string GetString(BinString data)
+        public override string GetString(BinString data)
         {
             if (BinString.IsNullOrEmpty(data)) return string.Empty;
 
@@ -128,9 +123,9 @@ namespace MiffTheFox
         /// Converts a base32 encoded string to its original binary form.
         /// </summary>
         /// <param name="encoded">The base32 string to convert.</param>
-        public BinString GetBinString(string encoded)
+        public override BinString GetBinString(string encoded)
         {
-            return GetBinString(encoded, Culture);
+            return GetBinString(encoded, CultureInfo.InvariantCulture);
         }
 
         /// <summary>

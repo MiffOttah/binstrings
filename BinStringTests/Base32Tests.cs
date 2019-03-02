@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiffTheFox;
+using MiffTheFox.BinaryTextEncodings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -40,7 +41,7 @@ namespace BinStringTests
         [TestMethod]
         public void Base32DecodingTest()
         {
-            var base32 = new Base32() { Culture = CultureInfo.InvariantCulture };
+            var base32 = new Base32() { FormatProvider = CultureInfo.InvariantCulture };
 
             // null/empty
             Assert.AreEqual(BinString.Empty, base32.GetBinString(null));

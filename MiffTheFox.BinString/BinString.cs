@@ -152,45 +152,21 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a BinString from URL encoded data
+        /// Creates a BinString with the specifed data decoded with the specified encoding
         /// </summary>
-        /// <param name="urlEncodedData">The URL encoded data to decode</param>
-        /// <returns></returns>
-        public static BinString FromUrlString(string urlEncodedData)
+        /// <param name="encoded">The encoded text</param>
+        /// <param name="encoding">The Binary-to-Text encoding used.</param>
+        public BinString(string encoded, BinaryTextEncoding encoding)
         {
-            if (urlEncodedData is null) throw new ArgumentNullException("Provided data is null.", nameof(urlEncodedData));
-            var result = new BinStringBuilder();
-
-            for (int i = 0; i < urlEncodedData.Length; i++)
+            if (encoding is null) throw new ArgumentNullException(nameof(encoding));
+            if (string.IsNullOrEmpty(encoded))
             {
-                switch (urlEncodedData[i])
-                {
-                    case '+':
-                        result.Append(0x20);
-                        break;
-
-                    case '%':
-                        if ((i + 2) < urlEncodedData.Length && int.TryParse(urlEncodedData.Substring(i + 1, 2), System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out int hexValue))
-                        {
-                            i += 2;
-                            result.Append(Convert.ToByte(hexValue));
-                        }
-                        else
-                        {
-                            throw new ArgumentException("URL encoded data contains an invalid escape sequence.", nameof(urlEncodedData));
-                        }
-                        break;
-
-                    case char c when c <= '~':
-                        result.Append((byte)c);
-                        break;
-
-                    default:
-                        throw new ArgumentException("URL encoded data contains a non-ASCII character.", nameof(urlEncodedData));
-                }
+                _Data = new byte[0];
             }
-
-            return result.ToBinString();
+            else
+            {
+                _Data = encoding.GetBinString(encoded)._Data;
+            }
         }
 
         /// <summary>
