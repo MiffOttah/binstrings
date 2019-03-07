@@ -10,7 +10,7 @@
     <Product>BinString</Product>
     <Description>Binary string library for .NET Core</Description>
     <Copyright>Copyright 2018-2019 MiffTheFox</Copyright>
-    <PackageLicenseUrl>https://github.com/MiffOttah/binstrings/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageIconUrl>https://files.miffthefox.info/binstrings.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MiffOttah/binstrings</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>

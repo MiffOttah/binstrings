@@ -6,7 +6,6 @@
     <title>$title$</title>
     <authors>MiffTheFox</authors>
     <owners>miffthefox</owners>
-    <licenseUrl>https://github.com/MiffOttah/binstrings/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/MiffOttah/binstrings</projectUrl>
     <iconUrl>https://files.miffthefox.info/binstrings.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

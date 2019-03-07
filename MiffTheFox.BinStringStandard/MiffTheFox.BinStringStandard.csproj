@@ -15,7 +15,7 @@
     <PackageIconUrl>https://files.miffthefox.info/binstrings.png</PackageIconUrl>
     <PackageTags>binary string manipulation base32 uuencode ascii85 quoted-printable</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageLicenseUrl>https://github.com/MiffOttah/binstrings/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
