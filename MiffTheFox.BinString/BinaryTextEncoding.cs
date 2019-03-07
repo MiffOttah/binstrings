@@ -412,11 +412,17 @@ namespace MiffTheFox
         /// </summary>
         public class UUEncode : BinaryTextEncoding
         {
+            /// <summary>
+            /// The filename to include with the uuencoded data.
+            /// </summary>
             public string FileName { get; set; } = "data";
+
+            /// <summary>
+            /// The UNIX permissions to include with the uuencoded data.
+            /// </summary>
             public string UnixPermissions { get; set; } = "644";
 
-            public IFormatProvider FormatProvider { get; set; } = CultureInfo.CurrentCulture;
-
+            /// <inheritdoc />
             public override BinString GetBinString(string encoded)
             {
                 var lines = encoded.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -475,6 +481,7 @@ namespace MiffTheFox
                 }
             }
 
+            /// <inheritdoc />
             public override string GetString(BinString data)
             {
                 int paddingRequired = data.Length % 3;
@@ -553,12 +560,7 @@ namespace MiffTheFox
             /// The newline character to use.
             /// </summary>
             public string Newline { get; set; } = Environment.NewLine;
-
-            /// <summary>
-            /// The format provider to use.
-            /// </summary>
-            public IFormatProvider FormatProvider { get; set; } = CultureInfo.CurrentCulture;
-
+            
             /// <summary>
             /// This is not supported and will throw an exception.
             /// </summary>

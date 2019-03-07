@@ -778,10 +778,15 @@ namespace MiffTheFox
             return builder.ToBinString();
         }
 
-#endregion
+        #endregion
 
-#region Check methods
+        #region Check methods
 
+        /// <summary>
+        /// Checks if the specified index is valid for this BinString and throws an IndexOutOfRangeException if it isn't.
+        /// A valid index is greater than or equal to zero and less than the length of the BinString.
+        /// </summary>
+        /// <exception cref="IndexOutOfRangeException">The given index is not valid for this BinString.</exception>
         protected void _CheckIndex(int index)
         {
             if (index < 0 || index > _Data.Length) throw new IndexOutOfRangeException();
@@ -801,7 +806,7 @@ namespace MiffTheFox
 
 #region IConvertable methods
 
-        public TypeCode GetTypeCode()
+        TypeCode IConvertible.GetTypeCode()
         {
             return TypeCode.Object;
         }
@@ -933,6 +938,9 @@ namespace MiffTheFox
 #endregion
 
 #region Serialization
+        /// <summary>
+        /// Reconstructs a seralized BinString.
+        /// </summary>
         public BinString(SerializationInfo info, StreamingContext context)
         {
             if (info is null) throw new ArgumentNullException(nameof(info));
@@ -941,6 +949,9 @@ namespace MiffTheFox
             _Data = Convert.FromBase64String(dataStr);
         }
 
+        /// <summary>
+        /// Populates a SerializationInfo with the data needed to serialize the target object.
+        /// </summary>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info is null) throw new ArgumentNullException(nameof(info));
@@ -952,16 +963,16 @@ namespace MiffTheFox
 #region Stream conversion
 
         /// <summary>
-        /// Converts the BinString to a Stream
+        /// Converts the BinString to a Stream.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A Stream from which this BinString's data can be read.</returns>
         public Stream ToStream()
         {
             return new MemoryStream(_Data, 0, _Data.Length, false, false);
         }
 
         /// <summary>
-        /// Creats a BinString from a Stream
+        /// Creates a BinString from a Stream.
         /// </summary>
         public static BinString FromStream(Stream str)
         {

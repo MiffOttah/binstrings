@@ -15,19 +15,33 @@ namespace MiffTheFox
 
         private const int ALPHABET_SIZE = 0x100;
 
+        /// <summary>
+        /// The BinString that this instance of BinBoyerMoore is searching for.
+        /// </summary>
         public BinString Needle { get; protected set; }
+
         private readonly int[] _CharTable;
         private readonly int[] _OffsetTable;
 
+        /// <summary>
+        /// Creates a new instance of the binary Boyer-Moore search.
+        /// </summary>
+        /// <param name="needle">The substring being searched for.</param>
         public BinBoyerMoore(BinString needle)
         {
-            Needle = needle;
+            Needle = needle ?? throw new ArgumentNullException(nameof(needle));
             _CharTable = _MakeCharTable();
             _OffsetTable = _MakeOffsetTable();
         }
 
+        /// <summary>
+        /// Searched the provided BinString for the first occurrence of the needle. 
+        /// </summary>
+        /// <param name="haystack">The BinString to search for the needle.</param>
+        /// <returns>If the needle is found in the haystack, returns the (zero-based) index in the haystack where the needle was found. If the needle was not found, returns -1.</returns>
         public int FindNeedleIn(BinString haystack)
         {
+            if (haystack is null) throw new ArgumentNullException(nameof(haystack));
             if (Needle.Length == 0) return 0;
 
             int i = Needle.Length - 1;
