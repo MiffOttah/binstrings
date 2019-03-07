@@ -184,6 +184,13 @@ namespace BinStringTests
 
             Assert.ThrowsException<ArgumentException>(() => stringA.CompareTo("TEST"));
             Assert.ThrowsException<ArgumentException>(() => stringA.CompareTo(ConsoleColor.Red));
+
+            Assert.AreEqual(0, BinString.Compare(stringA, stringA));
+            Assert.AreEqual(0, BinString.Compare(null, null));
+            Assert.IsTrue(BinString.Compare(stringA, stringB) < 0);
+            Assert.IsTrue(BinString.Compare(stringB, null) > 0);
+            Assert.IsTrue(BinString.Compare(stringB, stringA) > 0);
+            Assert.IsTrue(BinString.Compare(null, stringA) < 0);
         }
 
         [TestMethod]

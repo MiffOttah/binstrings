@@ -251,17 +251,34 @@ namespace MiffTheFox
             return new BinString(result);
         }
 
-#endregion
+        #endregion
 
-#region Interfaces and Comparison
+        #region Interfaces and Comparison
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
         public IEnumerator<byte> GetEnumerator() => new BinStringEnumerator(this);
         IEnumerator IEnumerable.GetEnumerator() => new BinStringEnumerator(this);
 
+        /// <summary>
+        /// Converts the byte array to a BinString.
+        /// </summary>
         public static explicit operator BinString(byte[] source) => new BinString(source);
+
+        /// <summary>
+        /// Converts the BinString to a byte array.
+        /// </summary>
         public static implicit operator byte[] (BinString source) => source.ToArray();
+
+        /// <summary>
+        /// Converts the byte to a BinString.
+        /// </summary>
         public static explicit operator BinString(byte source) => new BinString(new byte[] { source });
 
+        /// <summary>
+        /// Returns a hash of the contents of the BinString.
+        /// </summary>
         public override int GetHashCode()
         {
             // FNV-1a hash https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
@@ -278,12 +295,21 @@ namespace MiffTheFox
             }
         }
 
+        /// <summary>
+        /// Determines whether two object instances are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object. If null or a non-BinString object, always returns false.</param>
         public override bool Equals(object obj)
         {
             if (obj is null) return false;
             return obj is BinString && Equals((BinString)obj);
         }
 
+        /// <summary>
+        /// Determines whether the two binary strings are equal.
+        /// Two binary strings are equal if and only if they have the same number of bytes and each byte in each position is identical.
+        /// </summary>
+        /// <param name="other">The binary string to compare against.</param>
         public bool Equals(BinString other)
         {
             if (other is null) return false;
@@ -295,6 +321,9 @@ namespace MiffTheFox
             return true;
         }
 
+        /// <summary>
+        /// Determines whether the two binary strings are equal.
+        /// </summary>
         public static bool operator ==(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
@@ -304,6 +333,9 @@ namespace MiffTheFox
             return x.Equals(y);
         }
 
+        /// <summary>
+        /// Determines whether the two binary strings are not equal.
+        /// </summary>
         public static bool operator !=(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return false;
@@ -313,6 +345,12 @@ namespace MiffTheFox
             return !x.Equals(y);
         }
 
+        /// <summary>
+        /// Compares this BinString to another object.
+        /// </summary>
+        /// <param name="obj">The other object to compare against.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">A BinString can only be compared to another BinString or null.</exception>
         public int CompareTo(object obj)
         {
             if (obj is null)
@@ -329,6 +367,11 @@ namespace MiffTheFox
             }
         }
 
+        /// <summary>
+        /// Compares this BinString to another BinString, based on sort order.
+        /// </summary>
+        /// <param name="other">The other BinString to compare against.</param>
+        /// <returns>A positive int if this BinString should be sorted after the other, a negative int if this BinString should be sorted before the other, and 0 if the BinStrings are identical.</returns>
         public int CompareTo(BinString other)
         {
             if (other is null) return 1;
@@ -345,12 +388,39 @@ namespace MiffTheFox
             else return 0;
         }
 
+        /// <summary>
+        /// Compares two BinStrings, based on sort order.
+        /// </summary>
+        /// <param name="x">The first BinString to compare.</param>
+        /// <param name="y">The second BinString to compare.</param>
+        /// <returns>A positive int if y comes before x, a negative int if x comes before y, 0 if x and y are identical.</returns>
+        public static int Compare(BinString x, BinString y)
+        {
+            if (ReferenceEquals(x, y)) return 0;
+            if (x is null) return -1;
+            if (y is null) return 1;
+            return x.CompareTo(y);
+        }
+
+        /// <summary>
+        /// Compares two BinStrings, based on sort order.
+        /// </summary>
+        /// <param name="x">The first BinString to compare.</param>
+        /// <param name="y">The second BinString to compare.</param>
+        /// <returns>True if x comes after y, false otherwise.</returns>
         public static bool operator >(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return false;
             if (x is null) return false;
             return x.CompareTo(y) > 0;
         }
+
+        /// <summary>
+        /// Compares two BinStrings, based on sort order.
+        /// </summary>
+        /// <param name="x">The first BinString to compare.</param>
+        /// <param name="y">The second BinString to compare.</param>
+        /// <returns>True if x comes before y, false otherwise.</returns>
         public static bool operator <(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return false;
@@ -358,12 +428,25 @@ namespace MiffTheFox
             return x.CompareTo(y) < 0;
         }
 
+        /// <summary>
+        /// Compares two BinStrings, based on sort order.
+        /// </summary>
+        /// <param name="x">The first BinString to compare.</param>
+        /// <param name="y">The second BinString to compare.</param>
+        /// <returns>True if x comes after or is equal to y, false otherwise.</returns>
         public static bool operator >=(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
             if (x is null) return false;
             return x.CompareTo(y) >= 0;
         }
+
+        /// <summary>
+        /// Compares two BinStrings, based on sort order.
+        /// </summary>
+        /// <param name="x">The first BinString to compare.</param>
+        /// <param name="y">The second BinString to compare.</param>
+        /// <returns>True if x comes before or is equal to y, false otherwise.</returns>
         public static bool operator <=(BinString x, BinString y)
         {
             if (ReferenceEquals(x, y)) return true;
@@ -371,6 +454,9 @@ namespace MiffTheFox
             return x.CompareTo(y) <= 0;
         }
 
+        /// <summary>
+        /// Creates a new BinString object with the same contents.
+        /// </summary>
         public object Clone() => new BinString(ToArray());
 
 #endregion
