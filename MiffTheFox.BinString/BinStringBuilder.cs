@@ -8,12 +8,19 @@ using System.Threading.Tasks;
 namespace MiffTheFox
 {
     /// <summary>
-    /// A buffer that can be used to build up a binary string
+    /// Repersents a buffer of bytes that can be appended to or pulled into a BinString.
     /// </summary>
     public class BinStringBuilder : IDisposable, IFormattable
     {
+        /// <summary>
+        /// The underlying MemoryStream being used to collect the binary data.
+        /// </summary>
         protected MemoryStream _MemStream;
-        public int Length { get => Convert.ToInt32(_MemStream.Position); }
+
+        /// <summary>
+        /// The number of bytes written to the BinStringBuilder.
+        /// </summary>
+        public int Length => Convert.ToInt32(_MemStream.Position);
 
         /// <summary>
         /// Creates a new BinStringBuilder with an expandable capacity initialized to zero.
@@ -44,7 +51,13 @@ namespace MiffTheFox
         /// </summary>
         public void Append(BinString data)
         {
+#if CORE
+            // use a span to avoid making an un-necessary clone
+            // of the binary string data
+            _MemStream.Write(data.AsSpan());
+#else
             Append(data.ToArray());
+#endif
         }
 
         /// <summary>
@@ -52,7 +65,7 @@ namespace MiffTheFox
         /// </summary>
         public void Append(byte data)
         {
-            Append(new byte[] { data });
+            _MemStream.WriteByte(data);
         }
 
         /// <summary>
@@ -72,22 +85,31 @@ namespace MiffTheFox
             return new BinString(_MemStream.ToArray());
         }
 
+        /// <summary>
+        /// Disposes the underlying MemoryStream.
+        /// </summary>
         public void Dispose()
         {
-            ((IDisposable)_MemStream).Dispose();
+            if (_MemStream != null)
+            {
+                ((IDisposable)_MemStream).Dispose();
+                _MemStream = null;
+            }
         }
 
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return ToBinString().ToString(format, formatProvider);
-        }
-        public string ToString(string format)
-        {
-            return ToBinString().ToString(format, null);
-        }
-        public override string ToString()
-        {
-            return ToBinString().ToString();
-        }
+        /// <summary>
+        /// Converts the binary data to its string repersentation. A format string identical to the one used by MiffTheFox.BinString controls formatting.
+        /// </summary>
+        public string ToString(string format, IFormatProvider formatProvider) => ToBinString().ToString(format, formatProvider);
+
+        /// <summary>
+        /// Converts the binary data to its string repersentation. A format string identical to the one used by MiffTheFox.BinString controls formatting.
+        /// </summary>
+        public string ToString(string format) => ToBinString().ToString(format, null);
+
+        /// <summary>
+        /// Converts the binary data to its string repersentation.
+        /// </summary>
+        public override string ToString() => ToBinString().ToString();
     }
 }
