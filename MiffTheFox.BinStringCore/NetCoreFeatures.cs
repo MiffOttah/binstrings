@@ -6,6 +6,10 @@ namespace MiffTheFox
 {
     partial class BinString
     {
+        /// <summary>
+        /// Creates a BinString from the provided byte span.
+        /// </summary>
+        /// <param name="data">The data to create the BinString from.</param>
         public BinString(Span<byte> data)
         {
             _Data = new byte[data.Length];
@@ -13,6 +17,10 @@ namespace MiffTheFox
             data.CopyTo(dspan);
         }
 
+        /// <summary>
+        /// Creates a BinString from the provided byte span.
+        /// </summary>
+        /// <param name="data">The data to create the BinString from.</param>
         public BinString(ReadOnlySpan<byte> data)
         {
             _Data = new byte[data.Length];
