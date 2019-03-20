@@ -497,6 +497,28 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Concatnates the BinString and byte array.
+        /// </summary>
+        public static BinString operator +(BinString x, byte[] y)
+        {
+            byte[] result = new byte[x.Length + y.Length];
+            x.CopyTo(result, 0);
+            y.CopyTo(result, x.Length);
+            return new BinString(result);
+        }
+
+        /// <summary>
+        /// Concatnates the BinString and byte array.
+        /// </summary>
+        public static BinString operator +(byte[] x, BinString y)
+        {
+            byte[] result = new byte[x.Length + y.Length];
+            x.CopyTo(result, 0);
+            y.CopyTo(result, x.Length);
+            return new BinString(result);
+        }
+
+        /// <summary>
         /// Repeats the BinString a number of times.
         /// </summary>
         /// <param name="count">The number of times to repeat the BinString.</param>
