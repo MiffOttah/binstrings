@@ -168,56 +168,7 @@ namespace MiffTheFox
                 _Data = encoding.GetBinString(encoded)._Data;
             }
         }
-
-        /// <summary>
-        /// Creates a BinString from an ASCII text string with non-ASCII bytes repersented by backslash-encoding.
-        /// </summary>
-        /// <param name="escapedData">The escaped string, such as produced by BinString.ToEscapedString</param>
-        public static BinString FromEscapedString(string escapedData)
-        {
-            if (escapedData is null) throw new ArgumentNullException("Provided data is null.", nameof(escapedData));
-            var result = new BinStringBuilder();
-
-            for (int i = 0; i < escapedData.Length; i++)
-            {
-                if (escapedData[i] == '\\')
-                {
-                    i++;
-                    if (i < escapedData.Length)
-                    {
-                        switch (escapedData[i])
-                        {
-                            case 'x':
-                                if ((i + 2) < escapedData.Length && int.TryParse(escapedData.Substring(i + 1, 2), System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out int hexValue))
-                                {
-                                    i += 2;
-                                    result.Append(Convert.ToByte(hexValue));
-                                    continue;
-                                }
-                                break;
-
-                            case '\\':
-                            case '\'':
-                            case '"':
-                                result.Append((byte)escapedData[i]);
-                                continue;
-                        }
-                    }
-                    throw new ArgumentException("Invalid escape sequence in data.", nameof(escapedData));
-                }
-                else if (escapedData[i] <= '~')
-                {
-                    result.Append((byte)escapedData[i]);
-                }
-                else
-                {
-                    throw new ArgumentException("Escaped data contains a non-ASCII character.", nameof(escapedData));
-                }
-            }
-
-            return result.ToBinString();
-        }
-
+        
         /// <summary>
         /// Creates a BinString from a series of bytes
         /// </summary>

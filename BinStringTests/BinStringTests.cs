@@ -460,7 +460,7 @@ namespace BinStringTests
         [TestMethod]
         public void StreamConversionTest()
         {
-            var b = BinString.FromEscapedString("Hello, world.");
+            var b = new BinString("Hello, world.", Encoding.ASCII);
 
             // create from memory stream
             using (var ms = new MemoryStream(b))
