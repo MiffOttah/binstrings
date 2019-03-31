@@ -48,10 +48,17 @@ namespace MiffTheFox
             if (from == IntegerEndianess.Native) from = BitConverter.IsLittleEndian ? IntegerEndianess.LittleEndian : IntegerEndianess.BigEndian;
             if (to == IntegerEndianess.Native) to = BitConverter.IsLittleEndian ? IntegerEndianess.LittleEndian : IntegerEndianess.BigEndian;
 
-            byte[] d = new byte[_Data.Length];
-            _Data.CopyTo(d, 0);
-            if (from != to) Array.Reverse(d);
-            return new BinString(d);
+            if (from == to)
+            {
+                return this;
+            }
+            else
+            {
+                byte[] d = new byte[_Data.Length];
+                _Data.CopyTo(d, 0);
+                Array.Reverse(d);
+                return new BinString(d, false);
+            }
         }
 
         short IConvertible.ToInt16(IFormatProvider provider) => _BitConvert(2, BitConverter.ToInt16);

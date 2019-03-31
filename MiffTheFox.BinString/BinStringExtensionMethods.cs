@@ -73,36 +73,36 @@ namespace MiffTheFox
         /// Converts the given floating-point value to a binstring.
         /// </summary>
         public static BinString ToBinString(this double n) => (BinString)BitConverter.GetBytes(n);
-        
-        /// <summary>
-        /// Converts the given numeric value to a binstring with the specified endianess.
-        /// </summary>
-        public static BinString ToBinString(this short n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         /// <summary>
         /// Converts the given numeric value to a binstring with the specified endianess.
         /// </summary>
-        public static BinString ToBinString(this ushort n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+        public static BinString ToBinString(this short n, IntegerEndianess endianess) => new BinString(BitConverter.GetBytes(n), false).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         /// <summary>
         /// Converts the given numeric value to a binstring with the specified endianess.
         /// </summary>
-        public static BinString ToBinString(this int n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+        public static BinString ToBinString(this ushort n, IntegerEndianess endianess) => new BinString(BitConverter.GetBytes(n), false).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         /// <summary>
         /// Converts the given numeric value to a binstring with the specified endianess.
         /// </summary>
-        public static BinString ToBinString(this uint n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+        public static BinString ToBinString(this int n, IntegerEndianess endianess) => new BinString(BitConverter.GetBytes(n), false).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         /// <summary>
         /// Converts the given numeric value to a binstring with the specified endianess.
         /// </summary>
-        public static BinString ToBinString(this long n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+        public static BinString ToBinString(this uint n, IntegerEndianess endianess) => new BinString(BitConverter.GetBytes(n), false).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         /// <summary>
         /// Converts the given numeric value to a binstring with the specified endianess.
         /// </summary>
-        public static BinString ToBinString(this ulong n, IntegerEndianess endianess) => ((BinString)BitConverter.GetBytes(n)).ConvertEndianess(IntegerEndianess.Native, endianess);
+        public static BinString ToBinString(this long n, IntegerEndianess endianess) => new BinString(BitConverter.GetBytes(n), false).ConvertEndianess(IntegerEndianess.Native, endianess);
+
+        /// <summary>
+        /// Converts the given numeric value to a binstring with the specified endianess.
+        /// </summary>
+        public static BinString ToBinString(this ulong n, IntegerEndianess endianess) => new BinString(BitConverter.GetBytes(n), false).ConvertEndianess(IntegerEndianess.Native, endianess);
 
         #endregion
 
@@ -183,7 +183,7 @@ namespace MiffTheFox
         {
             var buffer = new byte[length];
             rng.NextBytes(buffer);
-            return new BinString(buffer);
+            return new BinString(buffer, false);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace MiffTheFox
         {
             var buffer = new byte[length];
             rng.GetBytes(buffer);
-            return new BinString(buffer);
+            return new BinString(buffer, false);
         }
 
         #endregion

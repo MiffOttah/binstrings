@@ -23,7 +23,7 @@ namespace MiffTheFox
         /// Returns the number of bytes in the BinString.
         /// </summary>
         public int Length => _Data.Length;
-        
+
         int IReadOnlyCollection<byte>.Count => _Data.Length;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MiffTheFox
         /// </summary>
         public byte this[int index] => _Data[index];
 
-#region Array methods
+        #region Array methods
 
         /// <summary>
         /// Returns the BinString as an array of System.Byte.
@@ -66,9 +66,9 @@ namespace MiffTheFox
             Array.Copy(_Data, sourceIndex, buffer, bufferIndex, length);
         }
 
-#endregion
+        #endregion
 
-#region Creation methods
+        #region Creation methods
 
         /// <summary>
         /// Returns an empty BinString.
@@ -88,16 +88,29 @@ namespace MiffTheFox
         /// <summary>
         /// Creates a BinString with the specified binary data.
         /// </summary>
-        public BinString(byte[] data)
+        public BinString(byte[] data) : this(data, true)
+        {
+        }
+
+        /// <summary>
+        /// Creates a BinString with the specified binary data, either as a reference or a clone.
+        /// This method is not for public consumption, allowing external references could create
+        /// externally mutable BinStrings, which is not permitted.
+        /// </summary>
+        internal BinString(byte[] data, bool clone)
         {
             if (data == null)
             {
                 _Data = new byte[0];
             }
-            else
+            else if (clone)
             {
                 _Data = new byte[data.Length];
                 Array.Copy(data, _Data, data.Length);
+            }
+            else
+            {
+                _Data = data;
             }
         }
 
@@ -168,13 +181,13 @@ namespace MiffTheFox
                 _Data = encoding.GetBinString(encoded)._Data;
             }
         }
-        
+
         /// <summary>
         /// Creates a BinString from a series of bytes
         /// </summary>
         public static BinString FromBytes(params byte[] data)
         {
-            return new BinString(data);
+            return new BinString(data, true);
         }
 
         /// <summary>
@@ -199,7 +212,7 @@ namespace MiffTheFox
                 result[i >> 1] = Convert.ToByte(parsedHex[i] << 4 | parsedHex[i + 1]);
             }
 
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         #endregion
@@ -410,9 +423,9 @@ namespace MiffTheFox
         /// </summary>
         public object Clone() => new BinString(ToArray());
 
-#endregion
+        #endregion
 
-#region String operations
+        #region String operations
 
         /// <summary>
         /// Concatenates two BinStrings
@@ -422,7 +435,7 @@ namespace MiffTheFox
             byte[] result = new byte[x.Length + y.Length];
             x.CopyTo(result, 0);
             y.CopyTo(result, x.Length);
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -433,7 +446,7 @@ namespace MiffTheFox
             byte[] result = new byte[x.Length + 1];
             x.CopyTo(result, 0);
             result[result.Length - 1] = append;
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -444,7 +457,7 @@ namespace MiffTheFox
             byte[] result = new byte[x.Length + 1];
             x.CopyTo(result, 1);
             result[0] = prepend;
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -455,7 +468,7 @@ namespace MiffTheFox
             byte[] result = new byte[x.Length + y.Length];
             x.CopyTo(result, 0);
             y.CopyTo(result, x.Length);
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -466,7 +479,7 @@ namespace MiffTheFox
             byte[] result = new byte[x.Length + y.Length];
             x.CopyTo(result, 0);
             y.CopyTo(result, x.Length);
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -484,7 +497,7 @@ namespace MiffTheFox
             {
                 CopyTo(result, i * _Data.Length);
             }
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -507,7 +520,7 @@ namespace MiffTheFox
             CopyTo(0, result, 0, index);
             toInsert.CopyTo(0, result, index, toInsert.Length);
             CopyTo(index, result, index + toInsert.Length, _Data.Length - index);
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -520,7 +533,7 @@ namespace MiffTheFox
             CopyTo(0, result, 0, index);
             result[index] = toInsert;
             CopyTo(index, result, index + 1, _Data.Length - index);
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -540,7 +553,7 @@ namespace MiffTheFox
             {
                 result[i] = padding;
             }
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -559,7 +572,7 @@ namespace MiffTheFox
             {
                 result[i] = padding;
             }
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -583,7 +596,7 @@ namespace MiffTheFox
             {
                 CopyTo(index + length, result, index, followLength);
             }
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -601,7 +614,7 @@ namespace MiffTheFox
 
             byte[] result = new byte[finalLength];
             CopyTo(index, result, 0, finalLength);
-            return new BinString(result);
+            return new BinString(result, false);
         }
 
         /// <summary>
@@ -775,9 +788,9 @@ namespace MiffTheFox
             return false;
         }
 
-#endregion
+        #endregion
 
-#region IConvertable methods
+        #region IConvertable methods
 
         TypeCode IConvertible.GetTypeCode()
         {
@@ -908,9 +921,9 @@ namespace MiffTheFox
             }
         }
 
-#endregion
+        #endregion
 
-#region Serialization
+        #region Serialization
         /// <summary>
         /// Reconstructs a seralized BinString.
         /// </summary>
@@ -931,9 +944,9 @@ namespace MiffTheFox
 
             info.AddValue("BinStringData", ToBase64String());
         }
-#endregion
+        #endregion
 
-#region Stream conversion
+        #region Stream conversion
 
         /// <summary>
         /// Converts the BinString to a Stream.
@@ -963,6 +976,6 @@ namespace MiffTheFox
             }
         }
 
-#endregion
+        #endregion
     }
 }

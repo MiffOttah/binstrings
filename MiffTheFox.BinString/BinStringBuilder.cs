@@ -82,7 +82,7 @@ namespace MiffTheFox
         /// </summary>
         public BinString ToBinString()
         {
-            return new BinString(_MemStream.ToArray());
+            return new BinString(_MemStream.ToArray(), false);
         }
 
         /// <summary>
