@@ -29,17 +29,17 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Returns a Span&lt;byte&gt; containing the binary data.
+        /// Returns a ReadOnlySpan&lt;byte&gt; containing the binary data.
         /// </summary>
         public ReadOnlySpan<byte> AsSpan() => new ReadOnlySpan<byte>(_Data);
 
         /// <summary>
-        /// Returns a Span&lt;byte&gt; containing a portion of the binary data.
+        /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.
         /// </summary>
         public ReadOnlySpan<byte> Slice(int start) => new ReadOnlySpan<byte>(_Data, start, _Data.Length - start);
 
         /// <summary>
-        /// Returns a Span&lt;byte&gt; containing a portion of the binary data.
+        /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.
         /// </summary>
         public ReadOnlySpan<byte> Slice(int start, int length) => new ReadOnlySpan<byte>(_Data, start, length);
     }
