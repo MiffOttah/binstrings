@@ -15,7 +15,7 @@ namespace BinStringTests
         public void BuilderBasicTest()
         {
             var builder = new BinStringBuilder();
-            var expected = BinString.FromBytes("0102030405060708090A0B0C");
+            var expected = BinString.FromBytes("0102030405060708090A0B0C0D");
 
             builder.Append(BinString.FromBytes(1, 2, 3));
             builder.Append(BinString.FromBytes(4, 5, 6));
@@ -23,10 +23,11 @@ namespace BinStringTests
             builder.Append(new byte[] { 8, 9, 10 });
 
             var builder2 = new BinStringBuilder();
-            builder2.Append(BinString.FromBytes("0A0B0C"));
+            builder2.Append(BinString.FromBytes("0B0C"));
+            builder2.Append(0x0d);
             builder.Append(builder2);
 
-            Assert.AreEqual(12, builder.Length);
+            Assert.AreEqual(13, builder.Length);
             Assert.AreEqual(expected, builder.ToBinString());
             Assert.AreEqual(expected.ToString("s"), builder.ToString("s"));
         }
