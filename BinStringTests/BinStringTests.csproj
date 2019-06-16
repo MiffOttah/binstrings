@@ -53,6 +53,7 @@
     <Compile Include="BinStringTests.cs" />
     <Compile Include="BinStringTypeConverterTests.cs" />
     <Compile Include="BitOperationsTests.cs" />
+    <Compile Include="BuilderTests.cs" />
     <Compile Include="ExtensionMethodTests.cs" />
     <Compile Include="Mocks\MockStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

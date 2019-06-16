@@ -20,7 +20,9 @@ namespace MiffTheFox
         /// <summary>
         /// The number of bytes written to the BinStringBuilder.
         /// </summary>
-        public int Length => Convert.ToInt32(_MemStream.Position);
+        public int Length => _MemStream is null
+            ? throw new ObjectDisposedException(null)
+            : Convert.ToInt32(_MemStream.Position);
 
         /// <summary>
         /// Creates a new BinStringBuilder with an expandable capacity initialized to zero.
@@ -44,6 +46,8 @@ namespace MiffTheFox
         public void Append(byte[] data)
         {
             if (_MemStream is null) throw new ObjectDisposedException(null);
+
+            if (data is null) return;
             _MemStream?.Write(data, 0, data.Length);
         }
 
@@ -52,6 +56,8 @@ namespace MiffTheFox
         /// </summary>
         public void Append(BinString data)
         {
+            if (data is null) return;
+
 #if CORE
             // use a span to avoid making an un-necessary clone
             // of the binary string data
@@ -77,7 +83,7 @@ namespace MiffTheFox
         /// <param name="data"></param>
         public void Append(BinStringBuilder data)
         {
-            if (data is null) throw new ArgumentNullException(nameof(data));
+            if (data is null) return;
             Append(data._MemStream?.ToArray());
         }
 
@@ -95,7 +101,6 @@ namespace MiffTheFox
         /// </summary>
         public void Dispose()
         {
-            _MemStream?.Close();
             (_MemStream as IDisposable)?.Dispose();
             _MemStream = null;
         }
