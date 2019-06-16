@@ -233,15 +233,24 @@ namespace BinStringTests
             var foo = BinString.FromBytes(1, 2, 3);
             var bar = BinString.FromBytes(4, 5, 6);
 
+            Assert.AreEqual(BinString.FromBytes(1, 2, 3, 4, 5, 6), BinString.Concat(foo, bar));
             Assert.AreEqual(BinString.FromBytes(1, 2, 3, 4, 5, 6), foo + bar);
             Assert.AreEqual(BinString.FromBytes(1, 2, 3, 255), foo + 255);
             Assert.AreEqual(BinString.FromBytes(128, 1, 2, 3), 128 + foo);
+            Assert.AreEqual(BinString.FromBytes(1, 2, 3, 4, 5, 6, 1, 2, 3), BinString.Concat(foo, bar, foo));
+            Assert.AreEqual(BinString.FromBytes(1, 2, 3, 4, 5, 6, 1, 2, 3), BinString.Concat(foo, BinString.Empty, bar, null, foo));
 
             var baz1 = BinString.Join((new string[] { "Lorem", "Ipsum", "Dolor", "Sit", "Amet" }).Select(_ => new BinString(_, Encoding.ASCII)), (BinString)0x20);
             Assert.AreEqual("Lorem Ipsum Dolor Sit Amet", baz1.ToString(Encoding.ASCII));
 
             var baz2 = BinString.Join((new string[] { "Aenean", "Porttitor", "Dictumst" }).Select(_ => new BinString(_, Encoding.ASCII)));
             Assert.AreEqual("AeneanPorttitorDictumst", baz2.ToString(Encoding.ASCII));
+
+            Assert.AreEqual(foo, foo + (BinString)null);
+            Assert.AreEqual(foo, (BinString)null + foo);
+
+            Assert.AreEqual(foo, foo + (byte[])null);
+            Assert.AreEqual(foo, (byte[])null + foo);
         }
 
         [TestMethod]

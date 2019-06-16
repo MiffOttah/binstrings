@@ -428,10 +428,13 @@ namespace MiffTheFox
         #region String operations
 
         /// <summary>
-        /// Concatenates two BinStrings
+        /// Concatenates two BinStrings.
         /// </summary>
-        public static BinString operator +(BinString x, BinString y)
+        public static BinString Concat(BinString x, BinString y)
         {
+            if (x is null || x.Length == 0) return y is null ? Empty : y;
+            if (y is null || y.Length == 0) return x;
+
             byte[] result = new byte[x.Length + y.Length];
             x.CopyTo(result, 0);
             y.CopyTo(result, x.Length);
@@ -439,14 +442,46 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Concatenates an arbitrary number of BinStrings.
+        /// </summary>
+        public static BinString Concat(params BinString[] binstrings)
+        {
+            byte[] result = new byte[(binstrings.Sum(b => b is null ? 0 : b.Length))];
+            int index = 0;
+
+            foreach (var b in binstrings)
+            {
+                if (b != null && b.Length > 0)
+                {
+                    b.CopyTo(result, index);
+                    index += b.Length;
+                }
+            }
+
+            return new BinString(result, false);
+        }
+
+        /// <summary>
+        /// Concatenates two BinStrings
+        /// </summary>
+        public static BinString operator +(BinString x, BinString y) => Concat(x, y);
+
+        /// <summary>
         /// Appends a byte to a BinString
         /// </summary>
         public static BinString operator +(BinString x, byte append)
         {
-            byte[] result = new byte[x.Length + 1];
-            x.CopyTo(result, 0);
-            result[result.Length - 1] = append;
-            return new BinString(result, false);
+            if (x is null)
+            {
+                return new BinString(new byte[] { append }, false);
+            }
+            else
+            {
+                byte[] result = new byte[x.Length + 1];
+                x.CopyTo(result, 0);
+                result[result.Length - 1] = append;
+                return new BinString(result, false);
+            }
         }
 
         /// <summary>
@@ -454,10 +489,17 @@ namespace MiffTheFox
         /// </summary>
         public static BinString operator +(byte prepend, BinString x)
         {
-            byte[] result = new byte[x.Length + 1];
-            x.CopyTo(result, 1);
-            result[0] = prepend;
-            return new BinString(result, false);
+            if (x is null)
+            {
+                return new BinString(new byte[] { prepend }, false);
+            }
+            else
+            {
+                byte[] result = new byte[x.Length + 1];
+                x.CopyTo(result, 1);
+                result[0] = prepend;
+                return new BinString(result, false);
+            }
         }
 
         /// <summary>
@@ -465,10 +507,10 @@ namespace MiffTheFox
         /// </summary>
         public static BinString operator +(BinString x, byte[] y)
         {
-            byte[] result = new byte[x.Length + y.Length];
-            x.CopyTo(result, 0);
-            y.CopyTo(result, x.Length);
-            return new BinString(result, false);
+            // since the binstring y is only temporarily created
+            // to call into the Concat method, we don't clone (and
+            // create a potentially mutable binstring)
+            return Concat(x, y is null ? null : new BinString(y, false));
         }
 
         /// <summary>
@@ -476,10 +518,10 @@ namespace MiffTheFox
         /// </summary>
         public static BinString operator +(byte[] x, BinString y)
         {
-            byte[] result = new byte[x.Length + y.Length];
-            x.CopyTo(result, 0);
-            y.CopyTo(result, x.Length);
-            return new BinString(result, false);
+            // since the binstring y is only temporarily created
+            // to call into the Concat method, we don't clone (and
+            // create a potentially mutable binstring)
+            return Concat(x is null ? null : new BinString(x, false), y);
         }
 
         /// <summary>
