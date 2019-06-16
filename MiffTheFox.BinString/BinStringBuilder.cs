@@ -43,7 +43,8 @@ namespace MiffTheFox
         /// </summary>
         public void Append(byte[] data)
         {
-            _MemStream.Write(data, 0, data.Length);
+            if (_MemStream is null) throw new ObjectDisposedException(null);
+            _MemStream?.Write(data, 0, data.Length);
         }
 
         /// <summary>
@@ -54,7 +55,8 @@ namespace MiffTheFox
 #if CORE
             // use a span to avoid making an un-necessary clone
             // of the binary string data
-            _MemStream.Write(data.AsSpan());
+            if (_MemStream is null) throw new ObjectDisposedException(null);
+            _MemStream?.Write(data.AsSpan());
 #else
             Append(data.ToArray());
 #endif
@@ -65,7 +67,8 @@ namespace MiffTheFox
         /// </summary>
         public void Append(byte data)
         {
-            _MemStream.WriteByte(data);
+            if (_MemStream is null) throw new ObjectDisposedException(null);
+            _MemStream?.WriteByte(data);
         }
 
         /// <summary>
@@ -74,7 +77,8 @@ namespace MiffTheFox
         /// <param name="data"></param>
         public void Append(BinStringBuilder data)
         {
-            Append(data._MemStream.ToArray());
+            if (data is null) throw new ArgumentNullException(nameof(data));
+            Append(data._MemStream?.ToArray());
         }
 
         /// <summary>
@@ -82,7 +86,8 @@ namespace MiffTheFox
         /// </summary>
         public BinString ToBinString()
         {
-            return new BinString(_MemStream.ToArray(), false);
+            if (_MemStream is null) throw new ObjectDisposedException(null);
+            return new BinString(_MemStream?.ToArray(), false);
         }
 
         /// <summary>
@@ -90,11 +95,9 @@ namespace MiffTheFox
         /// </summary>
         public void Dispose()
         {
-            if (_MemStream != null)
-            {
-                ((IDisposable)_MemStream).Dispose();
-                _MemStream = null;
-            }
+            _MemStream?.Close();
+            (_MemStream as IDisposable)?.Dispose();
+            _MemStream = null;
         }
 
         /// <summary>
