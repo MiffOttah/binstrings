@@ -855,7 +855,7 @@ namespace MiffTheFox
             else if (_Data.Length == 1)
             {
                 byte n = _Data[0];
-                if (n == 0 || (n >= 0x20 && n <= 0x7e))
+                if (n <= 0x7e)
                 {
                     return (char)n;
                 }

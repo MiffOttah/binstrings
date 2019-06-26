@@ -429,6 +429,7 @@ namespace BinStringTests
 
             Assert.AreEqual('\0', ((IConvertible)BinString.FromBytes(0)).ToChar(CultureInfo.InvariantCulture));
             Assert.AreEqual('\0', ((IConvertible)BinString.FromBytes()).ToChar(CultureInfo.InvariantCulture));
+            Assert.AreEqual('\t', ((IConvertible)BinString.FromBytes(0x9)).ToChar(CultureInfo.InvariantCulture));
             Assert.AreEqual('$', ((IConvertible)BinString.FromBytes(0x24)).ToChar(CultureInfo.InvariantCulture));
             Assert.ThrowsException<OverflowException>(() => ((IConvertible)BinString.FromBytes(0xff)).ToChar(CultureInfo.InvariantCulture));
             Assert.ThrowsException<OverflowException>(() => ((IConvertible)BinString.FromBytes(0x31, 0x32)).ToChar(CultureInfo.InvariantCulture));
