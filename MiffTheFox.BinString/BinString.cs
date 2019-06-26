@@ -238,7 +238,7 @@ namespace MiffTheFox
         /// <summary>
         /// Converts the byte to a BinString.
         /// </summary>
-        public static explicit operator BinString(byte source) => new BinString(new byte[] { source });
+        public static explicit operator BinString(byte source) => new BinString(new byte[] { source }, false);
 
         /// <summary>
         /// Returns a hash of the contents of the BinString.
@@ -432,8 +432,8 @@ namespace MiffTheFox
         /// </summary>
         public static BinString Concat(BinString x, BinString y)
         {
-            if (x is null || x.Length == 0) return y is null ? Empty : y;
-            if (y is null || y.Length == 0) return x;
+            if (IsNullOrEmpty(x)) return y is null ? Empty : y;
+            if (IsNullOrEmpty(y)) return x;
 
             byte[] result = new byte[x.Length + y.Length];
             x.CopyTo(result, 0);
@@ -446,12 +446,12 @@ namespace MiffTheFox
         /// </summary>
         public static BinString Concat(params BinString[] binstrings)
         {
-            byte[] result = new byte[(binstrings.Sum(b => b is null ? 0 : b.Length))];
+            byte[] result = new byte[binstrings.Sum(b => b?.Length ?? 0)];
             int index = 0;
 
             foreach (var b in binstrings)
             {
-                if (b != null && b.Length > 0)
+                if (!IsNullOrEmpty(b))
                 {
                     b.CopyTo(result, index);
                     index += b.Length;
@@ -473,7 +473,7 @@ namespace MiffTheFox
         {
             if (x is null)
             {
-                return new BinString(new byte[] { append }, false);
+                return (BinString)append;
             }
             else
             {
@@ -491,7 +491,7 @@ namespace MiffTheFox
         {
             if (x is null)
             {
-                return new BinString(new byte[] { prepend }, false);
+                return (BinString)prepend;
             }
             else
             {
@@ -510,7 +510,8 @@ namespace MiffTheFox
             // since the binstring y is only temporarily created
             // to call into the Concat method, we don't clone (and
             // create a potentially mutable binstring)
-            return Concat(x, y is null ? null : new BinString(y, false));
+            // the BinString(byte[], bool) constructor will accept a null first parameter
+            return Concat(x, new BinString(y, false));
         }
 
         /// <summary>
@@ -521,7 +522,8 @@ namespace MiffTheFox
             // since the binstring y is only temporarily created
             // to call into the Concat method, we don't clone (and
             // create a potentially mutable binstring)
-            return Concat(x is null ? null : new BinString(x, false), y);
+            // the BinString(byte[], bool) constructor will accept a null first parameter
+            return Concat(new BinString(x, false), y);
         }
 
         /// <summary>
