@@ -74,6 +74,15 @@ namespace BinStringTests
         }
 
         [TestMethod]
+        public void CreationFromEnumerableTest()
+        {
+            var str = new BinString(Enumerable.Range(5, 20).Select(x => (byte)x));
+            Assert.AreEqual(20, str.Length);
+            Assert.AreEqual(5, str[0]);
+            Assert.AreEqual(9, str[4]);
+        }
+
+        [TestMethod]
         public void CreationFromPartOfByteArray()
         {
             byte[] sourceArray = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };

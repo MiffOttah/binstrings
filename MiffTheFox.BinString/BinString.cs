@@ -93,6 +93,13 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Creates a BinString with the specified binary data.
+        /// </summary>
+        public BinString(IEnumerable<byte> data) : this (Enumerable.ToArray(data), false)
+        {
+        }
+
+        /// <summary>
         /// Creates a BinString with the specified binary data, either as a reference or a clone.
         /// This method is not for public consumption, allowing external references could create
         /// externally mutable BinStrings, which is not permitted.
