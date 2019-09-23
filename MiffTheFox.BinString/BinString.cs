@@ -669,6 +669,22 @@ namespace MiffTheFox
         }
 
         /// <summary>
+        /// Extracts a number of bytes from the BinString starting and ending at specified indicies.
+        /// </summary>
+        /// <param name="start">The index to begin extracting bytes.</param>
+        /// <param name="end">The index to stop extracting bytes.</param>
+        public BinString Range(int start, int end)
+        {
+            _CheckIndex(start);
+            _CheckIndex(end);
+            if (start > end) throw new ArgumentException("End index cannot be less than start index.");
+
+            var result = new byte[end - start];
+            CopyTo(start, result, 0, result.Length);
+            return new BinString(result, false);
+        }
+
+        /// <summary>
         /// Removes any occurance of the specified byte from the beginning and end of the BinString.
         /// </summary>
         public BinString Trim(byte trimByte = 0)

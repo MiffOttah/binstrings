@@ -42,5 +42,30 @@ namespace MiffTheFox
         /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.
         /// </summary>
         public ReadOnlySpan<byte> Slice(int start, int length) => new ReadOnlySpan<byte>(_Data, start, length);
+
+        /// <summary>
+        /// Retreives the byte at the specified index.
+        /// </summary>
+        public byte this[Index index]
+        {
+            get
+            {
+                if (index.Value >= Length) throw new IndexOutOfRangeException();
+                return _Data[index.IsFromEnd ? _Data.Length - index.Value : index.Value];
+            }
+        }
+         
+        /// <summary>
+        /// Retrieves a substring feating the specified range.
+        /// </summary>
+        public BinString this[Range range]
+        {
+            get
+            {
+                int start = range.Start.IsFromEnd ? _Data.Length - (range.Start.Value) : range.Start.Value;
+                int end = range.End.IsFromEnd ? _Data.Length - (range.End.Value) : range.End.Value;
+                return Range(start, end);
+            }
+        }
     }
 }

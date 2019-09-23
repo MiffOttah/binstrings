@@ -324,6 +324,17 @@ namespace BinStringTests
             Assert.AreEqual(0, input.Substring(4).Length);
             Assert.ThrowsException<IndexOutOfRangeException>(() => input.Substring(6));
             Assert.ThrowsException<IndexOutOfRangeException>(() => input.Substring(-1));
+
+            Assert.AreEqual(input, input.Range(0, 4));
+            Assert.AreEqual("AB", input.Range(0, 2).ToString(Encoding.ASCII));
+            Assert.AreEqual("B", input.Range(1, 2).ToString(Encoding.ASCII));
+            Assert.AreEqual("ABC", input.Range(0, 3).ToString(Encoding.ASCII));
+            Assert.AreEqual("BCD", input.Range(1, 4).ToString(Encoding.ASCII));
+            Assert.AreEqual("", input.Range(1, 1).ToString(Encoding.ASCII));
+            Assert.ThrowsException<IndexOutOfRangeException>(() => input.Range(0, 6));
+            Assert.ThrowsException<IndexOutOfRangeException>(() => input.Range(7, 10));
+            Assert.ThrowsException<IndexOutOfRangeException>(() => input.Range(-4, 2));
+            Assert.ThrowsException<ArgumentException>(() => input.Range(3, 0));
         }
 
         [TestMethod]
