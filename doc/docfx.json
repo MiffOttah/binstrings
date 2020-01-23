@@ -4,8 +4,9 @@
       "src": [
         {
           "files": [
-            "**.csproj"
+            "MiffTheFox.BinStringCore/*.csproj"
           ],
+          "src": ".."
         }
       ],
       "dest": "api",
