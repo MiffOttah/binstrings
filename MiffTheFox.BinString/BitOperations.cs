@@ -4,7 +4,7 @@ using System.IO;
 namespace MiffTheFox.BitOperations
 {
     /// <summary>
-    /// Provides a method of creating binary data bit-per-bit
+    /// Provides a method of creating binary data bit-per-bit.
     /// </summary>
     public class BitWriter
     {
@@ -14,14 +14,14 @@ namespace MiffTheFox.BitOperations
         private int _Value = 0;
 
         /// <summary>
-        /// The number of bits written to the writer so far
+        /// The number of bits written to the writer so far.
         /// </summary>
         public int BitsWritten => _Builder.Length * 8 + _Index;
 
         /// <summary>
-        /// Appends the given bit
+        /// Appends the given bit.
         /// </summary>
-        /// <param name="bit">The bit to append, true for 1 and false for 0</param>
+        /// <param name="bit">The bit to append, true for 1 and false for 0.</param>
         public void Write(bool bit)
         {
             if (bit) _Value |= 1 << 7 - _Index;
@@ -36,9 +36,9 @@ namespace MiffTheFox.BitOperations
         }
 
         /// <summary>
-        /// Appends the `count` least significant bits of `bitSource`
+        /// Appends a number of bits from the least-significant bits of an an integer source.
         /// </summary>
-        /// <param name="bitSource">The source of bits to write</param>
+        /// <param name="bitSource">The source of bits to write.</param>
         /// <param name="count">The number of bits (starting from the least significant bits) to append.</param>
         public void WriteBits(int bitSource, int count)
         {
@@ -53,10 +53,13 @@ namespace MiffTheFox.BitOperations
         }
 
         /// <summary>
-        /// Converts the bitwise data to a binary string
+        /// Converts the bitwise data to a binary string.
         /// </summary>
         /// <param name="unevenMode">The behavior to use when an uneven (non multiple of 8) bits have been written.</param>
-        /// <returns></returns>
+        /// <returns>A BinString containing the bits</returns>
+        /// <exception cref="InvalidOperationException">A non-even number of bits was written to the BitWriter and <paramref name="unevenMode"/> is <see cref="BitWriterUnevenMode.Disallow"/>.</exception>
+        /// <exception cref="ArgumentException">An invalid <see cref="BitWriterUnevenMode" /> was provided.</exception>
+        /// <seealso cref="BitWriterUnevenMode"/>
         public BinString ToBinString(BitWriterUnevenMode unevenMode)
         {
             if (_Index == 0)
@@ -94,7 +97,7 @@ namespace MiffTheFox.BitOperations
     public enum BitWriterUnevenMode
     {
         /// <summary>
-        /// A InvalidOperationException will be thrown.
+        /// An InvalidOperationException will be thrown.
         /// </summary>
         Disallow = 0,
 
@@ -110,7 +113,7 @@ namespace MiffTheFox.BitOperations
     }
 
     /// <summary>
-    /// Provides a method of consuming binary data bit-by-bit
+    /// Provides a method of consuming binary data bit-by-bit.
     /// </summary>
     public class BitReader
     {
@@ -152,10 +155,10 @@ namespace MiffTheFox.BitOperations
         }
 
         /// <summary>
-        /// Attempts to read a single bit
+        /// Attempts to read a single bit from the source.
         /// </summary>
-        /// <param name="value">The bit value read</param>
-        /// <returns>True if sucessfully read, false if the end of stream was reached.</returns>
+        /// <param name="value">The bit value read, true for 1 and false for 0.</param>
+        /// <returns>True if sucessfully read, false if the end of source was reached.</returns>
         public bool TryReadBit(out bool value)
         {
             if (_BitIndex == 8)
@@ -182,8 +185,9 @@ namespace MiffTheFox.BitOperations
         /// Attempts to read up to 32 bits.
         /// </summary>
         /// <param name="count">The maximum number of bits to read.</param>
-        /// <param name="values">The bits read, aligned to the LSB padded on the LSB side to reach count length.</param>
+        /// <param name="values">The bits read, aligned to the LSB padded on the LSB side to reach <paramref name="count"/> length.</param>
         /// <returns>The numer of bits actually read.</returns>
+        /// <exception cref="ArgumentException"><paramref name="count"/> must be between 0 and 32, inclusive.</exception>
         public int ReadBits(int count, out int values)
         {
             if (count < 0 || count > 32) throw new ArgumentException("Invalid number of bits.", nameof(count));
