@@ -135,12 +135,12 @@ namespace MiffTheFox
     public enum IntegerEndianess
     {
         /// <summary>
-        /// The endianess of the native system, based on BitConverter.IsLittleEndian.
+        /// The native endianess of the platform the code is running on.
         /// </summary>
         Native = 0,
 
         /// <summary>
-        /// Big-endian format, with the least significant byte last.
+        /// Big-endian format, also known as network order, with the least significant byte last.
         /// </summary>
         BigEndian = 1,
 

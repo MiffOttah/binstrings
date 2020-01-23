@@ -147,10 +147,13 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Reads an amount of binary data from the stream and returns it as a BinString. To read the entire stream, use BinString.FromStream
+        /// Reads an amount of binary data from the stream and returns it as a BinString.
         /// </summary>
         /// <param name="stream">The stream to be read from.</param>
         /// <param name="bufferSize">The maximum amount of data to read from the stream.</param>
+        /// <returns>A BinString containing up to <paramref name="bufferSize"/> bytes of data from <paramref name="stream"/>.</returns>
+        /// <remarks>To read the entirety of a stream, use <see cref="BinString.FromStream(Stream)"/>.</remarks>
+        /// <seealso cref="BinString.FromStream(Stream)"/>
         public static BinString ReadBinString(this Stream stream, int bufferSize)
         {
             var buffer = new byte[bufferSize];
@@ -177,8 +180,11 @@ namespace MiffTheFox
         #region Random methods
 
         /// <summary>
-        /// Returns a binary string of the specified length with random contents.
+        /// Returns a BinString of the specified length with random contents.
         /// </summary>
+        /// <param name="rng">The random number generator to use as a source of random data.</param>
+        /// <param name="length">The length of the resultant BinString.</param>
+        /// <returns>A BinString of the specified length with random contents.</returns>
         public static BinString NextBinString(this Random rng, int length)
         {
             var buffer = new byte[length];
@@ -189,6 +195,9 @@ namespace MiffTheFox
         /// <summary>
         /// Returns a binary string of the specified length with random contents.
         /// </summary>
+        /// <param name="rng">The random number generator to use as a source of random data.</param>
+        /// <param name="length">The length of the resultant BinString.</param>
+        /// <returns>A BinString of the specified length with random contents.</returns>
         public static BinString GetBinString(this System.Security.Cryptography.RandomNumberGenerator rng, int length)
         {
             var buffer = new byte[length];

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MiffTheFox
 {
     /// <summary>
-    /// Implements the Boyer-Moore search algorithim for BinStrings.
+    /// Allows searching BinStrings for a given substring (needle) using the Boyer-Moore search algorithm.
     /// </summary>
     public class BinBoyerMoore
     {
@@ -27,6 +27,7 @@ namespace MiffTheFox
         /// Creates a new instance of the binary Boyer-Moore search.
         /// </summary>
         /// <param name="needle">The substring being searched for.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="needle"/> is null.</exception>
         public BinBoyerMoore(BinString needle)
         {
             Needle = needle ?? throw new ArgumentNullException(nameof(needle));
@@ -38,12 +39,13 @@ namespace MiffTheFox
         /// Searched the provided BinString for the first occurrence of the needle. 
         /// </summary>
         /// <param name="haystack">The BinString to search for the needle.</param>
-        /// <returns>If the needle is found in the haystack, returns the (zero-based) index in the haystack where the needle was found. If the needle was not found, returns -1.</returns>
+        /// <returns>If the needle is found in the haystack, returns the (zero-based) index in the haystack where the needle was found. Otherwise, returns -1.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="haystack"/> is null.</exception>
         public int FindNeedleIn(BinString haystack)
         {
             if (haystack is null) throw new ArgumentNullException(nameof(haystack));
             if (Needle.Length == 0) return 0;
-
+            
             int i = Needle.Length - 1;
             while (i < haystack.Length)
             {

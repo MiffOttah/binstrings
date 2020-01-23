@@ -13,7 +13,7 @@ namespace MiffTheFox
         /// Formats the BinString as a text string for display.
         /// </summary>
         /// <param name="format">The format string for the BinString. See the documentation for examples.</param>
-        /// <param name="formatProvider">The format provider used to format the bytes for hexadecimal encoding.</param>
+        /// <param name="formatProvider">The format provider used to format the bytes.</param>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format)) format = "x";
@@ -95,7 +95,7 @@ namespace MiffTheFox
         /// <summary>
         /// Formats the BinString as a text string for display.
         /// </summary>
-        /// <param name="format">One of: x/X, s/S, 64, u/U, e/E. Passing null or g/G defaults to x. An x/X can optionally be followed with a separator string to indicate the sepeartor between bytes, such as "x-".</param>
+        /// <param name="format">The format string for the BinString. See the documentation for examples.</param>
         public string ToString(string format)
         {
             return ToString(format, null);
@@ -112,7 +112,6 @@ namespace MiffTheFox
         /// <summary>
         /// Returns the BinString as a base-64 encoded text string.
         /// </summary>
-        /// <returns></returns>
         public string ToBase64String()
         {
             return Convert.ToBase64String(_Data);

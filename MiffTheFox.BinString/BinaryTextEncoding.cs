@@ -14,12 +14,14 @@ namespace MiffTheFox
         /// <summary>
         /// When overridden in a derived class, converts the binary data to a textual representation.
         /// </summary>
+        /// <param name="data">The binary data to encode.</param>
         /// <returns>A string-based repersentation of the BinString's binary data.</returns>
         public abstract string GetString(BinString data);
 
         /// <summary>
         /// When overridden in a derived class, converts the textual repersentation to binary data.
         /// </summary>
+        /// <param name="encoded">The encoded binary data to decide.</param>
         /// <returns>Binary data decoded from the provided textual representation.</returns>
         public abstract BinString GetBinString(string encoded);
 
@@ -410,7 +412,7 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Implements UUEncode.
+        /// Implements the Unix-to-Unix encoding (uuencode).
         /// </summary>
         public class UUEncode : BinaryTextEncoding
         {
@@ -566,6 +568,7 @@ namespace MiffTheFox
             /// <summary>
             /// This is not supported and will throw an exception.
             /// </summary>
+            /// <exception cref="NotSupportedException">Decoding is not supported.</exception>
             public override BinString GetBinString(string encoded)
             {
                 throw new NotSupportedException();

@@ -20,6 +20,7 @@ namespace MiffTheFox
         /// <summary>
         /// The number of bytes written to the BinStringBuilder.
         /// </summary>
+        /// <exception cref="ObjectDisposedException">The BinStringBuilder is disposed.</exception>
         public int Length => _MemStream is null
             ? throw new ObjectDisposedException(null)
             : Convert.ToInt32(_MemStream.Position);
@@ -35,6 +36,7 @@ namespace MiffTheFox
         /// <summary>
         /// Creates a new BinStringBuilder with an expandable capacity initialized as specified.
         /// </summary>
+        /// <param name="capacity">The initial size of the internal array in bytes.</param>
         public BinStringBuilder(int capacity)
         {
             _MemStream = new MemoryStream(capacity);
@@ -43,6 +45,8 @@ namespace MiffTheFox
         /// <summary>
         /// Writes the given data to the end of the buffer.
         /// </summary>
+        /// <param name="data">The data to write.</param>
+        /// <exception cref="ObjectDisposedException">The BinStringBuilder is disposed.</exception>
         public void Append(byte[] data)
         {
             if (_MemStream is null) throw new ObjectDisposedException(null);
@@ -54,6 +58,8 @@ namespace MiffTheFox
         /// <summary>
         /// Writes the given data to the end of the buffer.
         /// </summary>
+        /// <param name="data">The data to write.</param>
+        /// <exception cref="ObjectDisposedException">The BinStringBuilder is disposed.</exception>
         public void Append(BinString data)
         {
             if (data is null) return;
@@ -71,6 +77,8 @@ namespace MiffTheFox
         /// <summary>
         /// Writes the given byte to the end of the buffer.
         /// </summary>
+        /// <param name="data">The byte to write.</param>
+        /// <exception cref="ObjectDisposedException">The BinStringBuilder is disposed.</exception>
         public void Append(byte data)
         {
             if (_MemStream is null) throw new ObjectDisposedException(null);
@@ -80,7 +88,8 @@ namespace MiffTheFox
         /// <summary>
         /// Writes the given data from the BinStringBuilder to the end of this buffer.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">The BinStringBuilder to copy the data from.</param>
+        /// <exception cref="ObjectDisposedException">The BinStringBuilder is disposed.</exception>
         public void Append(BinStringBuilder data)
         {
             if (data is null) return;
@@ -90,6 +99,8 @@ namespace MiffTheFox
         /// <summary>
         /// Returns the buffer contents.
         /// </summary>
+        /// <returns>A BinString containing all data that has been written to this builder.</returns>
+        /// <exception cref="ObjectDisposedException">The BinStringBuilder is disposed.</exception>
         public BinString ToBinString()
         {
             if (_MemStream is null) throw new ObjectDisposedException(null);
@@ -106,17 +117,19 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Converts the binary data to its string repersentation. A format string identical to the one used by MiffTheFox.BinString controls formatting.
+        /// Converts the binary data to its string repersentation. A format string identical to the one used by <see cref="BinString"/> controls formatting.
         /// </summary>
+        /// <seealso cref="BinString.ToString(string, IFormatProvider)"/>
         public string ToString(string format, IFormatProvider formatProvider) => ToBinString().ToString(format, formatProvider);
 
         /// <summary>
-        /// Converts the binary data to its string repersentation. A format string identical to the one used by MiffTheFox.BinString controls formatting.
+        /// Converts the binary data to its string repersentation. A format string identical to the one used by <see cref="BinString"/> controls formatting.
         /// </summary>
+        /// /// <seealso cref="BinString.ToString(string)"/>
         public string ToString(string format) => ToBinString().ToString(format, null);
 
         /// <summary>
-        /// Converts the binary data to its string repersentation.
+        /// Converts the binary data to a string repersentation.
         /// </summary>
         public override string ToString() => ToBinString().ToString();
     }

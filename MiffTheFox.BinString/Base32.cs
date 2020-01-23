@@ -11,6 +11,10 @@ namespace MiffTheFox.BinaryTextEncodings
     /// <summary>
     /// Provides a Base32 encoder/decoder.
     /// </summary>
+    /// <remarks>
+    /// When decoding, similar characters like I/1 and O/0 will not be substituted,
+    /// even if only one appears in the input string.
+    /// </remarks>
     public class Base32 : BinaryTextEncoding
     {
         /// <summary>
@@ -36,8 +40,9 @@ namespace MiffTheFox.BinaryTextEncodings
         private string _CharacterSet;
 
         /// <summary>
-        /// The character set used by the base32 encoder/decoder.
+        /// The character set used by the base32 encoder/decoder. This is a string of 32 characters.
         /// </summary>
+        /// <exception cref="InvalidOperationException">The string is not exactly 32 characters long.</exception>
         public string CharacterSet
         {
             get => _CharacterSet;
@@ -57,21 +62,26 @@ namespace MiffTheFox.BinaryTextEncodings
         /// <summary>
         /// The padding character appended to the end if UsePadding is true.
         /// </summary>
+        /// <seealso cref="UsePadding"/>
         public char Padding { get; set; } = '=';
 
         /// <summary>
         /// Whether or not to append a padding character to the end of the data to bring it to an even multiple of eight bytes.
         /// </summary>
+        /// <seealso cref="Padding"/>
         public bool UsePadding { get; set; } = true;
 
         /// <summary>
-        /// If true, case-insensitive comparison is used when decoding.
+        /// If true, case-insensitive comparison is used when decoding. Enabled by default.
         /// </summary>
         public bool IgnoreCase { get; set; } = true;
 
         /// <summary>
-        /// If true, will ignore any invalid characters that are whitespace.
+        /// If true, will ignore any invalid characters that are whitespace. Enabled by default.
         /// </summary>
+        /// <remarks>
+        /// If using a <see cref="CharacterSet"/> containing whitespace characters, those will still br processed.
+        /// </remarks>
         public bool IgnoreWhiteSpace { get; set; } = true;
 
         /// <summary>
@@ -92,10 +102,7 @@ namespace MiffTheFox.BinaryTextEncodings
             return _CharacterSet;
         }
 
-        /// <summary>
-        /// Converts a binary string to its base32 repersentation.
-        /// </summary>
-        /// <param name="data">The binary string to convert.</param>
+        /// <inheritdoc />
         public override string GetString(BinString data)
         {
             if (BinString.IsNullOrEmpty(data)) return string.Empty;
@@ -119,10 +126,7 @@ namespace MiffTheFox.BinaryTextEncodings
             return result.ToString();
         }
 
-        /// <summary>
-        /// Converts a base32 encoded string to its original binary form.
-        /// </summary>
-        /// <param name="encoded">The base32 string to convert.</param>
+        /// <inheritdoc />
         public override BinString GetBinString(string encoded)
         {
             return GetBinString(encoded, CultureInfo.InvariantCulture);
@@ -132,7 +136,7 @@ namespace MiffTheFox.BinaryTextEncodings
         /// Converts a base32 encoded string to its original binary form.
         /// </summary>
         /// <param name="encoded">The base32 string to convert.</param>
-        /// <param name="culture">The culture used for case-insensitive comparison.</param>
+        /// <param name="culture">The culture used for case-insensitive comparison. This parameter is ignored if <see cref="IgnoreCase"/> is set to false.</param>
         public BinString GetBinString(string encoded, CultureInfo culture)
         {
             if (string.IsNullOrEmpty(encoded)) return BinString.Empty;
