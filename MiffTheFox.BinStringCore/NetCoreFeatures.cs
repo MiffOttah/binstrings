@@ -7,7 +7,7 @@ namespace MiffTheFox
     partial class BinString
     {
         /// <summary>
-        /// Creates a BinString from the provided byte span.
+        /// Creates a BinString from the provided byte span. (Only avaiable in .NET core version.)
         /// </summary>
         /// <param name="data">The data to create the BinString from.</param>
         public BinString(Span<byte> data)
@@ -18,7 +18,7 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a BinString from the provided byte span.
+        /// Creates a BinString from the provided byte span. (Only avaiable in .NET core version.)
         /// </summary>
         /// <param name="data">The data to create the BinString from.</param>
         public BinString(ReadOnlySpan<byte> data)
@@ -29,18 +29,21 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Returns a ReadOnlySpan&lt;byte&gt; containing the binary data.
+        /// Returns a ReadOnlySpan&lt;byte&gt; containing the binary data. (Only avaiable in .NET core version.)
         /// </summary>
+        /// <returns>A ReadOnlySpan&lt;byte&gt; containing the binary data.</returns>
         public ReadOnlySpan<byte> AsSpan() => new ReadOnlySpan<byte>(_Data);
 
         /// <summary>
-        /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.
+        /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data. (Only avaiable in .NET core version.)
         /// </summary>
+        /// <returns>A ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.</returns>
         public ReadOnlySpan<byte> Slice(int start) => new ReadOnlySpan<byte>(_Data, start, _Data.Length - start);
 
         /// <summary>
-        /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.
+        /// Returns a ReadOnlySpan&lt;byte&gt; containing a portion of the binary data. (Only avaiable in .NET core version.)
         /// </summary>
+        /// /// <returns>A ReadOnlySpan&lt;byte&gt; containing a portion of the binary data.</returns>
         public ReadOnlySpan<byte> Slice(int start, int length) => new ReadOnlySpan<byte>(_Data, start, length);
 
         /// <summary>

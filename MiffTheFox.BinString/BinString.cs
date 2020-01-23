@@ -95,7 +95,7 @@ namespace MiffTheFox
         /// <summary>
         /// Creates a BinString with the specified binary data.
         /// </summary>
-        public BinString(IEnumerable<byte> data) : this (Enumerable.ToArray(data), false)
+        public BinString(IEnumerable<byte> data) : this(Enumerable.ToArray(data), false)
         {
         }
 
@@ -125,8 +125,11 @@ namespace MiffTheFox
         /// Creates a BinString with binary data from a specific portion of the byte array.
         /// </summary>
         /// <param name="data">The byte array containing the data.</param>
-        /// <param name="offset">The index into the byte array to start taking data from.</param>
+        /// <param name="offset">The index into the <paramref name="data"/> to start taking data from.</param>
         /// <param name="length">The length of data to take.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="offset"/> is an invalid index into <paramref name="data"/>, or <paramref name="length"/> is negative.</exception>
+        /// <exception cref="ArgumentException">Attempting to read past the end of <paramref name="data"/>.</exception>
         public BinString(byte[] data, int offset, int length)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
@@ -141,6 +144,7 @@ namespace MiffTheFox
         /// <summary>
         /// Creates a BinString with the specified length where all bytes are 0.
         /// </summary>
+        /// <param name="length">The length of the BinString.</param>
         public BinString(int length) : this(length, 0)
         {
         }
@@ -148,6 +152,8 @@ namespace MiffTheFox
         /// <summary>
         /// Creates a BinString with the specified length where all bytes are the given byte.
         /// </summary>
+        /// <param name="length">The length of the BinString.</param>
+        /// <param name="given">The byte to repeat <paramref name="length"/> times.</param>
         public BinString(int length, byte given)
         {
             _Data = new byte[length];
@@ -157,14 +163,19 @@ namespace MiffTheFox
         /// <summary>
         ///  Creates a BinString with the specified data encoded in Base64.
         /// </summary>
+        /// <param name="base64">Base64-encoded data, or null or empty for an empty BinString.</param>
+        /// <exception cref="FormatException">The Base64 encoded data is invalid</exception>"
         public BinString(string base64)
         {
             _Data = string.IsNullOrEmpty(base64) ? new byte[0] : Convert.FromBase64String(base64);
         }
 
         /// <summary>
-        /// Creates a BinString with the specified text encoded in the specified encoding.
+        /// Creates a BinString with the specified text encoded in the specified text encoding.
         /// </summary>
+        /// <param name="text">The text string to encode.</param>
+        /// <param name="encoding">The character encoding to use.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is null.</exception>
         public BinString(string text, Encoding encoding)
         {
             if (encoding is null) throw new ArgumentNullException(nameof(encoding));
@@ -172,10 +183,11 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a BinString with the specifed data decoded with the specified encoding
+        /// Creates a BinString with the specifed data decoded with the specified binary-to-text encoding.
         /// </summary>
         /// <param name="encoded">The encoded text</param>
         /// <param name="encoding">The Binary-to-Text encoding used.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is null.</exception>
         public BinString(string encoded, BinaryTextEncoding encoding)
         {
             if (encoding is null) throw new ArgumentNullException(nameof(encoding));
@@ -190,8 +202,10 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a BinString from a series of bytes
+        /// Creates a BinString from a series of bytes.
         /// </summary>
+        /// <param name="data">One or more bytes to put into a BinString.</param>
+        /// <returns>A BinString consisting of the bytes provided.</returns>
         public static BinString FromBytes(params byte[] data)
         {
             return new BinString(data, true);
@@ -201,6 +215,7 @@ namespace MiffTheFox
         /// Creates a BinString from a series of bytes repersented as hexadecimal
         /// </summary>
         /// <param name="hex">The bytes to create the BinString with, repersented as hexedecimal 0-9 A-F/a-f. All other characters are ignored.</param>
+        /// <returns>A BinString consisting of the bytes provided.</returns>
         public static BinString FromBytes(string hex)
         {
             const string HEX_CHARS = "0123456789ABCDEFabcdef";
@@ -240,7 +255,7 @@ namespace MiffTheFox
         /// <summary>
         /// Converts the BinString to a byte array.
         /// </summary>
-        public static implicit operator byte[] (BinString source) => source.ToArray();
+        public static implicit operator byte[](BinString source) => source.ToArray();
 
         /// <summary>
         /// Converts the byte to a BinString.
@@ -250,6 +265,12 @@ namespace MiffTheFox
         /// <summary>
         /// Returns a hash of the contents of the BinString.
         /// </summary>
+        /// <returns>A hash of the BinString's data.</returns>
+        /// <remarks>
+        /// This is currently implemented using the 64-bit FNV-1a algorith, but this is considered
+        /// an implemention detail. For hashing a BinString for permanent storage or with a specific
+        /// algorithm, use a System.Security.Cryptography.HashAlgorithm.
+        /// </remarks>
         public override int GetHashCode()
         {
             // FNV-1a hash https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
@@ -270,6 +291,7 @@ namespace MiffTheFox
         /// Determines whether two object instances are equal.
         /// </summary>
         /// <param name="obj">The object to compare with the current object. If null or a non-BinString object, always returns false.</param>
+        /// <returns>True if the object is a non-null BinString with the same data as this one. Otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             if (obj is null) return false;
@@ -281,6 +303,7 @@ namespace MiffTheFox
         /// Two binary strings are equal if and only if they have the same number of bytes and each byte in each position is identical.
         /// </summary>
         /// <param name="other">The binary string to compare against.</param>
+        /// /// <returns>True if the object is a non-null BinString with the same data as this one. Otherwise, false.</returns>
         public bool Equals(BinString other)
         {
             if (other is null) return false;
@@ -320,7 +343,7 @@ namespace MiffTheFox
         /// Compares this BinString to another object.
         /// </summary>
         /// <param name="obj">The other object to compare against.</param>
-        /// <returns></returns>
+        /// <returns>A positive int if this BinString should be sorted after the other, a negative int if this BinString should be sorted before the other, and 0 if the BinStrings are identical.</returns>
         /// <exception cref="ArgumentException">A BinString can only be compared to another BinString or null.</exception>
         public int CompareTo(object obj)
         {
@@ -426,8 +449,9 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a new BinString object with the same contents.
+        /// Creates a new BinString object with the same data.
         /// </summary>
+        /// <returns>A BinString (as an object) with the same data.</returns>
         public object Clone() => new BinString(ToArray());
 
         #endregion
@@ -437,6 +461,9 @@ namespace MiffTheFox
         /// <summary>
         /// Concatenates two BinStrings.
         /// </summary>
+        /// <param name="x">The first BinString to concatenate.</param>
+        /// <param name="y">The second BinString to concatenate.</param>
+        /// <returns>A concatenated BinString with the contents of x followed by the contents of y.</returns>
         public static BinString Concat(BinString x, BinString y)
         {
             if (IsNullOrEmpty(x)) return y is null ? Empty : y;
@@ -451,6 +478,9 @@ namespace MiffTheFox
         /// <summary>
         /// Concatenates an arbitrary number of BinStrings.
         /// </summary>
+        /// <param name="binstrings">The binstrings to concatenate.</param>
+        /// <returns>A concatenated BinString with each of the parameters in order.</returns>
+        /// <seealso cref="Join(IEnumerable{BinString}, BinString)"/>
         public static BinString Concat(params BinString[] binstrings)
         {
             byte[] result = new byte[binstrings.Sum(b => b?.Length ?? 0)];
@@ -526,7 +556,7 @@ namespace MiffTheFox
         /// </summary>
         public static BinString operator +(byte[] x, BinString y)
         {
-            // since the binstring y is only temporarily created
+            // since the binstring x is only temporarily created
             // to call into the Concat method, we don't clone (and
             // create a potentially mutable binstring)
             // the BinString(byte[], bool) constructor will accept a null first parameter
@@ -537,7 +567,8 @@ namespace MiffTheFox
         /// Repeats the BinString a number of times.
         /// </summary>
         /// <param name="count">The number of times to repeat the BinString.</param>
-        /// <returns></returns>
+        /// <returns>A BinString with the value of this one repeated <paramref name="count"/> times.</returns>
+        /// <exception cref="ArgumentException"><paramref name="count"/> is less than zero.</exception>
         public BinString Repeat(int count)
         {
             if (count == 0) return new BinString();
@@ -554,16 +585,21 @@ namespace MiffTheFox
         /// <summary>
         /// Repeats the BinString a number of times.
         /// </summary>
+        /// <exception cref="ArgumentException"><paramref name="count"/> is less than zero.</exception>
         public static BinString operator *(BinString x, int count) => x.Repeat(count);
 
         /// <summary>
         /// Repeats the BinString a number of times.
         /// </summary>
+        /// <exception cref="ArgumentException"><paramref name="count"/> is less than zero.</exception>
         public static BinString operator *(int count, BinString x) => x.Repeat(count);
 
         /// <summary>
         /// Inserts the contents of another BinString into this BinString at a specified index.
         /// </summary>
+        /// <param name="index">The index into this BinString to insert <paramref name="toInsert"/>.</param>
+        /// <param name="toInsert">The string to insert into this one.</param>
+        /// <returns>The BinString with <paramref name="toInsert"/> inserted.</returns>
         public BinString Insert(int index, BinString toInsert)
         {
             _CheckIndex(index);
@@ -577,6 +613,9 @@ namespace MiffTheFox
         /// <summary>
         /// Inserts a single byte into this BinString at a specified index.
         /// </summary>
+        /// /// <param name="index">The index into this BinString to insert <paramref name="toInsert"/>.</param>
+        /// <param name="toInsert">The string to insert into this one.</param>
+        /// <returns>The BinString with <paramref name="toInsert"/> inserted.</returns>
         public BinString Insert(int index, byte toInsert)
         {
             _CheckIndex(index);
@@ -591,7 +630,9 @@ namespace MiffTheFox
         /// Prepends bytes to the beginning of the BinString until the length of the BinString is equal to or greater than length.
         /// </summary>
         /// <param name="length">The minimum final length of the string.</param>
-        /// <param name="padding">The byte with which to pad the string to length bytes.</param>
+        /// <param name="padding">The byte with which to pad the string to <paramref name="length"/> bytes if necessary.</param>
+        /// <returns>A BinString with a minimum length of <paramref name="length"/> bytes, padded with <paramref name="padding"/> if necessary.</returns>
+        /// <exception cref="ArgumentException"><paramref name="length"/> less than 1.</exception>
         public BinString PadLeft(int length, byte padding = 0)
         {
             if (length <= 0) throw new ArgumentException("Length must be positive.", nameof(length));
@@ -611,7 +652,9 @@ namespace MiffTheFox
         /// Appends bytes to the end of the BinString until the length of the BinString is equal to or greater than length.
         /// </summary>
         /// <param name="length">The minimum final length of the string.</param>
-        /// <param name="padding">The byte with which to pad the string to length bytes.</param>
+        /// <param name="padding">The byte with which to pad the string to <paramref name="length"/> bytes if necessary.</param>
+        /// <returns>A BinString with a minimum length of <paramref name="length"/> bytes, padded with <paramref name="padding"/> if necessary.</returns>
+        /// <exception cref="ArgumentException"><paramref name="length"/> less than 1.</exception>
         public BinString PadRight(int length, byte padding = 0)
         {
             if (length <= 0) throw new ArgumentException("Length must be positive.", nameof(length));
@@ -631,6 +674,7 @@ namespace MiffTheFox
         /// </summary>
         /// <param name="index">The index to begin removing bytes at.</param>
         /// <param name="length">The number of bytes to remove. If less than zero, removes all bytes from the index to the end of the BinString.</param>
+        /// <exception cref="IndexOutOfRangeException">The given index is not valid for this BinString.</exception>
         public BinString Remove(int index, int length = -1)
         {
             _CheckIndex(index);
@@ -655,6 +699,7 @@ namespace MiffTheFox
         /// </summary>
         /// <param name="index">The index to begin extracting bytes at.</param>
         /// <param name="length">The number of bytes to extracting. If less than zero, extracts all bytes from the index to the end of the BinString.</param>
+        /// <exception cref="IndexOutOfRangeException">The given index is not valid for this BinString.</exception>
         public BinString Substring(int index, int length = -1)
         {
             _CheckIndex(index);
@@ -687,6 +732,8 @@ namespace MiffTheFox
         /// <summary>
         /// Removes any occurance of the specified byte from the beginning and end of the BinString.
         /// </summary>
+        /// <param name="trimByte">The byte to trim.</param>
+        /// <returns>A BinString with any occurance of the specified byte from the beginning and end of the BinString.</returns>
         public BinString Trim(byte trimByte = 0)
         {
             int startIndex, endIndex;
@@ -703,6 +750,8 @@ namespace MiffTheFox
         /// <summary>
         /// Removes any occurance of the specified byte from the beginning of the BinString.
         /// </summary>
+        /// /// <param name="trimByte">The byte to trim.</param>
+        /// <returns>A BinString with any occurance of the specified byte from the beginning of the BinString.</returns>
         public BinString TrimLeft(byte trimByte = 0)
         {
             int startIndex;
@@ -713,6 +762,8 @@ namespace MiffTheFox
         /// <summary>
         /// Removes any occurance of the specified byte from the end of the BinString.
         /// </summary>
+        /// /// <param name="trimByte">The byte to trim.</param>
+        /// <returns>A BinString with any occurance of the specified byte from the end of the BinString.</returns>
         public BinString TrimRight(byte trimByte = 0)
         {
             int endIndex;
@@ -723,6 +774,8 @@ namespace MiffTheFox
         /// <summary>
         /// Finds the first occurrence of the specified byte in the BinString.
         /// </summary>
+        /// <param name="needle">The byte to search for.</param>
+        /// <returns>The index of the first occurance of the byte in the BinString, or -1 if none.</returns>
         public int IndexOf(byte needle)
         {
             for (int i = 0; i < _Data.Length; i++)
@@ -735,6 +788,13 @@ namespace MiffTheFox
         /// <summary>
         /// Finds the first occurrence of the specified substring in the BinString.
         /// </summary>
+        /// /// <param name="needle">The substring to search for.</param>
+        /// <returns>The index of the first occurance of the byte in the BinString, or -1 if none.</returns>
+        /// <remarks>
+        /// This method creates an instance of the <see cref="BinBoyerMoore"/> class to perform the search.
+        /// If the search is to be performed multiple times, then it's more efficient to use a BinBoyerMoore
+        /// instance directly.
+        /// </remarks>
         public int IndexOf(BinString needle)
         {
             var bbm = new BinBoyerMoore(needle);
@@ -745,7 +805,8 @@ namespace MiffTheFox
         /// Replaces all instances of the needle substring with the replacement substring in this substring.
         /// </summary>
         /// <param name="needle">The substring to search for.</param>
-        /// <param name="replacement">The substring to replace the needle with.</param>
+        /// <param name="replacement">The substring to replace <paramref name="needle"/> with.</param>
+        /// <returns>The BinString, with all instances of <paramref name="needle"/> replaced with <paramref name="replacement"/></returns>
         public BinString Replace(BinString needle, BinString replacement)
         {
             return Replace(needle, replacement, this);
@@ -755,8 +816,9 @@ namespace MiffTheFox
         /// Replaces all instances of the needle substring with the replacement substring in a specified substring.
         /// </summary>
         /// <param name="needle">The substring to search for.</param>
-        /// <param name="replacement">The substring to replace the needle with.</param>
+        /// <param name="replacement">The substring to replace <paramref name="needle"/> with.</param>
         /// <param name="haystack">The substring to search within.</param>
+        /// <returns><paramref name="haystack"/>, with all instances of <paramref name="needle"/> replaced with <paramref name="replacement"/></returns>
         public static BinString Replace(BinString needle, BinString replacement, BinString haystack)
         {
             if (needle.Length == 0) return haystack;
@@ -778,8 +840,11 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Returns an array of BinStrings based on dividing the BinString up along any occurances of the specifeid substring.
+        /// Returns an array of BinStrings based on dividing the BinString up along any occurances of the specified needle.
         /// </summary>
+        /// <param name="needle">The BinString to search for that separates the individual components of the BinString.</param>
+        /// <returns>An array of BinStrings based on dividing the BinString up along any occurances of the specified needle.</returns>
+        /// <exception cref="ArgumentException"><paramref name="needle"/> is null or empty.</exception>
         public BinString[] Split(BinString needle)
         {
             if (BinString.IsNullOrEmpty(needle)) throw new ArgumentException("Cannot split with an empty needle.", nameof(needle));
@@ -804,7 +869,11 @@ namespace MiffTheFox
         /// </summary>
         /// <param name="binStrings">The BinStrings to join into one.</param>
         /// <param name="glue">The BinString glue to insert between each string, or null for none.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// A new BinString consisting the individual BinStrings joined together, with 
+        /// <paramref name="glue"/> inserted between each one if provided.
+        /// </returns>
+        /// <seealso cref="Concat(BinString[])"/>
         public static BinString Join(IEnumerable<BinString> binStrings, BinString glue = null)
         {
             bool useGlue = !IsNullOrEmpty(glue);
@@ -846,8 +915,10 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Checks if the value given is null or empty, returning True if so and False otherwise.
+        /// Checks if the value given is null or empty.
         /// </summary>
+        /// <param name="value">The value to check if null or empty.</param>
+        /// <returns>True if the <paramref name="value"/> is empty, false otherwise.</returns>
         public static bool IsNullOrEmpty(BinString value)
         {
             if (value is null) return true;
@@ -1018,6 +1089,7 @@ namespace MiffTheFox
         /// <summary>
         /// Converts the BinString to a Stream.
         /// </summary>
+        /// <remarks>This is useful for APIs that expect input in the form of a stream, for example WPF.</remarks>
         /// <returns>A Stream from which this BinString's data can be read.</returns>
         public Stream ToStream()
         {
@@ -1025,10 +1097,27 @@ namespace MiffTheFox
         }
 
         /// <summary>
-        /// Creates a BinString from a Stream.
+        /// Creates a BinString from a stream. 
         /// </summary>
+        /// <param name="str">The stream to create a BinString from.</param>
+        /// <returns>The contents of the stream as a BinString.</returns>
+        /// <remarks>
+        /// <para>The behavior of this method if passed a stream that has been read past the begining is undefined.
+        /// MemoryStreams will be copied in their entirety, whereas other streams will read from the current position
+        /// to the end. This may change in future versions.</para>
+        /// <para>The stream is not disposed after this method is called and should be disposed by the caller.</para>
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="str"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="str"/> does not support reading.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="str"/> is disposed.</exception>
+        /// <exception cref="IOException">An I/O error occured.</exception>
         public static BinString FromStream(Stream str)
         {
+            if (str is null)
+            {
+                throw new ArgumentNullException(nameof(str));
+            }
+
             if (str is MemoryStream strMs)
             {
                 return new BinString(strMs.ToArray());

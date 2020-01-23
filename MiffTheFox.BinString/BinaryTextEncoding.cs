@@ -7,18 +7,20 @@ using System.Text;
 namespace MiffTheFox
 {
     /// <summary>
-    /// Repersents a method for converting binary data to and from text.
+    /// Repersents a method for converting binary data to and from textual representations.
     /// </summary>
     public abstract class BinaryTextEncoding
     {
         /// <summary>
-        /// When overridden in a derived class, converts the binary data to a textual repersentation.
+        /// When overridden in a derived class, converts the binary data to a textual representation.
         /// </summary>
+        /// <returns>A string-based repersentation of the BinString's binary data.</returns>
         public abstract string GetString(BinString data);
 
         /// <summary>
         /// When overridden in a derived class, converts the textual repersentation to binary data.
         /// </summary>
+        /// <returns>Binary data decoded from the provided textual representation.</returns>
         public abstract BinString GetBinString(string encoded);
 
         /// <summary>
