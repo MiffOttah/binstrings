@@ -9,52 +9,69 @@ This library aims to make working with binary data as easy as working with
 strings by introducing the `BinString` type. A BinString is a string of bytes
 that can be manipulated along the lines of a string of characters.
 
-# Usage
+BinStrings also contain methods for converting binary data to and from integer
+types (with endianness checks!), text strings, and strings of encoded data in
+formats such as base32 and ascii85.
 
-Create a BinString
+The library is available as a build for .NET Framework, .NET Standard, and .NET
+Core, so it can be used in any sort of .NET environment.
 
-    byte[] hello = Encoding.UTF8.GetBytes("Hello, world!");
-    BinString helloBin = new BinString(hello);
-    // or
-    var helloBin = new BinString("Hello, world!", Encoding.UTF8);
+The library is being rewritten for version 2.0 with new changes:
 
-Use a BinString
+* New extensible BinaryTextEncoding system for adding new string encoding/decoding.
+* Native .NET core support including Span and Index.
+* License changed to MIT from GPL.
 
-    var sha = SHA1.Create();
-    var result = new BinString(sha.ComputeHash(helloBin));
+# Quick examples
 
-Format a BinString for display
+## Comparing two files
 
-    Console.WriteLine("The hash is: {0:x}", result);
+    var file1 = new BinString(File.ReadAllBytes("file1.bin"));
+    var file2 = new BinString(File.ReadAllBytes("file2.bin"));
+    Console.WriteLine(file1 == file2 ? "Files are identical" : "Files are not identical");
 
-Concatenation
+## Concatenating binstrings
 
     var a = new BinString("Hello", Encoding.ASCII));
     var b = BinString.FromBytes("2c20");
-    var c = BinString.FromUrlString("world%21");
+    var c = new BinString("world%21", BinaryTextEncoding.UrlString);
     var message = a + b + c;
     Console.WriteLine(message.ToString(Encoding.ASCII));
 
-Equality testing
+## Base32 encoding
 
-    var a = BinString.FromTextString("ABC", Encoding.ASCII);
-    var b = BinString.FromBytes("414243");
-    if (a == b) Console.WriteLine("They match!");
+    var base32 = new MiffTheFox.BinaryTextEncodings.Base32();
+    var data = new BinString("Hello", Encoding.ASCII);
+    Console.WriteLine(data.ToString(base32));
 
-Known-endianess conversion from longer types.
+## Extension methods for IO
 
-	uint color = 0xff8000ff;
-	var colorBin = BinString.FromUInt32(color, IntegerEndianess.BigEndian);
-	byte a = color[0], r = color[1], g = color[2], b = color[3];
-	return Color.FromArgb(a, r, g, b);
+    using (var fileStream = File.OpenRead(file)){
+        var prefix = fileStream.ReadBinString(32);
+    }
 
+## Practical example: Determine if a file is a PNG
 
-[More documentation is available on the wiki.](https://github.com/MiffOttah/binstrings/wiki)
+    static readonly BinString PNG_MAGIC_NUMBER = BinString.FromBytes("89 50 4e 47 0d 0a 1a 0a");
+    public static bool IsPng(string file)
+    {
+        using (var fileStream = File.OpenRead(file)){
+            var prefix = fileStream.ReadBinString(PNG_MAGIC_NUMBER.Length);
+            return prefix == PNG_MAGIC_NUMBER;
+        }
+    }
 
-# Installation
+## Practical example: Temporary file name
 
-[You can install the package through NuGet with this link](https://www.nuget.org/packages/MiffTheFox.BinString/) or by typing the following command into the Pacakage Manage Console:
+    public static string TemporaryFileName(string original){
+        // The original string can't be trusted, because it might
+        // contain invalid characters or names.
+        var hash = MD5.Create().ComputeHash(new BinString(original, Encoding.UTF8));
+        var timestamp = BinString.FromInt64(DateTime.Now.Ticks, IntegerEndianess.BigEndian);
+        var base32 = new Base32(Base32.CHARSET_ZBASE32) { UsePadding = false };
+        return (hash + timestamp).ToString(base32);
+    }
 
-    Install-Package MiffTheFox.BinString
+# Full documentation
 
-Have fun!~
+[Full documentation will be made available on Github Pages.](https://miffottah.github.io/binstrings)
