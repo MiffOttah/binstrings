@@ -394,6 +394,27 @@ namespace BinStringTests
         }
 
         [TestMethod]
+        [DataRow("00123400123400", "0001000100", "01", "1234")]
+        [DataRow("5544", "557777", "7777", "44")]
+        [DataRow("1100", "000000", "0000", "11")]
+        [DataRow("AB00", "ABCDEF00", "CDEF", "")]
+        [DataRow("AB00", "ABCDEF00", "CDEF", null)]
+        [DataRow("", "", "CDEF", "ABCD")]
+        [DataRow("1234AB", "1234AB", "", "FFFF")]
+        [DataRow("1234AB", "1234AB", null, "FFFF")]
+        [DataRow("1234AB", "1234AB", null, null)]
+        [DataRow("0000", "AA0000", "AA", null)]
+        [DataRow("0000CCDD", "0000AA", "AA", "CCDD")]
+        public void ReplaceTest(string expected, string haystack, string needle, string replacement)
+        {
+            BinString bHaystack = BinString.FromBytes(haystack);
+            BinString bNeedle = needle == null ? null : BinString.FromBytes(needle);
+            BinString bReplacement = replacement == null ? null : BinString.FromBytes(replacement);
+
+            Assert.AreEqual(BinString.FromBytes(expected), bHaystack.Replace(bNeedle, bReplacement));
+        }
+
+        [TestMethod]
         public void IsNullOrEmptyTest()
         {
             BinString bsNull = null;

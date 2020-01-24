@@ -36,7 +36,7 @@ namespace MiffTheFox
         /// <summary>
         /// Returns the BinString as an array of System.Byte.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The BinString as an array of System.Byte</returns>
         public byte[] ToArray()
         {
             var clone = new byte[Length];
@@ -71,7 +71,7 @@ namespace MiffTheFox
         #region Creation methods
 
         /// <summary>
-        /// Returns an empty BinString.
+        /// An empty BinString with a length of 0.
         /// </summary>
         public static BinString Empty { get; } = new BinString();
         // since BinStrings are (or at least should be) immutable,
@@ -267,7 +267,7 @@ namespace MiffTheFox
         /// </summary>
         /// <returns>A hash of the BinString's data.</returns>
         /// <remarks>
-        /// This is currently implemented using the 64-bit FNV-1a algorith, but this is considered
+        /// This is currently implemented using the 64-bit FNV-1a algorithm, but this is considered
         /// an implemention detail. For hashing a BinString for permanent storage or with a specific
         /// algorithm, use a System.Security.Cryptography.HashAlgorithm.
         /// </remarks>
@@ -452,7 +452,7 @@ namespace MiffTheFox
         /// Creates a new BinString object with the same data.
         /// </summary>
         /// <returns>A BinString (as an object) with the same data.</returns>
-        public object Clone() => new BinString(ToArray());
+        public object Clone() => new BinString(_Data, true); // the constructor can clone the array
 
         #endregion
 
@@ -804,8 +804,8 @@ namespace MiffTheFox
         /// <summary>
         /// Replaces all instances of the needle substring with the replacement substring in this substring.
         /// </summary>
-        /// <param name="needle">The substring to search for.</param>
-        /// <param name="replacement">The substring to replace <paramref name="needle"/> with.</param>
+        /// <param name="needle">The substring to search for. If null or empty, the haystack is unmodified.</param>
+        /// <param name="replacement">The substring to replace <paramref name="needle"/> with. If null or empty, those substrings are removed.</param>
         /// <returns>The BinString, with all instances of <paramref name="needle"/> replaced with <paramref name="replacement"/></returns>
         public BinString Replace(BinString needle, BinString replacement)
         {
@@ -815,28 +815,47 @@ namespace MiffTheFox
         /// <summary>
         /// Replaces all instances of the needle substring with the replacement substring in a specified substring.
         /// </summary>
-        /// <param name="needle">The substring to search for.</param>
-        /// <param name="replacement">The substring to replace <paramref name="needle"/> with.</param>
-        /// <param name="haystack">The substring to search within.</param>
+        /// <param name="needle">The substring to search for. If null or empty, the haystack is unmodified.</param>
+        /// <param name="replacement">The substring to replace <paramref name="needle"/> with. If null or empty, those substrings are removed.</param>
+        /// <param name="haystack">The substring to search within. Cannot be null.</param>
         /// <returns><paramref name="haystack"/>, with all instances of <paramref name="needle"/> replaced with <paramref name="replacement"/></returns>
+        /// <exception cref="ArgumentNullException">haystack cannot be null</exception>
         public static BinString Replace(BinString needle, BinString replacement, BinString haystack)
         {
-            if (needle.Length == 0) return haystack;
+            // short-circuit conditions
+            if (IsNullOrEmpty(needle))
+            {
+                return haystack;
+            }
+
+            if (haystack is null)
+            {
+                throw new ArgumentNullException(nameof(haystack));
+            }
+            else if (haystack.Length == 0)
+            {
+                return Empty;
+            }
+
+            if (needle == replacement) return haystack;
 
             var bbm = new BinBoyerMoore(needle);
             int index;
-            while ((index = bbm.FindNeedleIn(haystack)) != -1)
+            byte[] bHaystack = haystack._Data;
+            int replacementLength = replacement?.Length ?? 0;
+
+            while ((index = bbm.FindNeedleIn(new BinString(bHaystack, false))) != -1)
             {
-                byte[] newHaystack = new byte[(haystack.Length + replacement.Length) - needle.Length];
-                haystack.CopyTo(0, newHaystack, 0, index);
-                replacement.CopyTo(0, newHaystack, index, replacement.Length);
+                byte[] newHaystack = new byte[(bHaystack.Length + replacementLength) - needle.Length];
+                Array.Copy(bHaystack, 0, newHaystack, 0, index);
+                replacement?.CopyTo(0, newHaystack, index, replacementLength);
 
                 int endIndex = index + needle.Length;
-                haystack.CopyTo(endIndex, newHaystack, index + replacement.Length, haystack.Length - endIndex);
-                haystack = new BinString(newHaystack);
+                Array.Copy(bHaystack, endIndex, newHaystack, index + replacementLength, bHaystack.Length - endIndex);
+                bHaystack = newHaystack;
             }
 
-            return haystack;
+            return new BinString(bHaystack, false);
         }
 
         /// <summary>
