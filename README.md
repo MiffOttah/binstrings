@@ -26,32 +26,41 @@ The library is being rewritten for version 2.0 with new changes:
 
 ## Comparing two files
 
+```csharp
     var file1 = new BinString(File.ReadAllBytes("file1.bin"));
     var file2 = new BinString(File.ReadAllBytes("file2.bin"));
     Console.WriteLine(file1 == file2 ? "Files are identical" : "Files are not identical");
+```
 
 ## Concatenating binstrings
 
+```csharp
     var a = new BinString("Hello", Encoding.ASCII));
     var b = BinString.FromBytes("2c20");
     var c = new BinString("world%21", BinaryTextEncoding.UrlString);
     var message = a + b + c;
     Console.WriteLine(message.ToString(Encoding.ASCII));
+```
 
 ## Base32 encoding
 
+```csharp
     var base32 = new MiffTheFox.BinaryTextEncodings.Base32();
     var data = new BinString("Hello", Encoding.ASCII);
     Console.WriteLine(data.ToString(base32));
+```
 
 ## Extension methods for IO
 
+```csharp
     using (var fileStream = File.OpenRead(file)){
         var prefix = fileStream.ReadBinString(32);
     }
+```
 
 ## Practical example: Determine if a file is a PNG
 
+```csharp
     static readonly BinString PNG_MAGIC_NUMBER = BinString.FromBytes("89 50 4e 47 0d 0a 1a 0a");
     public static bool IsPng(string file)
     {
@@ -60,17 +69,20 @@ The library is being rewritten for version 2.0 with new changes:
             return prefix == PNG_MAGIC_NUMBER;
         }
     }
+```
 
 ## Practical example: Temporary file name
 
+```csharp
     public static string TemporaryFileName(string original){
         // The original string can't be trusted, because it might
         // contain invalid characters or names.
         var hash = MD5.Create().ComputeHash(new BinString(original, Encoding.UTF8));
         var timestamp = BinString.FromInt64(DateTime.Now.Ticks, IntegerEndianess.BigEndian);
         var base32 = new Base32(Base32.CHARSET_ZBASE32) { UsePadding = false };
-        return (hash + timestamp).ToString(base32);
+        return (hash + timestamp).ToString(base32) + ".tmp";
     }
+```
 
 # Full documentation
 
