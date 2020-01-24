@@ -8,9 +8,15 @@ $base = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
 # as documentation and page contents from a cache in the directory instead of
 # re-reading it from the source files. We have to remove the obj directory to
 # force it to do a clean build.
-# Let's clean up _site while we're at it so we do a clean build every time.
 Remove-Item -Recurse "$base\obj" -ErrorAction SilentlyContinue
-Remove-Item -Recurse "$base\_site" -ErrorAction SilentlyContinue
+
+# Let's clean up _site while we're at it so we do a clean build every time.
+# We can't just blindly Remove-Item -Recurse though becuase that's where the
+# gh-pages branch is checked out.
+#Remove-Item -Recurse "$base\_site" -ErrorAction SilentlyContinue
+if (Test-Path "$base\_site"){
+  Get-Item "$base\_site\*" | Where-Object { $_.Name -ne ".git" } | Remove-Item -Recurse
+}
 
 # Let's actually build the damn thing.
 & docfx "$base\docfx.json"
