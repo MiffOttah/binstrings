@@ -45,7 +45,19 @@ namespace MiffTheFox
         {
             if (haystack is null) throw new ArgumentNullException(nameof(haystack));
             if (Needle.Length == 0) return 0;
-            
+
+#if CORE
+            return FindNeedleIn(haystack.AsSpan());
+        }
+
+        /// <summary>
+        /// Searched the provided BinString for the first occurrence of the needle. (.NET Core only.)
+        /// </summary>
+        /// <param name="haystack">The BinString to search for the needle.</param>
+        /// <returns>If the needle is found in the haystack, returns the (zero-based) index in the haystack where the needle was found. Otherwise, returns -1.</returns>
+        public int FindNeedleIn(ReadOnlySpan<byte> haystack)
+        { 
+#endif
             int i = Needle.Length - 1;
             while (i < haystack.Length)
             {
@@ -64,6 +76,15 @@ namespace MiffTheFox
             
             return -1;
         }
+
+        /// <summary>
+        /// Searched the provided BinString for the first occurrence of the needle. 
+        /// </summary>
+        /// <param name="haystack">The BinString to search for the needle.</param>
+        /// <returns>If the needle is found in the haystack, returns the (zero-based) index in the haystack where the needle was found. Otherwise, returns -1.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="haystack"/> is null.</exception>
+        public int FindNeedleIn(byte[] haystack)
+            => haystack is null ? FindNeedleIn(new BinString(haystack, false)) : throw new ArgumentNullException(nameof(haystack));
 
         private int[] _MakeCharTable()
         {

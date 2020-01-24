@@ -866,20 +866,30 @@ namespace MiffTheFox
         /// <exception cref="ArgumentException"><paramref name="needle"/> is null or empty.</exception>
         public BinString[] Split(BinString needle)
         {
-            if (BinString.IsNullOrEmpty(needle)) throw new ArgumentException("Cannot split with an empty needle.", nameof(needle));
+            if (IsNullOrEmpty(needle)) throw new ArgumentException("Cannot split with an empty needle.", nameof(needle));
 
             var parts = new List<BinString>();
             var bbm = new BinBoyerMoore(needle);
-            var haystack = this;
             int index;
 
+#if CORE
+            var haystack = AsSpan();
+            while ((index = bbm.FindNeedleIn(haystack)) != -1)
+            {
+                parts.Add(new BinString(haystack.Slice(0, index)));
+                haystack = haystack.Slice(index + needle.Length);
+            }
+            parts.Add(new BinString(haystack));
+#else
+            var haystack = this;
             while ((index = bbm.FindNeedleIn(haystack)) != -1)
             {
                 parts.Add(haystack.Remove(index));
                 haystack = haystack.Substring(index + needle.Length);
             }
-
             parts.Add(haystack);
+#endif
+
             return parts.ToArray();
         }
 
@@ -919,9 +929,9 @@ namespace MiffTheFox
             return builder.ToBinString();
         }
 
-        #endregion
+#endregion
 
-        #region Check methods
+#region Check methods
 
         /// <summary>
         /// Checks if the specified index is valid for this BinString and throws an IndexOutOfRangeException if it isn't.
@@ -945,9 +955,9 @@ namespace MiffTheFox
             return false;
         }
 
-        #endregion
+#endregion
 
-        #region IConvertable methods
+#region IConvertable methods
 
         TypeCode IConvertible.GetTypeCode()
         {
@@ -1078,9 +1088,9 @@ namespace MiffTheFox
             }
         }
 
-        #endregion
+#endregion
 
-        #region Serialization
+#region Serialization
         /// <summary>
         /// Reconstructs a seralized BinString.
         /// </summary>
@@ -1101,9 +1111,9 @@ namespace MiffTheFox
 
             info.AddValue("BinStringData", ToBase64String());
         }
-        #endregion
+#endregion
 
-        #region Stream conversion
+#region Stream conversion
 
         /// <summary>
         /// Converts the BinString to a Stream.
@@ -1151,6 +1161,6 @@ namespace MiffTheFox
             }
         }
 
-        #endregion
+#endregion
     }
 }
