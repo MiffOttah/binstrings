@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="binstrings.svg"
+   inkscape:export-filename="D:\Pictures\Collections\Specialized\binstrings.png"
+   inkscape:export-xdpi="600"
+   inkscape:export-ydpi="600">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5"
+     inkscape:cx="64"
+     inkscape:cy="64"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1440"
+     inkscape:window-height="837"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="false"
+     inkscape:bbox-nodes="true"
+     inkscape:object-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4136"
+       spacingx="4"
+       spacingy="4"
+       empspacing="8" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-924.36216)">
+    <g
+       id="g4202"
+       transform="matrix(1.0999993,0,0,1.0999993,-6.3999552,-98.835535)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4138"
+         d="m 41.679077,938.36214 -8,12 8,88.00006 8,-88.00006 -8,-12 z m 0,8 4,8 -4,8 -4,-8 4,-8 z"
+         style="opacity:1;fill:#666666;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         transform="translate(9.6790772,5.99998)"
+         id="text4143"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+        <path
+           inkscape:connector-curvature="0"
+           id="path4155"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 11.374674,965.16139 -1.142979,1.06536 -3.1960971,-3.42894 -1.7144695,1.59805 -0.5326828,-0.57149 1.1429796,-1.06536 -0.5326828,-0.57149 0.5714898,-0.53269 -0.5326828,-0.57149 1.1429797,-1.06536 4.7941449,5.14341 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4157"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 16.128803,961.05442 -1.195948,1.00554 -3.016627,-3.58784 -1.793922,1.50831 -0.5027707,-0.59797 1.1959477,-1.00555 -0.502771,-0.59797 0.597974,-0.50277 -0.502771,-0.59797 1.195947,-1.00555 4.524941,5.38177 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4159"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 21.899883,955.70797 -0.630735,0.46101 0.461003,0.63073 -2.522943,1.84401 -0.461003,-0.63073 -0.630736,0.461 -3.227023,-4.41515 0.630736,-0.461 -0.461003,-0.63074 2.522943,-1.84401 0.461003,0.63073 0.630736,-0.461 3.227022,4.41515 z m -1.261471,0.92201 -1.844013,-2.52294 -0.630736,0.461 -0.922006,-1.26147 0.630736,-0.46101 -0.461003,-0.63073 -1.261472,0.922 1.844013,2.52295 0.630736,-0.46101 0.922006,1.26148 -0.630736,0.461 0.461003,0.63073 1.261472,-0.922 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4161"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 27.112015,953.62043 -4.10042,2.27139 -0.75713,-1.36681 0.683404,-0.37856 -0.378565,-0.6834 0.683403,-0.37857 -0.378565,-0.6834 0.683404,-0.37857 -0.378565,-0.6834 0.683403,-0.37857 -1.135694,-2.05021 -1.366807,0.75713 0.75713,1.36681 -1.366807,0.75713 -0.75713,-1.36681 0.683403,-0.37856 -0.378565,-0.6834 2.733614,-1.51426 0.378565,0.6834 0.683403,-0.37857 1.135695,2.05021 -0.683403,0.37857 0.378564,0.6834 -0.683403,0.37857 0.378565,0.6834 -0.683403,0.37857 0.378564,0.6834 -0.683403,0.37856 0.378565,0.68341 2.733614,-1.51426 0.378564,0.6834 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4163"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 32.882981,949.84971 -0.775433,0.0952 0.09515,0.77543 -0.775433,0.0952 0.190311,1.55086 -2.3263,0.28547 -0.09516,-0.77543 0.775434,-0.0952 -0.09516,-0.77543 0.775434,-0.0952 -0.09516,-0.77543 -1.550867,0.19031 -0.09516,-0.77543 -0.775434,0.0951 -0.380621,-3.10173 0.775433,-0.0952 -0.09515,-0.77543 3.101733,-0.38062 0.09516,0.77543 0.775433,-0.0951 0.475777,3.87716 z m -1.646022,-0.58512 -0.380622,-3.10173 -1.550866,0.19031 0.380621,3.10173 1.550867,-0.19031 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4165"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 39.646891,953.21593 -0.713711,-0.31776 -0.317755,0.71371 -0.713711,-0.31775 -0.317755,0.71371 -2.854844,-1.27102 2.859792,-6.4234 2.854844,1.27102 -0.317754,0.71371 0.713711,0.31776 -0.317755,0.71371 0.713711,0.31775 -1.588773,3.56856 z m -1.427422,-0.63551 1.588773,-3.56856 -0.713711,-0.31775 0.317755,-0.71371 -0.713711,-0.31776 -2.224283,4.99598 0.713711,0.31776 0.317754,-0.71372 0.713712,0.31776 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4167"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 47.269853,953.62305 -0.646922,-0.438 -0.875999,1.29384 -0.646922,-0.43799 -0.875998,1.29384 -0.646922,-0.438 -1.313998,1.94077 -1.293844,-0.876 1.313998,-1.94077 0.646922,0.438 0.875998,-1.29384 0.646922,0.438 0.875999,-1.29385 0.646922,0.438 0.437999,-0.64692 -2.587689,-1.752 0.438,-0.64692 3.881532,2.628 -0.875998,1.29384 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4169"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 50.684939,961.31961 -0.608871,-0.48951 -0.979035,1.21774 -1.217743,-0.97904 0.979035,-1.21774 -2.435484,-1.95807 0.979035,-1.21774 0.608871,0.48952 2.447588,-3.04436 1.217742,0.97904 -2.447588,3.04435 -0.608871,-0.48952 -0.489518,0.60887 1.217743,0.97904 1.95807,-2.43548 1.217742,0.97903 -1.95807,2.43549 0.608871,0.48951 -0.489517,0.60887 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4171"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 53.768969,966.19851 -3.488557,-3.13091 4.696372,-5.23284 3.488557,3.13091 -0.521819,0.58143 -2.325705,-2.08728 -1.565457,1.74428 1.744279,1.56546 -0.52182,0.58143 -1.744278,-1.56546 -1.565457,1.74428 2.325704,2.08727 -0.521819,0.58143 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4173"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 58.774557,969.94571 -0.564961,-0.5396 -0.539602,0.56496 -2.259844,-2.15841 0.539602,-0.56496 -0.564961,-0.5396 1.079204,-1.12992 1.129923,1.0792 -1.079205,1.12993 1.129922,1.0792 1.618807,-1.69488 -1.129922,-1.07921 0.539602,-0.56496 1.129922,1.07921 1.618807,-1.69489 -1.129922,-1.0792 -1.079205,1.12992 -1.129922,-1.0792 1.079205,-1.12993 0.564961,0.53961 0.539602,-0.56497 2.259844,2.15841 -0.539602,0.56496 0.564961,0.53961 -1.618807,1.69488 -0.564961,-0.5396 -0.539602,0.56496 0.564961,0.5396 -1.618807,1.69488 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4175"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 63.958653,973.51394 -0.588004,-0.5144 -0.514396,0.588 -0.588003,-0.51439 -0.514396,0.588 -2.352015,-2.05758 0.514396,-0.58801 1.764011,1.54319 0.514396,-0.588 0.588004,0.51439 1.028792,-1.176 -2.352015,-2.05759 2.571979,-2.94002 3.528023,3.08638 -0.514396,0.588 -2.352015,-2.05758 -1.543188,1.76401 1.764011,1.54319 -0.514396,0.588 0.588004,0.5144 -1.028792,1.17601 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4177"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 68.312735,977.95763 -0.617118,-0.47908 -0.479079,0.61711 -3.085591,-2.39539 4.311709,-5.55406 3.085592,2.39539 -0.479079,0.61712 0.617118,0.47908 -1.437236,1.85135 -0.617119,-0.47908 -0.479078,0.61712 0.617118,0.47908 -1.437237,1.85136 z m 0.682079,-3.42664 1.437237,-1.85135 -1.234237,-0.95816 -1.437237,1.85136 1.234237,0.95815 z m -1.916315,2.46848 1.437236,-1.85136 -1.234236,-0.95816 -1.437237,1.85136 1.234237,0.95816 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4179"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 73.884908,980.70056 -0.660068,-0.41793 -0.417926,0.66007 -0.660068,-0.41792 -0.417926,0.66006 -2.640271,-1.6717 3.761333,-5.94061 2.640271,1.6717 -0.417926,0.66007 0.660068,0.41793 -0.417926,0.66007 0.660068,0.41792 -2.089629,3.30034 z m -1.320136,-0.83585 2.08963,-3.30034 -0.660068,-0.41793 0.417926,-0.66006 -0.660068,-0.41793 -2.925481,4.62047 0.660067,0.41793 0.417926,-0.66007 0.660068,0.41793 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4181"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 79.072396,983.66483 -0.739562,-0.25179 -0.251793,0.73956 -2.958248,-1.00717 0.251793,-0.73956 -0.739562,-0.25179 0.755378,-2.21869 0.739562,0.25179 0.251793,-0.73956 -0.739562,-0.25179 0.755378,-2.21869 0.739562,0.2518 0.251793,-0.73957 2.958248,1.00717 -0.251793,0.73957 0.739562,0.25179 -0.755378,2.21868 -0.739562,-0.25179 -0.251793,0.73956 0.739562,0.2518 -0.755378,2.21868 z m -0.471953,-3.46183 0.755378,-2.21869 -1.479124,-0.50358 -0.503585,1.47912 0.739562,0.25179 -0.251793,0.73957 0.739562,0.25179 z m -1.007171,2.95825 0.503585,-1.47913 -0.739562,-0.25179 0.251793,-0.73956 -0.739562,-0.25179 -0.755378,2.21868 1.479124,0.50359 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4183"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 85.887311,982.80499 -0.781249,-10e-4 -0.0027,1.56249 -1.562498,-0.003 0.0027,-1.56249 -3.124996,-0.005 0.0027,-1.5625 0.781249,0.001 0.0067,-3.90625 1.562498,0.003 -0.0067,3.90624 -0.781249,-10e-4 -0.0013,0.78125 1.562497,0.003 0.0053,-3.125 1.562497,0.003 -0.0053,3.125 0.781249,10e-4 -0.0013,0.78125 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4185"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 90.572151,984.36218 -1.5625,0 0,-4.6875 -2.34375,0 0,-0.78125 1.5625,0 0,-0.78125 0.78125,0 0,-0.78125 1.5625,0 0,7.03125 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4187"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 97.603401,982.79968 -0.78125,0 0,0.78125 -0.78125,0 0,0.78125 -3.125,0 0,-0.78125 2.34375,0 0,-0.78125 0.78125,0 0,-1.5625 -3.125,0 0,-3.90625 4.6875,0 0,0.78125 -3.125,0 0,2.34375 2.34375,0 0,0.78125 0.78125,0 0,1.5625 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4189"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Fixedsys Excelsior 3.01';-inkscape-font-specification:'Fixedsys Excelsior 3.01, ';fill:#00ff00"
+           d="m 103.8534,983.58093 -0.78125,0 0,0.78125 -3.124999,0 0,-0.78125 -0.78125,0 0,-3.90625 0.78125,0 0,-0.78125 0.781249,0 0,-1.5625 2.34375,0 0,0.78125 -0.78125,0 0,0.78125 -0.78125,0 0,0.78125 1.5625,0 0,0.78125 0.78125,0 0,3.125 z m -1.5625,0 0,-3.125 -1.5625,0 0,3.125 1.5625,0 z" />
+      </g>
+      <path
+         inkscape:connector-curvature="0"
+         id="path4195"
+         d="m 41.679077,938.36214 -8,12 8,88.00006 4,-44.00006 -4,0 0,-32 -4,-8 4,-8 0,-8 z"
+         style="opacity:1;fill:#666666;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

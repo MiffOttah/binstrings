@@ -1,0 +1,420 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/Code/MiffTheFox.BinString/doc",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinBoyerMoore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinBoyerMoore.html",
+          "hash": "6JnEeeq9SdD5WNnazG0WUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinString.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinString.html",
+          "hash": "OKIc2NSwN0XKwW2zfWlrmw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinStringBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinStringBuilder.html",
+          "hash": "7em5lAjcYDzYg0eSduxECg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinStringEnumerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinStringEnumerator.html",
+          "hash": "aemkdN5VauS4DYodpUjoLg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinStringExtensionMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinStringExtensionMethods.html",
+          "hash": "vOtb+/6mYgPw+4nxImsl4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinStringTypeConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinStringTypeConverter.html",
+          "hash": "H6jxPF0zbGicQwr8Y5qBfA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncoding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncoding.html",
+          "hash": "3BWFz0f6wHOB9dM7JUAOzg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.Ascii85.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.Ascii85.html",
+          "hash": "LqpPGrkdCwCnQKhQNIYxxQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.BackslashEscapeEncoding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.BackslashEscapeEncoding.html",
+          "hash": "hs3lJ5CaN1xEeOBk3Yx+gA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.Base32.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.Base32.html",
+          "hash": "u//ojzxRbd/i/HpF14m0Fw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.Base64.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.Base64.html",
+          "hash": "cwdb1J45yj1t8r5tcLjo4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.QuotedPrintable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.QuotedPrintable.html",
+          "hash": "zJN9HhSnGEdmz7A9Bl+VTw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.UUEncode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.UUEncode.html",
+          "hash": "d1tCVhKz45RfwhxtzPdFbQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.UrlEncoding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.UrlEncoding.html",
+          "hash": "+I3fiKAvZX2wp0qURhxwKg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BinaryTextEncodings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BinaryTextEncodings.html",
+          "hash": "SdOtWNV38TzDcksYXZ6uqw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BitOperations.BitReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BitOperations.BitReader.html",
+          "hash": "0dVe5Uz8I8dhjEheye1ffQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BitOperations.BitWriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BitOperations.BitWriter.html",
+          "hash": "HUx669xYkml3gGb0iKsnxQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BitOperations.BitWriterUnevenMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BitOperations.BitWriterUnevenMode.html",
+          "hash": "jrgK+9GizBAdXG+q1L2E9g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.BitOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.BitOperations.html",
+          "hash": "AL8psxzPvh99kLc8VkD+hg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.IntegerEndianess.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.IntegerEndianess.html",
+          "hash": "v9iYfvoDDhyGDH+osKyMfQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MiffTheFox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MiffTheFox.html",
+          "hash": "nYk4Sh9EHfuuuaIEfpLqcw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "0z7LTHNPb8S72V9il4M1HQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "DTuUFRTbUAe6LgMtvd3n5g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "fjMhyQX66zZPT0SszJU6TQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "gB8AESyvNru97tzIZofEEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/binstrings.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/binstrings.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/binstrings.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/binstrings.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "images/favicon.ico"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "QGWgTC/2GRNARB2i+kphHA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "+rHUkRZHZRi5gd1aTU6lJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 21,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
