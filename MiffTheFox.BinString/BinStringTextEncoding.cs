@@ -12,7 +12,7 @@ namespace MiffTheFox
         /// <summary>
         /// Formats the BinString as a text string for display.
         /// </summary>
-        /// <param name="format">The format string for the BinString. See the documentation for examples.</param>
+        /// <param name="format">The format string for the BinString. See https://miffottah.github.io/binstrings/articles/format-strings.html for full information.</param>
         /// <param name="formatProvider">The format provider used to format the bytes.</param>
         public string ToString(string format, IFormatProvider formatProvider)
         {
