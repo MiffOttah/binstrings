@@ -73,7 +73,7 @@
   
   <h1 id="MiffTheFox_BinString" data-uid="MiffTheFox.BinString" class="text-break">Class BinString
   </h1>
-  <div class="markdown level0 summary"><p>Repersents binary data as a series of System.Byte objects that can be manipulated like a string.</p>
+  <div class="markdown level0 summary"><p>Repersents binary data as a series of bytes that can be manipulated like a string.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -387,7 +387,7 @@ public class BinString : IReadOnlyList&lt;byte&gt;, IReadOnlyCollection&lt;byte&
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.%23ctor(System.Runtime.Serialization.SerializationInfo%2CSystem.Runtime.Serialization.StreamingContext)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1068">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1097">View Source</a>
   </span>
   <a id="MiffTheFox_BinString__ctor_" data-uid="MiffTheFox.BinString.#ctor*"></a>
   <h4 id="MiffTheFox_BinString__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="MiffTheFox.BinString.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">BinString(SerializationInfo, StreamingContext)</h4>
@@ -659,7 +659,7 @@ public class BinString : IReadOnlyList&lt;byte&gt;, IReadOnlyCollection&lt;byte&
   </span>
   <a id="MiffTheFox_BinString_Empty_" data-uid="MiffTheFox.BinString.Empty*"></a>
   <h4 id="MiffTheFox_BinString_Empty" data-uid="MiffTheFox.BinString.Empty">Empty</h4>
-  <div class="markdown level1 summary"><p>Returns an empty BinString.</p>
+  <div class="markdown level1 summary"><p>An empty BinString with a length of 0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -863,7 +863,7 @@ public class BinString : IReadOnlyList&lt;byte&gt;, IReadOnlyCollection&lt;byte&
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString__CheckIndex_System_Int32_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString._CheckIndex(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L912">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L941">View Source</a>
   </span>
   <a id="MiffTheFox_BinString__CheckIndex_" data-uid="MiffTheFox.BinString._CheckIndex*"></a>
   <h4 id="MiffTheFox_BinString__CheckIndex_System_Int32_" data-uid="MiffTheFox.BinString._CheckIndex(System.Int32)">_CheckIndex(Int32)</h4>
@@ -1816,7 +1816,7 @@ Two binary strings are equal if and only if they have the same number of bytes a
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_FromStream_System_IO_Stream_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.FromStream(System.IO.Stream)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1114">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1143">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_FromStream_" data-uid="MiffTheFox.BinString.FromStream*"></a>
   <h4 id="MiffTheFox_BinString_FromStream_System_IO_Stream_" data-uid="MiffTheFox.BinString.FromStream(System.IO.Stream)">FromStream(Stream)</h4>
@@ -2123,7 +2123,7 @@ to the end. This may change in future versions.</p>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">System.Object.GetHashCode()</span></div>
   <h5 id="MiffTheFox_BinString_GetHashCode_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This is currently implemented using the 64-bit FNV-1a algorith, but this is considered
+  <div class="markdown level1 remarks"><p>This is currently implemented using the 64-bit FNV-1a algorithm, but this is considered
 an implemention detail. For hashing a BinString for permanent storage or with a specific
 algorithm, use a System.Security.Cryptography.HashAlgorithm.</p>
 </div>
@@ -2132,7 +2132,7 @@ algorithm, use a System.Security.Cryptography.HashAlgorithm.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.GetObjectData(System.Runtime.Serialization.SerializationInfo%2CSystem.Runtime.Serialization.StreamingContext)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1079">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1108">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_GetObjectData_" data-uid="MiffTheFox.BinString.GetObjectData*"></a>
   <h4 id="MiffTheFox_BinString_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="MiffTheFox.BinString.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">GetObjectData(SerializationInfo, StreamingContext)</h4>
@@ -2387,7 +2387,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_IsNullOrEmpty_MiffTheFox_BinString_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.IsNullOrEmpty(MiffTheFox.BinString)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L922">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L951">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_IsNullOrEmpty_" data-uid="MiffTheFox.BinString.IsNullOrEmpty*"></a>
   <h4 id="MiffTheFox_BinString_IsNullOrEmpty_MiffTheFox_BinString_" data-uid="MiffTheFox.BinString.IsNullOrEmpty(MiffTheFox.BinString)">IsNullOrEmpty(BinString)</h4>
@@ -2437,7 +2437,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_Join_System_Collections_Generic_IEnumerable_MiffTheFox_BinString__MiffTheFox_BinString_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.Join(System.Collections.Generic.IEnumerable%7BMiffTheFox.BinString%7D%2CMiffTheFox.BinString)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L877">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L906">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_Join_" data-uid="MiffTheFox.BinString.Join*"></a>
   <h4 id="MiffTheFox_BinString_Join_System_Collections_Generic_IEnumerable_MiffTheFox_BinString__MiffTheFox_BinString_" data-uid="MiffTheFox.BinString.Join(System.Collections.Generic.IEnumerable{MiffTheFox.BinString},MiffTheFox.BinString)">Join(IEnumerable&lt;BinString&gt;, BinString)</h4>
@@ -2858,13 +2858,13 @@ instance directly.</p>
       <tr>
         <td><a class="xref" href="MiffTheFox.BinString.html">BinString</a></td>
         <td><span class="parametername">needle</span></td>
-        <td><p>The substring to search for.</p>
+        <td><p>The substring to search for. If null or empty, the haystack is unmodified.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="MiffTheFox.BinString.html">BinString</a></td>
         <td><span class="parametername">replacement</span></td>
-        <td><p>The substring to replace <code data-dev-comment-type="paramref" class="paramref">needle</code> with.</p>
+        <td><p>The substring to replace <code data-dev-comment-type="paramref" class="paramref">needle</code> with. If null or empty, those substrings are removed.</p>
 </td>
       </tr>
     </tbody>
@@ -2890,7 +2890,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_Replace_MiffTheFox_BinString_MiffTheFox_BinString_MiffTheFox_BinString_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.Replace(MiffTheFox.BinString%2CMiffTheFox.BinString%2CMiffTheFox.BinString)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L822">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L823">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_Replace_" data-uid="MiffTheFox.BinString.Replace*"></a>
   <h4 id="MiffTheFox_BinString_Replace_MiffTheFox_BinString_MiffTheFox_BinString_MiffTheFox_BinString_" data-uid="MiffTheFox.BinString.Replace(MiffTheFox.BinString,MiffTheFox.BinString,MiffTheFox.BinString)">Replace(BinString, BinString, BinString)</h4>
@@ -2914,19 +2914,19 @@ instance directly.</p>
       <tr>
         <td><a class="xref" href="MiffTheFox.BinString.html">BinString</a></td>
         <td><span class="parametername">needle</span></td>
-        <td><p>The substring to search for.</p>
+        <td><p>The substring to search for. If null or empty, the haystack is unmodified.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="MiffTheFox.BinString.html">BinString</a></td>
         <td><span class="parametername">replacement</span></td>
-        <td><p>The substring to replace <code data-dev-comment-type="paramref" class="paramref">needle</code> with.</p>
+        <td><p>The substring to replace <code data-dev-comment-type="paramref" class="paramref">needle</code> with. If null or empty, those substrings are removed.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="MiffTheFox.BinString.html">BinString</a></td>
         <td><span class="parametername">haystack</span></td>
-        <td><p>The substring to search within.</p>
+        <td><p>The substring to search within. Cannot be null.</p>
 </td>
       </tr>
     </tbody>
@@ -2943,6 +2943,22 @@ instance directly.</p>
       <tr>
         <td><a class="xref" href="MiffTheFox.BinString.html">BinString</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">haystack</code>, with all instances of <code data-dev-comment-type="paramref" class="paramref">needle</code> replaced with <code data-dev-comment-type="paramref" class="paramref">replacement</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>haystack cannot be null</p>
 </td>
       </tr>
     </tbody>
@@ -3055,7 +3071,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_Split_MiffTheFox_BinString_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.Split(MiffTheFox.BinString)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L848">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L867">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_Split_" data-uid="MiffTheFox.BinString.Split*"></a>
   <h4 id="MiffTheFox_BinString_Split_MiffTheFox_BinString_" data-uid="MiffTheFox.BinString.Split(MiffTheFox.BinString)">Split(BinString)</h4>
@@ -3214,7 +3230,8 @@ instance directly.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Byte</span>[]</td>
-        <td></td>
+        <td><p>The BinString as an array of System.Byte</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -3398,7 +3415,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_ToStream.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.ToStream%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1094">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1123">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_ToStream_" data-uid="MiffTheFox.BinString.ToStream*"></a>
   <h4 id="MiffTheFox_BinString_ToStream" data-uid="MiffTheFox.BinString.ToStream">ToStream()</h4>
@@ -3587,7 +3604,7 @@ instance directly.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">format</span></td>
-        <td><p>The format string for the BinString. See the documentation for examples.</p>
+        <td><p>The format string for the BinString. See <a href="https://miffottah.github.io/binstrings/articles/format-strings.html">https://miffottah.github.io/binstrings/articles/format-strings.html</a> for full information.</p>
 </td>
       </tr>
       <tr>
@@ -4901,7 +4918,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_GetTypeCode.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23GetTypeCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L933">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L962">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_GetTypeCode_" data-uid="MiffTheFox.BinString.System#IConvertible#GetTypeCode*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_GetTypeCode" data-uid="MiffTheFox.BinString.System#IConvertible#GetTypeCode">IConvertible.GetTypeCode()</h4>
@@ -4931,7 +4948,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToBoolean_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToBoolean(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L938">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L967">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToBoolean_" data-uid="MiffTheFox.BinString.System#IConvertible#ToBoolean*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToBoolean_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToBoolean(System.IFormatProvider)">IConvertible.ToBoolean(IFormatProvider)</h4>
@@ -4978,7 +4995,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToByte_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToByte(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L977">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1006">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToByte_" data-uid="MiffTheFox.BinString.System#IConvertible#ToByte*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToByte_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToByte(System.IFormatProvider)">IConvertible.ToByte(IFormatProvider)</h4>
@@ -5025,7 +5042,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToChar_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToChar(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L943">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L972">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToChar_" data-uid="MiffTheFox.BinString.System#IConvertible#ToChar*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToChar_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToChar(System.IFormatProvider)">IConvertible.ToChar(IFormatProvider)</h4>
@@ -5072,7 +5089,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToDateTime_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToDateTime(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1026">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1055">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToDateTime_" data-uid="MiffTheFox.BinString.System#IConvertible#ToDateTime*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToDateTime_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToDateTime(System.IFormatProvider)">IConvertible.ToDateTime(IFormatProvider)</h4>
@@ -5119,7 +5136,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToDecimal_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToDecimal(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1025">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1054">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToDecimal_" data-uid="MiffTheFox.BinString.System#IConvertible#ToDecimal*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToDecimal_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToDecimal(System.IFormatProvider)">IConvertible.ToDecimal(IFormatProvider)</h4>
@@ -5166,7 +5183,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToDouble_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToDouble(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1009">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1038">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToDouble_" data-uid="MiffTheFox.BinString.System#IConvertible#ToDouble*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToDouble_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToDouble(System.IFormatProvider)">IConvertible.ToDouble(IFormatProvider)</h4>
@@ -5354,7 +5371,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToSByte_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToSByte(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L961">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L990">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToSByte_" data-uid="MiffTheFox.BinString.System#IConvertible#ToSByte*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToSByte_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToSByte(System.IFormatProvider)">IConvertible.ToSByte(IFormatProvider)</h4>
@@ -5401,7 +5418,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToSingle_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToSingle(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L993">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1022">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToSingle_" data-uid="MiffTheFox.BinString.System#IConvertible#ToSingle*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToSingle_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToSingle(System.IFormatProvider)">IConvertible.ToSingle(IFormatProvider)</h4>
@@ -5448,7 +5465,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToString_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToString(System.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1027">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1056">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToString_" data-uid="MiffTheFox.BinString.System#IConvertible#ToString*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToString_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToString(System.IFormatProvider)">IConvertible.ToString(IFormatProvider)</h4>
@@ -5495,7 +5512,7 @@ instance directly.</p>
     <a href="https://github.com/MiffOttah/binstrings/new/master/apiSpec/new?filename=MiffTheFox_BinString_System_IConvertible_ToType_System_Type_System_IFormatProvider_.md&amp;value=---%0Auid%3A%20MiffTheFox.BinString.System%23IConvertible%23ToType(System.Type%2CSystem.IFormatProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1029">View Source</a>
+    <a href="https://github.com/MiffOttah/binstrings/blob/master/MiffTheFox.BinString/BinString.cs/#L1058">View Source</a>
   </span>
   <a id="MiffTheFox_BinString_System_IConvertible_ToType_" data-uid="MiffTheFox.BinString.System#IConvertible#ToType*"></a>
   <h4 id="MiffTheFox_BinString_System_IConvertible_ToType_System_Type_System_IFormatProvider_" data-uid="MiffTheFox.BinString.System#IConvertible#ToType(System.Type,System.IFormatProvider)">IConvertible.ToType(Type, IFormatProvider)</h4>

@@ -665,6 +665,15 @@ references:
   commentId: M:MiffTheFox.BinBoyerMoore.FindNeedleIn(MiffTheFox.BinString)
   fullName: MiffTheFox.BinBoyerMoore.FindNeedleIn(MiffTheFox.BinString)
   nameWithType: BinBoyerMoore.FindNeedleIn(BinString)
+- uid: MiffTheFox.BinBoyerMoore.FindNeedleIn(System.Byte[])
+  name: FindNeedleIn(Byte[])
+  href: api/MiffTheFox.BinBoyerMoore.html#MiffTheFox_BinBoyerMoore_FindNeedleIn_System_Byte___
+  commentId: M:MiffTheFox.BinBoyerMoore.FindNeedleIn(System.Byte[])
+  name.vb: FindNeedleIn(Byte())
+  fullName: MiffTheFox.BinBoyerMoore.FindNeedleIn(System.Byte[])
+  fullName.vb: MiffTheFox.BinBoyerMoore.FindNeedleIn(System.Byte())
+  nameWithType: BinBoyerMoore.FindNeedleIn(Byte[])
+  nameWithType.vb: BinBoyerMoore.FindNeedleIn(Byte())
 - uid: MiffTheFox.BinBoyerMoore.FindNeedleIn*
   name: FindNeedleIn
   href: api/MiffTheFox.BinBoyerMoore.html#MiffTheFox_BinBoyerMoore_FindNeedleIn_

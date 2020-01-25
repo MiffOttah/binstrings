@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title> </title>
+    <title>Format strings </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content=" ">
+    <meta name="title" content="Format strings ">
     <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -67,8 +67,68 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+<h1 id="format-strings">Format strings</h1>
 
-<p>These articles cover more nuanced details regarding BinStrings.</p>
+<p>BinStrings are <a href="https://docs.microsoft.com/en-us/dotnet/api/system.iformattable">formattable</a>.</p>
+<p>The following format strings apply.</p>
+<table>
+<thead>
+<tr>
+<th>Format String</th>
+<th>Description</th>
+<th>Example</th>
+<th>Also provided by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code> or <code>X</code></td>
+<td>Hexadecimal encoding. Each byte is written as two characters of hex. If the format string is followed by a string, that string will be used as separator. Otherwise, there will be no separator.</td>
+<td><code>546573740d0a</code></td>
+<td><em>(n/a)</em></td>
+</tr>
+<tr>
+<td><code>s</code> or <code>S</code></td>
+<td>Same as <code>x</code>, except the separator is a space. Since format strings cannot end in spaces, this can be used to produce space-separated hex.</td>
+<td><code>54 65 73 74 0d 0a</code></td>
+<td><em>(n/a)</em></td>
+</tr>
+<tr>
+<td><code>u</code> or <code>U</code></td>
+<td>URL encoding. All bytes from 0x21 to 0x7e, except 0x2b (ASCII <code>%</code>) are repersented by their ASCII characters. All other bytes are represented with a <code>%</code>, followed by two hexadecimal characters. This is similar to the URL encoding specified by <a href="https://tools.ietf.org/html/rfc1738">RFC 1738</a>.</td>
+<td><code>Test%0d%0a</code></td>
+<td><a href="../api/MiffTheFox.BinaryTextEncodings.UrlEncoding.html">BinaryTextEncodings.UrlEncoding</a></td>
+</tr>
+<tr>
+<td><code>e</code> or <code>E</code></td>
+<td>Backslash encoding. All bytes from 0x21 to 0x7e, except 0x5c, 0x22, and 0x27 (ASCII <code>\\</code>, <code>&quot;</code> and <code>'</code>) are repersented by their ASCII characters. 0x5c, is represented by two backslashes (<code>\\\\</code>). All other bytes are represented with a <code>\\x</code>, followed by two hexadecimal characters.</td>
+<td><code>Test\x0d\x0a</code></td>
+<td><a href="../api/MiffTheFox.BinaryTextEncodings.BackslashEscapeEncoding.html">BinaryTextEncodings.BackslashEscapeEncoding</a></td>
+</tr>
+<tr>
+<td><code>q</code> or <code>Q</code></td>
+<td>Quoted-Printable encoding.</td>
+<td><code>Test=0d=0a</code></td>
+<td><a href="../api/MiffTheFox.BinaryTextEncodings.QuotedPrintable.html">BinaryTextEncodings.QuotedPrintable</a></td>
+</tr>
+<tr>
+<td><code>64</code></td>
+<td>Base64 encoding.</td>
+<td><code>VGVzdA0K</code></td>
+<td><a href="../api/MiffTheFox.BinaryTextEncodings.Base64.html">BinaryTextEncodings.Base64</a></td>
+</tr>
+<tr>
+<td><code>85</code></td>
+<td>ASCII-85 encoding.</td>
+<td><code>&lt;~&lt;+U,m%13~&gt;</code></td>
+<td><a href="../api/MiffTheFox.BinaryTextEncodings.Ascii85.html">BinaryTextEncodings.Ascii85</a></td>
+</tr>
+</tbody>
+</table>
+<p>With the <code>x</code>/<code>X</code>, <code>s</code>/<code>S</code>, <code>u</code>/<code>U</code>, <code>e</code>/<code>E</code>, and <code>q</code>/<code>Q</code> options, the case of
+the character indicates the case of the hexadecimal representations.</p>
+<p>A null or empty format string, the general format string <code>&quot;G&quot;</code>/<code>&quot;g&quot;</code>, or
+calling the parameterless <code>ToString</code> method, defaults to <code>&quot;x&quot;</code>.</p>
 </article>
           </div>
           

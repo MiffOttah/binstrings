@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MiffTheFox.BinBoyerMoore.html",
-          "hash": "6JnEeeq9SdD5WNnazG0WUw=="
+          "hash": "j1nU7A6g8TLKpPF2JUS+Xg=="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MiffTheFox.BinString.html",
-          "hash": "OKIc2NSwN0XKwW2zfWlrmw=="
+          "hash": "yWjpziwjLZddUhxrf2vWlw=="
         }
       },
       "is_incremental": false,
@@ -249,19 +249,22 @@
       "output": {
         ".html": {
           "relative_path": "api/MiffTheFox.html",
-          "hash": "nYk4Sh9EHfuuuaIEfpLqcw=="
+          "hash": "4XLrezFbqAnGsVaN7n2bIQ=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "api/index.md",
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "0z7LTHNPb8S72V9il4M1HQ=="
+          "hash": "UAPumca1HLyFhz4xpc8tWA=="
         }
       },
       "is_incremental": false,
@@ -280,12 +283,27 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/format-strings.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/format-strings.html",
+          "hash": "F7gE/LJwD2wVssHIjEIBmQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "articles/intro.md",
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "fjMhyQX66zZPT0SszJU6TQ=="
+          "hash": "fShgHjzea43ZHlh38oEg7Q=="
         }
       },
       "is_incremental": false,
@@ -297,7 +315,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "gB8AESyvNru97tzIZofEEg=="
+          "hash": "R/ygS8tsAygN45qRT+HDhg=="
         }
       },
       "is_incremental": false,
@@ -342,7 +360,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "QGWgTC/2GRNARB2i+kphHA=="
+          "hash": "St/Eq2LhAXltTjILAQjyag=="
         }
       },
       "is_incremental": false,
@@ -372,11 +390,17 @@
         "full_build_reason_code": "NoAvailableBuildCache"
       },
       "processors": {
-        "TocDocumentProcessor": {
+        "ResourceDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
           "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 4,
           "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
@@ -385,15 +409,9 @@
           "total_file_count": 21,
           "skipped_file_count": 0
         },
-        "ConceptualDocumentProcessor": {
+        "TocDocumentProcessor": {
           "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 3,
-          "skipped_file_count": 0
-        },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
           "total_file_count": 0,
           "skipped_file_count": 0
